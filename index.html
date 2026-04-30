@@ -239,49 +239,35 @@ transform: translate3d(-50%, 0, 0);
 }
 }
 
-/* ── Full-width optimisation (MacBook Pro 14" = 1512px and up) ── */
-@media screen and (min-width: 1200px) {
-  /* Expand the Webflow base containers edge-to-edge */
-  .w-container,
-  .w-layout-blockcontainer {
-    max-width: 96vw !important;
-    width: 96vw !important;
-    margin-left: auto !important;
-    margin-right: auto !important;
-  }
-
-  /* .container is on the same element — also needs its max-width lifted */
-  .container,
-  .container.narrow-container {
-    max-width: 96vw !important;
-    width: 100% !important;
-    padding-left: 2vw !important;
-    padding-right: 2vw !important;
-  }
-
-  /* wide-container already strips its own padding — keep it that way */
-  .container.wide-container {
-    padding-left: 0 !important;
-    padding-right: 0 !important;
-  }
+/* ── Consistent page margins — single source of truth ─────── */
+:root {
+  --gutter: clamp(16px, 4vw, 80px);
 }
 
-/* Slightly tighter cap on very large monitors so lines don't stretch too far */
-@media screen and (min-width: 1800px) {
+/* Consistent padding on all containers at every size */
+.container,
+.container.narrow-container {
+  padding-left: var(--gutter) !important;
+  padding-right: var(--gutter) !important;
+}
+.container.wide-container {
+  padding-left: 0 !important;
+  padding-right: 0 !important;
+}
+
+/* From 992px up: lift the 940px Webflow cap, fill screen width */
+@media screen and (min-width: 992px) {
   .w-container,
   .w-layout-blockcontainer {
-    max-width: 1728px !important;
-    width: 1728px !important;
+    max-width: min(96vw, 1728px) !important;
+    width: min(96vw, 1728px) !important;
     margin-left: auto !important;
     margin-right: auto !important;
   }
-
   .container,
   .container.narrow-container {
-    max-width: 1728px !important;
+    max-width: 100% !important;
     width: 100% !important;
-    padding-left: 48px !important;
-    padding-right: 48px !important;
   }
 }
 
