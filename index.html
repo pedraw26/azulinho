@@ -87,8 +87,17 @@ text-align: center;
 }
 
 .releases-list-wrapper {
+display: block;
 overflow: hidden;
-width: 100%;
+width: 100vw;
+position: relative;
+left: 50%;
+transform: translateX(-50%);
+}
+
+/* Ensure the releases section never clips the edge-to-edge wrapper */
+.section.no-top-border {
+overflow: visible;
 }
 
 .releases-list.is-marquee {
@@ -504,8 +513,6 @@ transform: translate3d(-50%, 0, 0);
 <div class="body-m button-text">Listen Now</div>
 <img src="assets/cdn.prod.website-files.com/67ee44f1ff9354a5d5c4df6c/67ee9442b2f39a68e205ff40_Play.svg" loading="lazy" alt="" class="button-icon right-button-icon"/>
 </a>
-</div>
-</div>
 </div>
 </div>
 </section>
