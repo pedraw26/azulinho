@@ -759,20 +759,16 @@ transform: translate3d(-50%, 0, 0);
 </div>
 </div>
 <div role="listitem" class="tour-item w-dyn-item">
-<div class="tour-block track-item" data-track-id="track-03" data-track-title="Coffee Eye Queen" data-track-mood="Azulinho" data-track-url="https://res.cloudinary.com/dzgqzeebg/video/upload/azulinho/waves/azulinho---coffee-eye-queen.m4a">
+<div class="tour-block track-item track-coming-soon" data-track-id="track-03">
 <div class="tour-block-content">
-<div class="tour-block-date"><div class="body-m">03</div></div>
+<div class="tour-block-date"><div class="body-m" style="opacity:0.35">03</div></div>
 <div class="tour-block-main">
-<div class="body-m">Coffee Eye Queen</div>
-<div class="body-m">Azulinho</div>
+<div class="body-m" style="opacity:0.35">Coffee Eye Queen</div>
+<div class="body-m" style="opacity:0.35">Azulinho</div>
 </div>
 </div>
 <div class="tour-block-button">
-<button type="button" class="button custom-cursor-link track-play-button">
-<img src="assets/cdn.prod.website-files.com/67ee44f1ff9354a5d5c4df6c/67ee9442b2f39a68e205ff40_Play.svg" loading="lazy" alt="" class="button-icon left-button-icon"/>
-<div class="body-m button-text">Play</div>
-<img src="assets/cdn.prod.website-files.com/67ee44f1ff9354a5d5c4df6c/67ee9442b2f39a68e205ff40_Play.svg" loading="lazy" alt="" class="button-icon right-button-icon"/>
-</button>
+<div class="body-m" style="opacity:0.4;font-size:10px;letter-spacing:.14em;text-transform:uppercase">Coming Soon</div>
 </div>
 </div>
 </div>
@@ -947,7 +943,7 @@ transform: translate3d(-50%, 0, 0);
 </script>
 <script>
 (() => {
-  const rows = Array.from(document.querySelectorAll(".track-item"));
+  const rows = Array.from(document.querySelectorAll(".track-item:not(.track-coming-soon)"));
   if (!rows.length) return;
 
   const audio = new Audio();
