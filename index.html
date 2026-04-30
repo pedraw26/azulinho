@@ -239,17 +239,50 @@ transform: translate3d(-50%, 0, 0);
 }
 }
 
-/* ── Full-width optimisation ───────────────────────────── */
+/* ── Full-width optimisation (MacBook Pro 14" = 1512px and up) ── */
 @media screen and (min-width: 1200px) {
+  /* Expand the Webflow base containers edge-to-edge */
   .w-container,
-  .w-layout-blockcontainer { max-width: 94vw !important; width: 94vw !important; }
-  .container { padding-left: 3vw !important; padding-right: 3vw !important; }
+  .w-layout-blockcontainer {
+    max-width: 96vw !important;
+    width: 96vw !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
+  }
+
+  /* .container is on the same element — also needs its max-width lifted */
+  .container,
+  .container.narrow-container {
+    max-width: 96vw !important;
+    width: 100% !important;
+    padding-left: 2vw !important;
+    padding-right: 2vw !important;
+  }
+
+  /* wide-container already strips its own padding — keep it that way */
+  .container.wide-container {
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+  }
 }
 
+/* Slightly tighter cap on very large monitors so lines don't stretch too far */
 @media screen and (min-width: 1800px) {
   .w-container,
-  .w-layout-blockcontainer { max-width: 1720px !important; width: 1720px !important; }
-  .container { padding-left: 60px !important; padding-right: 60px !important; }
+  .w-layout-blockcontainer {
+    max-width: 1728px !important;
+    width: 1728px !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
+  }
+
+  .container,
+  .container.narrow-container {
+    max-width: 1728px !important;
+    width: 100% !important;
+    padding-left: 48px !important;
+    padding-right: 48px !important;
+  }
 }
 
 </style>
