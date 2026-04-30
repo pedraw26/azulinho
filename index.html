@@ -88,6 +88,14 @@ text-align: center;
 
 .releases-list-wrapper {
 overflow: hidden;
+/* Break out of container — edge to edge */
+position: relative;
+left: 50%;
+right: 50%;
+margin-left: -50vw;
+margin-right: -50vw;
+width: 100vw;
+padding: 0;
 }
 
 .releases-list.is-marquee {
@@ -220,11 +228,11 @@ transform: rotateX(0) rotateY(-180deg) rotateZ(0) translate3d(0.75%, 1%, 0) scal
 
 @keyframes releases-marquee {
 0% {
-transform: translate3d(-50%, 0, 0);
+transform: translate3d(0, 0, 0);
 }
 
 100% {
-transform: translate3d(0, 0, 0);
+transform: translate3d(-50%, 0, 0);
 }
 }
 
