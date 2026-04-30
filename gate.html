@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>Azulinho</title>
+<link href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@800&display=swap" rel="stylesheet"/>
+<meta name="robots" content="noindex"/>
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+html, body {
+  height: 100%;
+  background: #000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  gap: 48px;
+  font-family: -apple-system, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  overflow: hidden;
+}
+
+.sig {
+  width: clamp(260px, 40vw, 560px);
+  height: auto;
+  opacity: 0.9;
+  filter: invert(1);
+  user-select: none;
+}
+
+.gate {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+}
+
+input[type="password"] {
+  background: transparent;
+  border: none;
+  border-bottom: 1px solid rgba(255,255,255,0.25);
+  color: #fff;
+  font-size: 14px;
+  letter-spacing: 0.2em;
+  text-align: center;
+  width: 160px;
+  padding: 8px 0;
+  outline: none;
+  caret-color: rgba(255,255,255,0.5);
+  transition: border-color 0.2s;
+}
+
+input[type="password"]::placeholder {
+  color: rgba(255,255,255,0.2);
+  letter-spacing: 0.15em;
+}
+
+input[type="password"]:focus {
+  border-bottom-color: rgba(255,255,255,0.6);
+}
+
+button {
+  background: transparent;
+  border: none;
+  color: rgba(255,255,255,0.45);
+  font-family: 'Big Shoulders Display', sans-serif;
+  font-size: 18px;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: 0;
+  cursor: pointer;
+  transition: color 0.2s;
+}
+button:hover { color: #fff; }
+
+.msg {
+  font-size: 10px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0);
+  transition: color 0.3s;
+  height: 14px;
+}
+
+.msg.error  { color: rgba(255,80,80,0.7); }
+.msg.ok     { color: rgba(255,255,255,0.5); }
+</style>
+</head>
+<body>
+
+<img src="assets/signuture.svg" class="sig" alt="A storm is coming"/>
+
+<form class="gate" id="gate" onsubmit="return false;">
+  <input id="pw" type="password" placeholder="password" autocomplete="off" autofocus/>
+  <button type="submit">enter</button>
+  <div class="msg" id="msg"></div>
+</form>
+
+<script>
+document.getElementById('gate').addEventListener('submit', function() {
+  var val = document.getElementById('pw').value.trim();
+  var msg = document.getElementById('msg');
+  if (val === 'waves99') {
+    msg.textContent = 'entering...';
+    msg.className = 'msg ok';
+    setTimeout(function() { window.location.replace('/azulinho/waves.html'); }, 600);
+  } else {
+    msg.textContent = 'incorrect';
+    msg.className = 'msg error';
+    document.getElementById('pw').value = '';
+    setTimeout(function() { msg.className = 'msg'; }, 1800);
+  }
+});
+</script>
+</body>
+</html>
