@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+<script>if(!sessionStorage.getItem('az_auth'))window.location.replace('/gate.html');</script>
 <!-- This site was created in Webflow. https://webflow.com -->
 <!-- Last Published: Tue Apr 22 2025 07:39:45 GMT+0000 (Coordinated Universal Time) -->
 <html data-wf-domain="trvns.webflow.io" data-wf-page="67ee44f1ff9354a5d5c4df73" data-wf-site="67ee44f1ff9354a5d5c4df6c" lang="en">
@@ -75,6 +76,45 @@ height: 24px;
 .streaming-button-icon[alt="YouTube"] {
 width: 32px;
 height: 32px;
+}
+
+.streaming-icon-button-media[alt="Apple Music"],
+.streaming-button-icon[alt="Apple Music"] {
+width: 32px;
+height: 32px;
+}
+
+/* Hide icons in the LISTEN ON bar — text only */
+.streaming-button .streaming-button-icon {
+display: none !important;
+}
+
+/* About section slideshow */
+.about-slideshow {
+position: absolute;
+inset: 0;
+z-index: 1;
+overflow: hidden;
+}
+.about-slideshow .slide {
+position: absolute;
+inset: 0;
+width: 100%;
+height: 100%;
+object-fit: cover;
+object-position: center top;
+animation: about-crossfade 15s infinite;
+}
+.about-slideshow .slide-2 {
+animation-delay: -10s;
+}
+.about-slideshow .slide-3 {
+animation-delay: -5s;
+}
+@keyframes about-crossfade {
+0%, 26%  { opacity: 1; }
+33%, 93% { opacity: 0; }
+100%     { opacity: 1; }
 }
 
 .latest-release-buttons-content .streaming-button {
@@ -534,7 +574,7 @@ transform: translate3d(-50%, 0, 0);
 <img src="assets/cdn.prod.website-files.com/67ee44f1ff9354a5d5c4df6c/67ee85fb0f074b505aea71fe_Noise.avif" loading="lazy" alt="" class="noise-default"/>
 <img src="assets/cdn.prod.website-files.com/67ee44f1ff9354a5d5c4df6c/67ee85fb0f074b505aea71fe_Noise.avif" loading="lazy" alt="" class="noise-flipped"/>
 </div></div>
-<img src="assets/cdn.prod.website-files.com/67ee554feab19e388b23feeb/67ee7da8e4682d7cc8e61f26_Burning%20Soul.avif" loading="lazy" alt="Post-Clarity" class="background-image"/>
+<video class="background-image" autoplay muted loop playsinline style="object-fit:cover;width:100%;height:100%;"><source src="assets/hero-bg.mp4" type="video/mp4"/></video>
 </div>
 <div class="release-block-content">
 <div class="release-block-info">
@@ -847,7 +887,7 @@ transform: translate3d(-50%, 0, 0);
 </div>
 </div>
 </div>
-<a href="#socials" class="button custom-cursor-link w-inline-block">
+<a href="https://buymeacoffee.com/azulinho" target="_blank" class="button custom-cursor-link w-inline-block">
 <img src="assets/cdn.prod.website-files.com/67ee44f1ff9354a5d5c4df6c/67ee9442b2f39a68e205ff40_Play.svg" loading="lazy" alt="" class="button-icon left-button-icon"/>
 <div class="body-m button-text">Support Me Here</div>
 <img src="assets/cdn.prod.website-files.com/67ee44f1ff9354a5d5c4df6c/67ee9442b2f39a68e205ff40_Play.svg" loading="lazy" alt="" class="button-icon right-button-icon"/>
@@ -864,7 +904,11 @@ transform: translate3d(-50%, 0, 0);
 </div>
 </div>
 </div>
-<img src="assets/image-before-footer.webp" loading="lazy" alt="Azulinho" class="background-image"/>
+<div class="about-slideshow">
+<img src="assets/image-before-footer.webp" loading="lazy" alt="Azulinho" class="slide">
+<img src="assets/loop-image.webp" loading="lazy" alt="Azulinho" class="slide slide-2">
+<img src="assets/lower-bottom.webp" loading="lazy" alt="Azulinho" class="slide slide-3">
+</div>
 </section>
 <section id="socials" class="section streaming-section">
 <div class="w-layout-blockcontainer container w-container">
@@ -893,7 +937,7 @@ transform: translate3d(-50%, 0, 0);
 <div class="body-m">© 2026, Azulinho</div>
 <div class="footer-divider">
 </div>
-<a data-wf--menu-item--variant="base" href="mailto:hello@pedraw.co.uk" class="menu-item custom-cursor-link w-inline-block">
+<a data-wf--menu-item--variant="base" href="mailto:info@azulinhomusic.com" class="menu-item custom-cursor-link w-inline-block">
 <div class="body-m">Contact Us</div>
 </a>
 </div>
@@ -1028,17 +1072,265 @@ transform: translate3d(-50%, 0, 0);
     }
   });
 
-  // Autoplay track 1 on page load
+  // Autoplay track 1 — fires on first user interaction (browser policy)
   const firstRow = rows[0];
   if (firstRow) {
     audio.src = firstRow.dataset.trackUrl;
-    setNowPlaying(firstRow, "Loading…", "Pause");
-    audio.play().then(() => setNowPlaying(firstRow, "Playing", "Pause")).catch(() => {
-      setIdleState();
-      titleEl.textContent = "Select a track to start the player";
-      moodEl.textContent  = "Waves · 2026";
-    });
+    setNowPlaying(firstRow, "Loading…", "Play");
+
+    let started = false;
+    function tryAutoplay() {
+      if (started) return;
+      started = true;
+      ['click','scroll','touchstart','keydown'].forEach(function(e) {
+        document.removeEventListener(e, tryAutoplay);
+      });
+      audio.play()
+        .then(() => setNowPlaying(firstRow, "Playing", "Pause"))
+        .catch(() => {
+          setIdleState();
+          titleEl.textContent = "Select a track to start the player";
+          moodEl.textContent  = "Waves · 2026";
+        });
+    }
+
+    // Try immediately — works if browser allows it (e.g. returning visitor)
+    audio.play()
+      .then(() => { started = true; setNowPlaying(firstRow, "Playing", "Pause"); })
+      .catch(() => {
+        // Browser blocked it — wait for first interaction
+        statusEl.textContent = "Tap anywhere to play";
+        ['click','scroll','touchstart','keydown'].forEach(function(e) {
+          document.addEventListener(e, tryAutoplay, { once: true });
+        });
+      });
   }
+})();
+</script>
+
+<!-- ── FILM GRAIN ON HERO ──────────────────────────────────── -->
+<canvas id="grain-canvas" style="
+  position:absolute;
+  inset:0;
+  width:100%;
+  height:100%;
+  pointer-events:none;
+  z-index:5;
+  mix-blend-mode:overlay;
+  opacity:0.55;
+"></canvas>
+<script>
+(function() {
+  // Wait for hero to be in DOM
+  window.addEventListener('load', function() {
+    const hero = document.querySelector('.home-hero-section');
+    const canvas = document.getElementById('grain-canvas');
+    if (!hero || !canvas) return;
+
+    // Move canvas inside hero so it's contained to it
+    hero.style.position = 'relative';
+    hero.appendChild(canvas);
+
+    function resize() {
+      canvas.width  = hero.offsetWidth;
+      canvas.height = hero.offsetHeight;
+    }
+    resize();
+    window.addEventListener('resize', resize);
+
+    const ctx = canvas.getContext('2d');
+
+    function drawGrain() {
+      const w = canvas.width, h = canvas.height;
+      const imageData = ctx.createImageData(w, h);
+      const data = imageData.data;
+
+      for (let i = 0; i < data.length; i += 4) {
+        // Warm analog grain — slightly golden tint
+        const luma = (Math.random() * 2 - 1) * 180;
+        data[i]   = 128 + luma + 8;   // R — slightly warm
+        data[i+1] = 128 + luma + 2;   // G
+        data[i+2] = 128 + luma - 12;  // B — slightly cool shadow
+        data[i+3] = 38 + Math.random() * 28; // alpha — vary density
+      }
+      ctx.putImageData(imageData, 0, 0);
+      requestAnimationFrame(drawGrain);
+    }
+
+    drawGrain();
+  });
+})();
+</script>
+
+<!-- ── HIP-HOP GLITCH EFFECT ─────────────────────────────── -->
+<style>
+/* Phase 1: RGB split on WAVES title */
+@keyframes rgb-split {
+  0%   { text-shadow: none; }
+  15%  { text-shadow: -5px 0 rgba(255,0,60,0.7), 5px 0 rgba(0,200,255,0.7); letter-spacing: 0.01em; }
+  30%  { text-shadow: 5px 0 rgba(255,0,60,0.5), -5px 0 rgba(0,200,255,0.5); }
+  50%  { text-shadow: -3px 0 rgba(255,0,60,0.8), 3px 0 rgba(0,200,255,0.8); letter-spacing: -0.01em; }
+  70%  { text-shadow: 4px 0 rgba(255,0,60,0.4), -4px 0 rgba(0,200,255,0.4); }
+  100% { text-shadow: none; letter-spacing: inherit; }
+}
+
+/* Phase 2: one clean horizontal tear across the hero */
+@keyframes hero-signal {
+  0%   { filter: none; }
+  20%  { filter: brightness(1.15) saturate(0.6); }
+  35%  { filter: brightness(0.92) hue-rotate(8deg); }
+  55%  { filter: brightness(1.08) saturate(1.2) hue-rotate(-4deg); }
+  100% { filter: none; }
+}
+
+.glitch-title {
+  animation: rgb-split 0.55s steps(3) forwards;
+}
+.glitch-hero {
+  animation: hero-signal 0.55s ease forwards;
+}
+</style>
+
+<script>
+(function() {
+  let glitching = false;
+
+  function runGlitch() {
+    if (glitching) return;
+    glitching = true;
+
+    const title = document.querySelector('.h1');
+    const hero  = document.querySelector('.home-hero-section');
+
+    if (title) title.classList.add('glitch-title');
+    if (hero)  hero.classList.add('glitch-hero');
+
+    setTimeout(function() {
+      if (title) title.classList.remove('glitch-title');
+      if (hero)  hero.classList.remove('glitch-hero');
+      glitching = false;
+    }, 600);
+  }
+
+  function scheduleNext() {
+    const delay = 6000 + Math.random() * 5000; // every 6–11s
+    setTimeout(function() { runGlitch(); scheduleNext(); }, delay);
+  }
+
+  setTimeout(function() { runGlitch(); scheduleNext(); }, 2500);
+})();
+</script>
+
+<!-- ── SCROLL REVEAL ──────────────────────────────────────── -->
+<style>
+.sr {
+  opacity: 0;
+  transform: translateY(22px);
+  transition: opacity 0.55s ease, transform 0.55s ease;
+}
+.sr.visible {
+  opacity: 1;
+  transform: none;
+}
+</style>
+<script>
+(function() {
+  // Only run after full page load
+  window.addEventListener('load', function() {
+    // Targets: section headings + release/tour/streaming items below hero
+    var targets = document.querySelectorAll(
+      '.releases-section .section-heading, ' +
+      '.tracklist-section .section-heading, ' +
+      '.tour-section .section-heading, ' +
+      '.about-section .section-heading, ' +
+      '.tour-block, ' +
+      '.about-section .quote-text, ' +
+      '.about-section .body-m, ' +
+      '.streaming-section .section-heading, ' +
+      '.streaming-button'
+    );
+
+    if (!targets.length) return;
+
+    // Only hide elements that are genuinely below the fold right now
+    var fold = window.innerHeight;
+    var toReveal = [];
+    targets.forEach(function(el) {
+      var rect = el.getBoundingClientRect();
+      if (rect.top > fold + 60) {
+        el.classList.add('sr');
+        toReveal.push(el);
+      }
+    });
+
+    if (!toReveal.length) return;
+
+    // FAILSAFE: show everything after 2s no matter what
+    var failsafe = setTimeout(function() {
+      toReveal.forEach(function(el) { el.classList.add('visible'); });
+    }, 2000);
+
+    var observer = new IntersectionObserver(function(entries) {
+      entries.forEach(function(entry) {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          observer.unobserve(entry.target);
+        }
+      });
+      // If all revealed, clear failsafe
+      if (toReveal.every(function(el) { return el.classList.contains('visible'); })) {
+        clearTimeout(failsafe);
+      }
+    }, { threshold: 0, rootMargin: '0px 0px -40px 0px' });
+
+    toReveal.forEach(function(el) { observer.observe(el); });
+  });
+})();
+</script>
+<!-- ── CONTENT PROTECTION ─────────────────────────────────── -->
+<div id="az-protect-toast" style="
+  position:fixed;bottom:32px;left:50%;transform:translateX(-50%) translateY(20px);
+  background:rgba(0,0,0,0.85);color:#fff;font-size:12px;letter-spacing:0.12em;
+  text-transform:uppercase;padding:10px 20px;border:1px solid rgba(255,255,255,0.15);
+  border-radius:2px;opacity:0;transition:opacity 0.3s,transform 0.3s;
+  pointer-events:none;z-index:99999;white-space:nowrap;
+">I SAW THAT 👀</div>
+<script>
+(function(){
+  var toast = document.getElementById('az-protect-toast');
+  var toastTimer;
+  function showToast(){
+    clearTimeout(toastTimer);
+    toast.style.opacity='1';
+    toast.style.transform='translateX(-50%) translateY(0)';
+    toastTimer = setTimeout(function(){
+      toast.style.opacity='0';
+      toast.style.transform='translateX(-50%) translateY(20px)';
+    }, 2200);
+  }
+
+  // Block right-click
+  document.addEventListener('contextmenu', function(e){
+    e.preventDefault();
+    showToast();
+  });
+
+  // Block drag on images and audio
+  document.addEventListener('dragstart', function(e){
+    if(e.target.tagName==='IMG'||e.target.tagName==='AUDIO'||e.target.tagName==='VIDEO'){
+      e.preventDefault();
+    }
+  });
+
+  // Block Ctrl+S, Ctrl+U, Ctrl+Shift+I, Ctrl+Shift+J
+  document.addEventListener('keydown', function(e){
+    var blocked = (e.ctrlKey||e.metaKey) && (
+      e.key==='s'||e.key==='S'||
+      e.key==='u'||e.key==='U'||
+      (e.shiftKey && (e.key==='i'||e.key==='I'||e.key==='j'||e.key==='J'))
+    );
+    if(blocked){ e.preventDefault(); showToast(); }
+  });
 })();
 </script>
 </body>
