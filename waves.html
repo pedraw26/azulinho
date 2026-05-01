@@ -1085,7 +1085,7 @@ transform: translate3d(-50%, 0, 0);
   });
 
   // Autoplay track 1 — fires on first user interaction (browser policy)
-  const firstRow = rows[0];
+  const firstRow = rows.find(r => r.dataset.trackId === 'track-01') || rows[0];
   if (firstRow) {
     audio.src = firstRow.dataset.trackUrl;
     setNowPlaying(firstRow, "Loading…", "Play");
