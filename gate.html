@@ -30,6 +30,16 @@ html, body {
   z-index: 0;
 }
 
+.logo {
+  position: relative;
+  z-index: 1;
+  width: clamp(60px, 12vw, 120px);
+  height: auto;
+  opacity: 0.95;
+  filter: invert(1);
+  user-select: none;
+}
+
 .sig {
   position: relative;
   z-index: 1;
@@ -104,6 +114,7 @@ button:hover { color: #fff; }
 <body>
 
 <div class="bg"></div>
+<img src="assets/logo_black.svg" class="logo" alt="Azulinho"/>
 <img src="assets/signuture.svg" class="sig" alt="A storm is coming"/>
 
 <form class="gate" id="gate" onsubmit="return false;">
