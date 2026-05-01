@@ -170,13 +170,13 @@ right: 40px;
 }
 
 .noise-default {
-animation: grain-shift 0.22s steps(2) infinite;
+animation: grain-shift 1.04s steps(1) infinite;
 will-change: transform;
 }
 
 .noise-flipped {
-animation: grain-flash 0.34s steps(2) infinite;
-will-change: opacity, transform;
+animation: grain-flash 1.04s steps(1) infinite 0.52s;
+will-change: transform;
 }
 
 .home-hero-section .latest-release-cover .background-image {
@@ -228,51 +228,35 @@ flex-basis: min(78vw, 280px);
 }
 
 @keyframes grain-shift {
-0% {
-transform: translate3d(0, 0, 0) scale(1.08);
-}
-
-20% {
-transform: translate3d(-1.5%, 1%, 0) scale(1.1);
-}
-
-40% {
-transform: translate3d(1%, -1.5%, 0) scale(1.07);
-}
-
-60% {
-transform: translate3d(-1%, -0.5%, 0) scale(1.09);
-}
-
-80% {
-transform: translate3d(1.5%, 1%, 0) scale(1.08);
-}
-
-100% {
-transform: translate3d(0, 0, 0) scale(1.08);
-}
+  0%   { transform: translate3d(  0px,   0px, 0) scale(1.08); }
+  8%   { transform: translate3d(-83px,  47px, 0) scale(1.08); }
+  16%  { transform: translate3d( 51px, -71px, 0) scale(1.08); }
+  24%  { transform: translate3d(-37px,  93px, 0) scale(1.08); }
+  32%  { transform: translate3d( 76px,  28px, 0) scale(1.08); }
+  40%  { transform: translate3d(-61px, -55px, 0) scale(1.08); }
+  48%  { transform: translate3d( 29px,  81px, 0) scale(1.08); }
+  56%  { transform: translate3d(-94px,  13px, 0) scale(1.08); }
+  64%  { transform: translate3d( 44px, -88px, 0) scale(1.08); }
+  72%  { transform: translate3d(-19px,  62px, 0) scale(1.08); }
+  80%  { transform: translate3d( 88px, -34px, 0) scale(1.08); }
+  88%  { transform: translate3d(-52px,  79px, 0) scale(1.08); }
+  100% { transform: translate3d(  0px,   0px, 0) scale(1.08); }
 }
 
 @keyframes grain-flash {
-0%, 100% {
-opacity: 0.03;
-transform: rotateX(0) rotateY(-180deg) rotateZ(0) translate3d(0, 0, 0) scale(1.08);
-}
-
-25% {
-opacity: 0.12;
-transform: rotateX(0) rotateY(-180deg) rotateZ(0) translate3d(1%, -1%, 0) scale(1.1);
-}
-
-50% {
-opacity: 0.06;
-transform: rotateX(0) rotateY(-180deg) rotateZ(0) translate3d(-1.25%, 1.25%, 0) scale(1.07);
-}
-
-75% {
-opacity: 0.15;
-transform: rotateX(0) rotateY(-180deg) rotateZ(0) translate3d(0.75%, 1%, 0) scale(1.09);
-}
+  0%   { transform: translate3d( 33px,  67px, 0) scale(1.08); }
+  8%   { transform: translate3d(-71px, -22px, 0) scale(1.08); }
+  16%  { transform: translate3d( 58px,  84px, 0) scale(1.08); }
+  24%  { transform: translate3d(-44px,  11px, 0) scale(1.08); }
+  32%  { transform: translate3d( 91px, -63px, 0) scale(1.08); }
+  40%  { transform: translate3d(-27px,  55px, 0) scale(1.08); }
+  48%  { transform: translate3d( 69px, -41px, 0) scale(1.08); }
+  56%  { transform: translate3d(-86px,  78px, 0) scale(1.08); }
+  64%  { transform: translate3d( 14px, -59px, 0) scale(1.08); }
+  72%  { transform: translate3d(-53px,  36px, 0) scale(1.08); }
+  80%  { transform: translate3d( 77px,  22px, 0) scale(1.08); }
+  88%  { transform: translate3d(-38px, -74px, 0) scale(1.08); }
+  100% { transform: translate3d( 33px,  67px, 0) scale(1.08); }
 }
 
 @keyframes releases-marquee {
