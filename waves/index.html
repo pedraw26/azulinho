@@ -1401,6 +1401,13 @@ transform: translate3d(-50%, 0, 0);
 
   if (!bgs.length || !pill || !titleEl) return;
 
+  // Set initial state immediately
+  const first = slides[0];
+  bgs.forEach(function(bg, i) { bg.classList.toggle('hz-active', i === first.bgIndex); });
+  pill.textContent = first.pill;
+  titleEl.textContent = first.title;
+  if (sig) sig.style.opacity = first.showSig ? '0.85' : '0';
+
   let current = 0;
 
   function goTo(next) {
@@ -1432,10 +1439,12 @@ transform: translate3d(-50%, 0, 0);
     }, 550);
   }
 
-  // Auto-advance every 6 seconds
-  setInterval(function() {
-    goTo((current + 1) % slides.length);
-  }, 6000);
+  // Only auto-advance if there's more than one slide
+  if (slides.length > 1) {
+    setInterval(function() {
+      goTo((current + 1) % slides.length);
+    }, 6000);
+  }
 })();
 </script>
 </body>
