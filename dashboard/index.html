@@ -932,33 +932,28 @@ tbody td:first-child { color: var(--text); }
         <div class="funnel-steps">
           <div class="funnel-step">
             <div class="funnel-label">Visited</div>
-            <div class="funnel-bar-wrap"><div class="funnel-bar" style="width:100%"></div></div>
-            <div class="funnel-pct">2,847</div>
+            <div class="funnel-bar-wrap"><div class="funnel-bar" id="funnel-bar-visited" style="width:0%"></div></div>
+            <div class="funnel-pct" id="funnel-visited">—</div>
           </div>
           <div class="funnel-step">
             <div class="funnel-label">Hit Play</div>
-            <div class="funnel-bar-wrap"><div class="funnel-bar" style="width:78%"></div></div>
-            <div class="funnel-pct">78%</div>
+            <div class="funnel-bar-wrap"><div class="funnel-bar" id="funnel-bar-play" style="width:0%"></div></div>
+            <div class="funnel-pct" id="funnel-play">—</div>
           </div>
           <div class="funnel-step">
-            <div class="funnel-label">25% done</div>
-            <div class="funnel-bar-wrap"><div class="funnel-bar green" style="width:62%"></div></div>
-            <div class="funnel-pct">62%</div>
+            <div class="funnel-label">Spotify</div>
+            <div class="funnel-bar-wrap"><div class="funnel-bar green" id="funnel-bar-spotify" style="width:0%"></div></div>
+            <div class="funnel-pct" id="funnel-spotify">—</div>
           </div>
           <div class="funnel-step">
-            <div class="funnel-label">50% done</div>
-            <div class="funnel-bar-wrap"><div class="funnel-bar green" style="width:44%"></div></div>
-            <div class="funnel-pct">44%</div>
+            <div class="funnel-label">Apple Music</div>
+            <div class="funnel-bar-wrap"><div class="funnel-bar green" id="funnel-bar-apple" style="width:0%"></div></div>
+            <div class="funnel-pct" id="funnel-apple">—</div>
           </div>
           <div class="funnel-step">
-            <div class="funnel-label">75% done</div>
-            <div class="funnel-bar-wrap"><div class="funnel-bar yellow" style="width:28%"></div></div>
-            <div class="funnel-pct">28%</div>
-          </div>
-          <div class="funnel-step">
-            <div class="funnel-label">Completed</div>
-            <div class="funnel-bar-wrap"><div class="funnel-bar red" style="width:17%"></div></div>
-            <div class="funnel-pct">17%</div>
+            <div class="funnel-label">YouTube</div>
+            <div class="funnel-bar-wrap"><div class="funnel-bar yellow" id="funnel-bar-youtube" style="width:0%"></div></div>
+            <div class="funnel-pct" id="funnel-youtube">—</div>
           </div>
         </div>
       </div>
@@ -1019,32 +1014,8 @@ tbody td:first-child { color: var(--text); }
           </div>
           <div class="device-item">
             <div class="device-label">Tablet</div>
-            <div class="device-bar-wrap"><div class="device-bar yellow" style="width:6%"></div></div>
-            <div class="device-pct">6%</div>
-          </div>
-        </div>
-        <div style="height:1px;background:var(--border);margin:20px 0;"></div>
-        <div class="section-label" style="margin-bottom:16px;">OS</div>
-        <div class="device-list">
-          <div class="device-item">
-            <div class="device-label">iOS</div>
-            <div class="device-bar-wrap"><div class="device-bar" style="width:58%"></div></div>
-            <div class="device-pct">58%</div>
-          </div>
-          <div class="device-item">
-            <div class="device-label">Android</div>
-            <div class="device-bar-wrap"><div class="device-bar green" style="width:28%"></div></div>
-            <div class="device-pct">28%</div>
-          </div>
-          <div class="device-item">
-            <div class="device-label">macOS</div>
-            <div class="device-bar-wrap"><div class="device-bar yellow" style="width:10%"></div></div>
-            <div class="device-pct">10%</div>
-          </div>
-          <div class="device-item">
-            <div class="device-label">Windows</div>
-            <div class="device-bar-wrap"><div class="device-bar" style="width:4%;background:var(--muted)"></div></div>
-            <div class="device-pct">4%</div>
+            <div class="device-bar-wrap"><div class="device-bar yellow" id="dev-tablet-bar" style="width:0%"></div></div>
+            <div class="device-pct" id="dev-tablet-pct">—</div>
           </div>
         </div>
       </div>
@@ -1067,62 +1038,7 @@ tbody td:first-child { color: var(--text); }
               </tr>
             </thead>
             <tbody id="visitors-tbody">
-              <tr>
-                <td>London, UK</td>
-                <td style="font-variant-numeric:tabular-nums;color:var(--muted);">82.x.x.x</td>
-                <td>Instagram</td>
-                <td><span class="event-pill buy">Buy Click</span></td>
-                <td>2 min ago</td>
-              </tr>
-              <tr>
-                <td>Lagos, NG</td>
-                <td style="font-variant-numeric:tabular-nums;color:var(--muted);">105.x.x.x</td>
-                <td>Direct</td>
-                <td><span class="event-pill play">▶ Play</span></td>
-                <td>4 min ago</td>
-              </tr>
-              <tr>
-                <td>New York, US</td>
-                <td style="font-variant-numeric:tabular-nums;color:var(--muted);">74.x.x.x</td>
-                <td>Instagram</td>
-                <td><span class="event-pill visit">Visit</span></td>
-                <td>6 min ago</td>
-              </tr>
-              <tr>
-                <td>Paris, FR</td>
-                <td style="font-variant-numeric:tabular-nums;color:var(--muted);">90.x.x.x</td>
-                <td>Direct</td>
-                <td><span class="event-pill play">▶ Play</span></td>
-                <td>9 min ago</td>
-              </tr>
-              <tr>
-                <td>Accra, GH</td>
-                <td style="font-variant-numeric:tabular-nums;color:var(--muted);">196.x.x.x</td>
-                <td>Twitter</td>
-                <td><span class="event-pill buy">Buy Click</span></td>
-                <td>12 min ago</td>
-              </tr>
-              <tr>
-                <td>Berlin, DE</td>
-                <td style="font-variant-numeric:tabular-nums;color:var(--muted);">84.x.x.x</td>
-                <td>Direct</td>
-                <td><span class="event-pill play">▶ Play</span></td>
-                <td>15 min ago</td>
-              </tr>
-              <tr>
-                <td>São Paulo, BR</td>
-                <td style="font-variant-numeric:tabular-nums;color:var(--muted);">177.x.x.x</td>
-                <td>Google</td>
-                <td><span class="event-pill visit">Visit</span></td>
-                <td>18 min ago</td>
-              </tr>
-              <tr>
-                <td>Tokyo, JP</td>
-                <td style="font-variant-numeric:tabular-nums;color:var(--muted);">202.x.x.x</td>
-                <td>Direct</td>
-                <td><span class="event-pill buy">Buy Click</span></td>
-                <td>22 min ago</td>
-              </tr>
+              <tr><td colspan="5" style="text-align:center;padding:20px;color:var(--muted);font-size:11px;">Loading…</td></tr>
             </tbody>
           </table>
         </div>
@@ -1303,8 +1219,28 @@ async function loadDashboard() {
   const dTotal = Math.max(1, visits.length);
   setStat('dev-mobile-pct', Math.round(devices.mobile/dTotal*100) + '%');
   setStat('dev-desktop-pct', Math.round(devices.desktop/dTotal*100) + '%');
+  setStat('dev-tablet-pct', Math.round(devices.tablet/dTotal*100) + '%');
   document.getElementById('dev-mobile-bar').style.width = (devices.mobile/dTotal*100) + '%';
   document.getElementById('dev-desktop-bar').style.width = (devices.desktop/dTotal*100) + '%';
+  document.getElementById('dev-tablet-bar').style.width = (devices.tablet/dTotal*100) + '%';
+
+  // ── Song funnel (streaming clicks) ──
+  const totalVisits = visits.length || 1;
+  const totalPlays = plays.length;
+  const spotify = plays.filter(e => e.meta === 'Spotify').length;
+  const apple = plays.filter(e => e.meta === 'Apple Music').length;
+  const youtube = plays.filter(e => e.meta === 'YouTube').length;
+  setStat('funnel-visited', visits.length.toLocaleString());
+  setStat('funnel-play', totalPlays);
+  setStat('funnel-spotify', spotify);
+  setStat('funnel-apple', apple);
+  setStat('funnel-youtube', youtube);
+  document.getElementById('funnel-bar-visited').style.width = '100%';
+  document.getElementById('funnel-bar-play').style.width = (totalPlays/totalVisits*100) + '%';
+  const maxStream = Math.max(1, spotify, apple, youtube);
+  document.getElementById('funnel-bar-spotify').style.width = (spotify/maxStream*100) + '%';
+  document.getElementById('funnel-bar-apple').style.width = (apple/maxStream*100) + '%';
+  document.getElementById('funnel-bar-youtube').style.width = (youtube/maxStream*100) + '%';
 
   // ── Live feed ──
   const feedEl = document.getElementById('live-feed');
