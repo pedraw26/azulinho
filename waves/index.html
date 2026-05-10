@@ -232,6 +232,11 @@ animation-duration: 0.24s;
 mix-blend-mode: screen;
 }
 
+/* Full-page background noise: screen blend so grain doesn't gray-wash the page */
+.noise[data-wf--noise--variant="background"] {
+mix-blend-mode: screen;
+}
+
 @media screen and (max-width: 991px) {
 .home-hero-section .latest-release-cover .background-image {
 object-position: center 30%;
