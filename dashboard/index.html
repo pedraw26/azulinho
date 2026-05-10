@@ -667,8 +667,107 @@ tbody td:first-child { color: var(--text); }
 ::-webkit-scrollbar-track { background: transparent; }
 ::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.1); }
 </style>
+<style>
+#gate-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  background: var(--bg);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+}
+#gate-overlay .brand {
+  font-family: var(--font-display);
+  font-size: 28px;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #fff;
+  margin-bottom: 8px;
+}
+#gate-overlay .brand span { color: var(--blue); }
+#gate-overlay input[type="password"] {
+  background: transparent;
+  border: none;
+  border-bottom: 1px solid rgba(255,255,255,0.2);
+  color: #fff;
+  font-size: 13px;
+  letter-spacing: 0.2em;
+  text-align: center;
+  width: 200px;
+  padding: 10px 0;
+  outline: none;
+  caret-color: rgba(255,255,255,0.5);
+  transition: border-color 0.2s;
+  font-family: var(--font-body);
+}
+#gate-overlay input[type="password"]::placeholder { color: rgba(255,255,255,0.2); }
+#gate-overlay input[type="password"]:focus { border-bottom-color: rgba(255,255,255,0.5); }
+#gate-overlay .gate-btn {
+  background: transparent;
+  border: none;
+  color: rgba(255,255,255,0.4);
+  font-family: var(--font-display);
+  font-size: 18px;
+  font-weight: 800;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: color 0.2s;
+  padding: 0;
+}
+#gate-overlay .gate-btn:hover { color: #fff; }
+#gate-overlay .gate-error {
+  font-size: 10px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: rgba(255,80,80,0);
+  transition: color 0.3s;
+  height: 14px;
+}
+#gate-overlay .gate-error.show { color: rgba(255,80,80,0.7); }
+</style>
 </head>
 <body>
+
+<!-- GATE -->
+<div id="gate-overlay">
+  <div class="brand">AZULINHO<span>·</span>OS</div>
+  <input type="password" id="gate-input" placeholder="password" autofocus/>
+  <button class="gate-btn" id="gate-btn">Enter</button>
+  <div class="gate-error" id="gate-error">Incorrect password</div>
+</div>
+
+<script>
+(function() {
+  const PWD = 'azulinhorulesdaworld';
+  const overlay = document.getElementById('gate-overlay');
+  const input = document.getElementById('gate-input');
+  const btn = document.getElementById('gate-btn');
+  const err = document.getElementById('gate-error');
+
+  if (sessionStorage.getItem('az_dash_auth') === '1') {
+    overlay.style.display = 'none';
+  }
+
+  function attempt() {
+    if (input.value === PWD) {
+      sessionStorage.setItem('az_dash_auth', '1');
+      overlay.style.display = 'none';
+    } else {
+      err.classList.add('show');
+      input.value = '';
+      setTimeout(() => err.classList.remove('show'), 2000);
+    }
+  }
+
+  btn.addEventListener('click', attempt);
+  input.addEventListener('keydown', e => { if (e.key === 'Enter') attempt(); });
+})();
+</script>
 
 <div class="shell">
 
