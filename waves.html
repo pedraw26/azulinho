@@ -148,6 +148,29 @@ transform: translateX(-50%);
 overflow: visible;
 }
 
+/* ── Merch marquee — fully isolated, Webflow JS can't touch it ── */
+.merch-marquee-wrap {
+overflow: hidden;
+width: 100%;
+margin-bottom: 0;
+}
+.merch-marquee-track {
+display: flex;
+width: max-content;
+animation: merch-scroll 28s linear infinite;
+will-change: transform;
+}
+@keyframes merch-scroll {
+0%   { transform: translateX(0); }
+100% { transform: translateX(-50%); }
+}
+.merch-marquee-item {
+flex: 0 0 clamp(240px, 28vw, 360px);
+margin-right: 32px;
+position: relative;
+overflow: hidden;
+}
+
 .releases-list.is-marquee {
 display: flex;
 flex-wrap: nowrap;
@@ -636,40 +659,40 @@ transform: translate3d(-50%, 0, 0);
 </div>
 </div>
 </div>
-<div class="releases-list-wrapper w-dyn-list" style="margin-bottom:0;">
-<div role="list" class="releases-list is-marquee w-dyn-items">
-<div role="listitem" class="release-item w-dyn-item" style="position:relative;overflow:hidden;">
+<div class="merch-marquee-wrap">
+<div class="merch-marquee-track">
+<div class="merch-marquee-item">
 <img src="https://res.cloudinary.com/dzgqzeebg/image/upload/f_auto,q_auto,c_pad,ar_1:1,b_rgb:000000/azulinho/merch/blackstar-front-1.jpg" loading="lazy" alt="AZ Black Star Front" style="width:100%;height:auto;display:block;"/>
-<img src="assets/cdn.prod.website-files.com/67ee44f1ff9354a5d5c4df6c/67ee85fb2178ca84a0b94f64_Texture.avif" alt="" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:.5;mix-blend-mode:screen;pointer-events:none;z-index:1;"/>
+<img src="assets/cdn.prod.website-files.com/67ee44f1ff9354a5d5c4df6c/67ee85fb2178ca84a0b94f64_Texture.avif" alt="" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:.5;mix-blend-mode:screen;pointer-events:none;"/>
 </div>
-<div role="listitem" class="release-item w-dyn-item" style="position:relative;overflow:hidden;">
+<div class="merch-marquee-item">
 <img src="https://res.cloudinary.com/dzgqzeebg/image/upload/f_auto,q_auto,c_pad,ar_1:1,b_rgb:000000/azulinho/merch/blackstar-front-2.jpg" loading="lazy" alt="AZ Black Star" style="width:100%;height:auto;display:block;"/>
-<img src="assets/cdn.prod.website-files.com/67ee44f1ff9354a5d5c4df6c/67ee85fb2178ca84a0b94f64_Texture.avif" alt="" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:.5;mix-blend-mode:screen;pointer-events:none;z-index:1;"/>
+<img src="assets/cdn.prod.website-files.com/67ee44f1ff9354a5d5c4df6c/67ee85fb2178ca84a0b94f64_Texture.avif" alt="" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:.5;mix-blend-mode:screen;pointer-events:none;"/>
 </div>
-<div role="listitem" class="release-item w-dyn-item" style="position:relative;overflow:hidden;">
+<div class="merch-marquee-item">
 <img src="https://res.cloudinary.com/dzgqzeebg/image/upload/f_auto,q_auto,c_pad,ar_1:1,b_rgb:000000/azulinho/merch/blackstar-back.jpg" loading="lazy" alt="AZ Black Star Back" style="width:100%;height:auto;display:block;"/>
-<img src="assets/cdn.prod.website-files.com/67ee44f1ff9354a5d5c4df6c/67ee85fb2178ca84a0b94f64_Texture.avif" alt="" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:.5;mix-blend-mode:screen;pointer-events:none;z-index:1;"/>
+<img src="assets/cdn.prod.website-files.com/67ee44f1ff9354a5d5c4df6c/67ee85fb2178ca84a0b94f64_Texture.avif" alt="" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:.5;mix-blend-mode:screen;pointer-events:none;"/>
 </div>
-<div role="listitem" class="release-item w-dyn-item" style="position:relative;overflow:hidden;">
+<div class="merch-marquee-item">
 <img src="https://res.cloudinary.com/dzgqzeebg/image/upload/f_auto,q_auto,c_pad,ar_1:1,b_rgb:000000/azulinho/merch/blackstar-left.jpg" loading="lazy" alt="AZ Black Star Side" style="width:100%;height:auto;display:block;"/>
-<img src="assets/cdn.prod.website-files.com/67ee44f1ff9354a5d5c4df6c/67ee85fb2178ca84a0b94f64_Texture.avif" alt="" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:.5;mix-blend-mode:screen;pointer-events:none;z-index:1;"/>
+<img src="assets/cdn.prod.website-files.com/67ee44f1ff9354a5d5c4df6c/67ee85fb2178ca84a0b94f64_Texture.avif" alt="" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:.5;mix-blend-mode:screen;pointer-events:none;"/>
 </div>
 <!-- duplicate set for seamless loop -->
-<div role="listitem" class="release-item w-dyn-item" style="position:relative;overflow:hidden;">
+<div class="merch-marquee-item">
 <img src="https://res.cloudinary.com/dzgqzeebg/image/upload/f_auto,q_auto,c_pad,ar_1:1,b_rgb:000000/azulinho/merch/blackstar-front-1.jpg" loading="lazy" alt="AZ Black Star Front" style="width:100%;height:auto;display:block;"/>
-<img src="assets/cdn.prod.website-files.com/67ee44f1ff9354a5d5c4df6c/67ee85fb2178ca84a0b94f64_Texture.avif" alt="" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:.5;mix-blend-mode:screen;pointer-events:none;z-index:1;"/>
+<img src="assets/cdn.prod.website-files.com/67ee44f1ff9354a5d5c4df6c/67ee85fb2178ca84a0b94f64_Texture.avif" alt="" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:.5;mix-blend-mode:screen;pointer-events:none;"/>
 </div>
-<div role="listitem" class="release-item w-dyn-item" style="position:relative;overflow:hidden;">
+<div class="merch-marquee-item">
 <img src="https://res.cloudinary.com/dzgqzeebg/image/upload/f_auto,q_auto,c_pad,ar_1:1,b_rgb:000000/azulinho/merch/blackstar-front-2.jpg" loading="lazy" alt="AZ Black Star" style="width:100%;height:auto;display:block;"/>
-<img src="assets/cdn.prod.website-files.com/67ee44f1ff9354a5d5c4df6c/67ee85fb2178ca84a0b94f64_Texture.avif" alt="" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:.5;mix-blend-mode:screen;pointer-events:none;z-index:1;"/>
+<img src="assets/cdn.prod.website-files.com/67ee44f1ff9354a5d5c4df6c/67ee85fb2178ca84a0b94f64_Texture.avif" alt="" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:.5;mix-blend-mode:screen;pointer-events:none;"/>
 </div>
-<div role="listitem" class="release-item w-dyn-item" style="position:relative;overflow:hidden;">
+<div class="merch-marquee-item">
 <img src="https://res.cloudinary.com/dzgqzeebg/image/upload/f_auto,q_auto,c_pad,ar_1:1,b_rgb:000000/azulinho/merch/blackstar-back.jpg" loading="lazy" alt="AZ Black Star Back" style="width:100%;height:auto;display:block;"/>
-<img src="assets/cdn.prod.website-files.com/67ee44f1ff9354a5d5c4df6c/67ee85fb2178ca84a0b94f64_Texture.avif" alt="" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:.5;mix-blend-mode:screen;pointer-events:none;z-index:1;"/>
+<img src="assets/cdn.prod.website-files.com/67ee44f1ff9354a5d5c4df6c/67ee85fb2178ca84a0b94f64_Texture.avif" alt="" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:.5;mix-blend-mode:screen;pointer-events:none;"/>
 </div>
-<div role="listitem" class="release-item w-dyn-item" style="position:relative;overflow:hidden;">
+<div class="merch-marquee-item">
 <img src="https://res.cloudinary.com/dzgqzeebg/image/upload/f_auto,q_auto,c_pad,ar_1:1,b_rgb:000000/azulinho/merch/blackstar-left.jpg" loading="lazy" alt="AZ Black Star Side" style="width:100%;height:auto;display:block;"/>
-<img src="assets/cdn.prod.website-files.com/67ee44f1ff9354a5d5c4df6c/67ee85fb2178ca84a0b94f64_Texture.avif" alt="" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:.5;mix-blend-mode:screen;pointer-events:none;z-index:1;"/>
+<img src="assets/cdn.prod.website-files.com/67ee44f1ff9354a5d5c4df6c/67ee85fb2178ca84a0b94f64_Texture.avif" alt="" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:.5;mix-blend-mode:screen;pointer-events:none;"/>
 </div>
 </div>
 </div>
