@@ -357,8 +357,9 @@ transform: translate3d(-50%, 0, 0);
   opacity: 1;
 }
 .latest-release-cover .dark-overlay {
-  z-index: 1;
-  position: relative;
+  z-index: 2;
+  position: absolute;
+  inset: 0;
 }
 /* Push hero text toward the bottom */
 .latest-release-content {
@@ -490,7 +491,7 @@ transform: translate3d(-50%, 0, 0);
 </div>
 </div>
 <div class="latest-release-cover">
-<div class="dark-overlay w-condition-invisible">
+<div class="dark-overlay">
 </div>
 <img src="https://res.cloudinary.com/dzgqzeebg/image/upload/c_crop,h_1075,w_3168,y_269/azulinho/alien-cover.jpg" alt="ALIEN" class="hero-slide-bg" id="hero-bg-0"/>
 <img src="/assets/hero_long_format.jpg" alt="WAVES" class="hero-slide-bg hz-active" id="hero-bg-1"/>
