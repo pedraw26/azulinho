@@ -85,6 +85,15 @@ width: 32px;
 height: 32px;
 }
 
+/* Apple Music — greyed out / disabled across the page */
+a[href*="music.apple.com"],
+.streaming-button[href*="music.apple.com"] {
+  opacity: 0.3;
+  pointer-events: none;
+  cursor: default;
+  filter: grayscale(1);
+}
+
 /* Hide icons in the LISTEN ON bar — text only */
 .streaming-button .streaming-button-icon {
 display: none !important;
