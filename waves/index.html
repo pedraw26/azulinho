@@ -1524,5 +1524,79 @@ transform: translate3d(-50%, 0, 0);
   }
 })();
 </script>
+
+<!-- ── Azulinho Analytics ── -->
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+<script>
+(function() {
+  const SUPA_URL = 'https://symywayiveicjgmswari.supabase.co';
+  const SUPA_KEY = 'sb_publishable_m6fm8X8EJtLn1U27sxS6Xw_lnhougka';
+  const db = supabase.createClient(SUPA_URL, SUPA_KEY);
+
+  const PRODUCTS = {
+    'fZu8wQ3iV14h4O6evX9MY00': 'Trapsoul Tee',
+    '8x2bJ2g5HdR33K2drT9MY01': 'Cap',
+    'aFafZibPr28l5Sa2Nf9MY02': '777 Tee'
+  };
+
+  let visitId = sessionStorage.getItem('az_visit_id');
+
+  async function trackVisit() {
+    if (visitId) return;
+    try {
+      const geo = await fetch('https://ipapi.co/json/').then(r => r.json());
+      const device = /Mobi|Android/i.test(navigator.userAgent) ? 'mobile' : 'desktop';
+      const { data } = await db.from('visits').insert({
+        ip: geo.ip,
+        country: geo.country_name,
+        country_code: geo.country_code,
+        city: geo.city,
+        lat: geo.latitude,
+        lng: geo.longitude,
+        referrer: document.referrer || 'direct',
+        user_agent: navigator.userAgent,
+        device
+      }).select('id').single();
+      if (data) {
+        visitId = data.id;
+        sessionStorage.setItem('az_visit_id', visitId);
+      }
+    } catch(e) {}
+  }
+
+  async function trackEvent(type, meta) {
+    try {
+      await db.from('events').insert({ visit_id: visitId || null, type, meta });
+    } catch(e) {}
+  }
+
+  // Track visit on load
+  trackVisit();
+
+  // Track streaming button clicks (Spotify, Apple Music, YouTube)
+  document.querySelectorAll('.streaming-button, .streaming-icon-button').forEach(btn => {
+    btn.addEventListener('click', function() {
+      const href = this.href || '';
+      let platform = 'streaming';
+      if (href.includes('spotify')) platform = 'Spotify';
+      else if (href.includes('apple')) platform = 'Apple Music';
+      else if (href.includes('youtube')) platform = 'YouTube';
+      trackEvent('play', platform);
+    });
+  });
+
+  // Track Buy Now clicks
+  document.querySelectorAll('a[href*="buy.stripe.com"]').forEach(btn => {
+    btn.addEventListener('click', function() {
+      const href = this.href || '';
+      let product = 'Unknown';
+      Object.entries(PRODUCTS).forEach(([id, name]) => {
+        if (href.includes(id)) product = name;
+      });
+      trackEvent('buy_click', product);
+    });
+  });
+})();
+</script>
 </body>
 </html>

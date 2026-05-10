@@ -1,0 +1,1283 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>Azulinho · Dashboard</title>
+<link href="/assets/favicon-star.svg" rel="icon" type="image/svg+xml"/>
+<link href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@800&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+<meta name="robots" content="noindex"/>
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --bg: #080808;
+  --surface: #111111;
+  --surface2: #171717;
+  --border: rgba(255,255,255,0.07);
+  --border-blue: rgba(59,130,246,0.3);
+  --text: #e8e8e8;
+  --muted: rgba(255,255,255,0.35);
+  --blue: #60a5fa;
+  --blue-dim: rgba(59,130,246,0.12);
+  --green: #4ade80;
+  --green-dim: rgba(74,222,128,0.1);
+  --red: #f87171;
+  --yellow: #fbbf24;
+  --font-display: 'Big Shoulders Display', sans-serif;
+  --font-body: 'Inter', sans-serif;
+}
+
+html, body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font-body);
+  font-size: 13px;
+  line-height: 1.5;
+  min-height: 100vh;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ── Layout ── */
+.shell {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+/* ── Top Bar ── */
+.topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 28px;
+  height: 56px;
+  border-bottom: 1px solid var(--border);
+  background: var(--bg);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  flex-shrink: 0;
+}
+
+/* ── Sub Nav ── */
+.subnav {
+  display: flex;
+  align-items: center;
+  gap: 0;
+  padding: 0 28px;
+  border-bottom: 1px solid var(--border);
+  background: var(--bg);
+  position: sticky;
+  top: 56px;
+  z-index: 99;
+  overflow-x: auto;
+  flex-shrink: 0;
+}
+
+.subnav::-webkit-scrollbar { display: none; }
+
+.subnav-item {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  padding: 0 18px;
+  height: 40px;
+  font-size: 11px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--muted);
+  cursor: pointer;
+  border-bottom: 2px solid transparent;
+  transition: all 0.15s;
+  text-decoration: none;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.subnav-item:hover { color: var(--text); }
+.subnav-item.active { color: var(--blue); border-bottom-color: var(--blue); }
+.subnav-icon { width: 12px; height: 12px; opacity: 0.7; }
+
+.topbar-brand {
+  font-family: var(--font-display);
+  font-size: 22px;
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: #fff;
+}
+
+.topbar-brand span {
+  color: var(--blue);
+}
+
+.topbar-right {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.live-dot {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 11px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.live-dot::before {
+  content: '';
+  width: 6px;
+  height: 6px;
+  background: var(--green);
+  border-radius: 50%;
+  animation: pulse 2s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.3; }
+}
+
+#clock {
+  font-size: 11px;
+  letter-spacing: 0.1em;
+  color: var(--muted);
+  font-variant-numeric: tabular-nums;
+}
+
+/* ── Main ── */
+
+/* ── Main ── */
+.main {
+  padding: 28px;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  max-width: 1600px;
+  width: 100%;
+  margin: 0 auto;
+}
+
+/* ── Section headers ── */
+.section-label {
+  font-size: 9px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 12px;
+}
+
+/* ── Stat Cards ── */
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 0;
+  border-top: 1px solid var(--border);
+  border-left: 1px solid var(--border);
+}
+
+.stat-card {
+  padding: 20px 22px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  border-right: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+}
+
+.stat-label {
+  font-size: 9px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.stat-value {
+  font-family: var(--font-display);
+  font-size: 32px;
+  font-weight: 800;
+  letter-spacing: 0.02em;
+  color: #fff;
+  line-height: 1;
+}
+
+.stat-delta {
+  font-size: 10px;
+  color: var(--green);
+  display: flex;
+  align-items: center;
+  gap: 3px;
+}
+
+.stat-delta.down { color: var(--red); }
+
+.stat-card.highlight .stat-value { color: var(--blue); }
+
+/* ── Map + Feed row ── */
+.map-feed-row {
+  display: grid;
+  grid-template-columns: 1fr 320px;
+  gap: 12px;
+}
+
+.card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  padding: 20px;
+}
+
+.card-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 16px;
+}
+
+.card-title {
+  font-size: 11px;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--text);
+  font-weight: 500;
+}
+
+.card-badge {
+  font-size: 9px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  padding: 3px 8px;
+  border: 1px solid var(--border);
+  color: var(--muted);
+  cursor: pointer;
+}
+
+.card-badge.active {
+  border-color: var(--border-blue);
+  color: var(--blue);
+  background: var(--blue-dim);
+}
+
+/* ── Map ── */
+.map-container {
+  position: relative;
+  background: #0a0f1a;
+  border: 1px solid var(--border);
+  height: 340px;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.map-container svg {
+  width: 100%;
+  height: 100%;
+  opacity: 0.25;
+}
+
+.map-dots {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.map-dot {
+  position: absolute;
+  width: 8px;
+  height: 8px;
+  background: var(--blue);
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  box-shadow: 0 0 12px var(--blue);
+  animation: dot-ping 2s ease-out infinite;
+}
+
+.map-dot::after {
+  content: '';
+  position: absolute;
+  inset: -4px;
+  border-radius: 50%;
+  border: 1px solid var(--blue);
+  opacity: 0.4;
+  animation: dot-ping 2s ease-out infinite;
+}
+
+@keyframes dot-ping {
+  0% { transform: translate(-50%, -50%) scale(1); opacity: 1; }
+  100% { transform: translate(-50%, -50%) scale(1); opacity: 1; }
+}
+
+.map-dot.uk   { left: 48%; top: 28%; animation-delay: 0s; }
+.map-dot.ng   { left: 51%; top: 53%; animation-delay: 0.4s; background: var(--green); box-shadow: 0 0 12px var(--green); }
+.map-dot.us   { left: 22%; top: 38%; animation-delay: 0.8s; }
+.map-dot.br   { left: 30%; top: 65%; animation-delay: 1.2s; background: var(--yellow); box-shadow: 0 0 12px var(--yellow); }
+.map-dot.fr   { left: 49%; top: 31%; animation-delay: 0.2s; }
+.map-dot.gh   { left: 49%; top: 52%; animation-delay: 1.6s; background: var(--green); box-shadow: 0 0 12px var(--green); }
+.map-dot.de   { left: 51%; top: 29%; animation-delay: 0.6s; }
+.map-dot.jp   { left: 80%; top: 35%; animation-delay: 1s; background: var(--red); box-shadow: 0 0 12px var(--red); }
+
+.map-legend {
+  position: absolute;
+  bottom: 12px;
+  left: 14px;
+  display: flex;
+  gap: 14px;
+}
+
+.map-legend-item {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 9px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.map-legend-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+}
+
+/* ── Activity Feed ── */
+.feed {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  overflow-y: auto;
+  max-height: 340px;
+}
+
+.feed-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 10px 0;
+  border-bottom: 1px solid var(--border);
+  animation: fadeIn 0.4s ease;
+}
+
+.feed-item:last-child { border-bottom: none; }
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(-4px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.feed-icon {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  font-size: 12px;
+}
+
+.feed-icon.play { background: rgba(96,165,250,0.15); }
+.feed-icon.buy { background: rgba(74,222,128,0.12); }
+.feed-icon.visit { background: rgba(255,255,255,0.05); }
+
+.feed-text { font-size: 11px; color: var(--muted); line-height: 1.4; }
+.feed-text strong { color: var(--text); font-weight: 500; }
+.feed-time { font-size: 9px; color: rgba(255,255,255,0.2); margin-top: 2px; letter-spacing: 0.06em; }
+
+/* ── Charts Row ── */
+.charts-row {
+  display: grid;
+  grid-template-columns: 1fr 280px;
+  gap: 12px;
+}
+
+.chart-wrap {
+  position: relative;
+  height: 200px;
+}
+
+/* ── Time range tabs ── */
+.tabs {
+  display: flex;
+  gap: 4px;
+}
+
+.tab {
+  font-size: 9px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  padding: 4px 10px;
+  border: 1px solid var(--border);
+  color: var(--muted);
+  cursor: pointer;
+  transition: all 0.15s;
+  background: none;
+  font-family: var(--font-body);
+}
+
+.tab.active, .tab:hover {
+  border-color: var(--border-blue);
+  color: var(--blue);
+  background: var(--blue-dim);
+}
+
+/* ── Funnel ── */
+.funnel-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 48px;
+  padding: 8px 0;
+}
+
+.funnel-steps {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.funnel-step {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.funnel-label {
+  font-size: 10px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--muted);
+  width: 100px;
+  flex-shrink: 0;
+}
+
+.funnel-bar-wrap {
+  flex: 1;
+  height: 6px;
+  background: rgba(255,255,255,0.05);
+  position: relative;
+}
+
+.funnel-bar {
+  height: 100%;
+  background: var(--blue);
+  transition: width 1s ease;
+}
+
+.funnel-bar.green { background: var(--green); }
+.funnel-bar.yellow { background: var(--yellow); }
+.funnel-bar.red { background: var(--red); }
+
+.funnel-pct {
+  font-size: 10px;
+  color: var(--text);
+  width: 36px;
+  text-align: right;
+  flex-shrink: 0;
+  font-variant-numeric: tabular-nums;
+}
+
+/* ── Merch products ── */
+.merch-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+}
+
+.merch-stat-card {
+  background: var(--surface2);
+  border: 1px solid var(--border);
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.merch-stat-name {
+  font-size: 10px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.merch-stat-clicks {
+  font-family: var(--font-display);
+  font-size: 32px;
+  font-weight: 800;
+  color: #fff;
+  line-height: 1;
+}
+
+.merch-stat-sub {
+  font-size: 10px;
+  color: var(--muted);
+}
+
+.merch-bar-wrap {
+  height: 3px;
+  background: rgba(255,255,255,0.05);
+}
+
+.merch-bar {
+  height: 100%;
+  background: var(--blue);
+}
+
+/* ── Bottom row ── */
+.bottom-row {
+  display: grid;
+  grid-template-columns: 220px 1fr;
+  gap: 12px;
+}
+
+/* ── Device breakdown ── */
+.device-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.device-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.device-label {
+  font-size: 11px;
+  color: var(--muted);
+  width: 64px;
+  flex-shrink: 0;
+}
+
+.device-bar-wrap {
+  flex: 1;
+  height: 4px;
+  background: rgba(255,255,255,0.05);
+}
+
+.device-bar {
+  height: 100%;
+  background: var(--blue);
+}
+
+.device-bar.green { background: var(--green); }
+.device-bar.yellow { background: var(--yellow); }
+
+.device-pct {
+  font-size: 10px;
+  color: var(--text);
+  width: 30px;
+  text-align: right;
+  flex-shrink: 0;
+}
+
+/* ── Visitors table ── */
+.table-wrap { overflow-x: auto; }
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 11px;
+}
+
+thead th {
+  text-align: left;
+  font-size: 9px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--muted);
+  padding: 0 12px 10px 0;
+  border-bottom: 1px solid var(--border);
+  font-weight: 400;
+}
+
+tbody tr {
+  border-bottom: 1px solid var(--border);
+  transition: background 0.1s;
+}
+
+tbody tr:hover { background: var(--surface2); }
+tbody tr:last-child { border-bottom: none; }
+
+tbody td {
+  padding: 9px 12px 9px 0;
+  color: var(--muted);
+}
+
+tbody td:first-child { color: var(--text); }
+
+.flag { margin-right: 6px; }
+
+.event-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 9px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  padding: 2px 7px;
+  border: 1px solid var(--border);
+}
+
+.event-pill.play { border-color: rgba(96,165,250,0.3); color: var(--blue); }
+.event-pill.buy { border-color: rgba(74,222,128,0.3); color: var(--green); }
+.event-pill.visit { color: var(--muted); }
+
+/* ── Heatmap placeholder ── */
+.heatmap-grid {
+  display: grid;
+  grid-template-columns: repeat(24, 1fr);
+  grid-template-rows: repeat(7, 1fr);
+  gap: 3px;
+  height: 120px;
+}
+
+.hm-cell {
+  border-radius: 2px;
+  background: rgba(59,130,246,0.08);
+  transition: background 0.2s;
+  cursor: default;
+}
+
+.hm-cell:hover { outline: 1px solid rgba(96,165,250,0.4); }
+
+.hm-cell.l1 { background: rgba(59,130,246,0.15); }
+.hm-cell.l2 { background: rgba(59,130,246,0.3); }
+.hm-cell.l3 { background: rgba(59,130,246,0.5); }
+.hm-cell.l4 { background: rgba(59,130,246,0.75); }
+.hm-cell.l5 { background: rgba(96,165,250,1); }
+
+.hm-labels {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 6px;
+  font-size: 9px;
+  color: var(--muted);
+  letter-spacing: 0.08em;
+}
+
+/* ── Scrollbar ── */
+::-webkit-scrollbar { width: 4px; height: 4px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.1); }
+</style>
+</head>
+<body>
+
+<div class="shell">
+
+  <!-- TOP BAR -->
+  <header class="topbar">
+    <div class="topbar-brand">AZULINHO<span>·</span>OS</div>
+    <div class="topbar-right">
+      <div class="live-dot">Live</div>
+      <div id="clock">--:--:--</div>
+    </div>
+  </header>
+
+  <!-- SUB NAV -->
+  <nav class="subnav">
+    <a class="subnav-item active" href="#sec-overview" data-section="sec-overview">
+      <svg class="subnav-icon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="1" y="1" width="6" height="6"/><rect x="9" y="1" width="6" height="6"/><rect x="1" y="9" width="6" height="6"/><rect x="9" y="9" width="6" height="6"/></svg>
+      Overview
+    </a>
+    <a class="subnav-item" href="#sec-map" data-section="sec-map">
+      <svg class="subnav-icon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="8" cy="8" r="6"/><circle cx="8" cy="8" r="2"/></svg>
+      Visitors
+    </a>
+    <a class="subnav-item" href="#sec-charts" data-section="sec-charts">
+      <svg class="subnav-icon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 13V7M8 13V3M13 13V9"/></svg>
+      Analytics
+    </a>
+    <a class="subnav-item" href="#sec-funnel" data-section="sec-funnel">
+      <svg class="subnav-icon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><polygon points="3,2 13,8 3,14"/></svg>
+      Song Plays
+    </a>
+    <a class="subnav-item" href="#sec-funnel" data-section="sec-funnel">
+      <svg class="subnav-icon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2 11a2 2 0 1 0 4 0 2 2 0 0 0-4 0M10 9a2 2 0 1 0 4 0 2 2 0 0 0-4 0"/><path d="M6 11V4l8-2v7"/></svg>
+      Engagement
+    </a>
+    <a class="subnav-item" href="#sec-merch" data-section="sec-merch">
+      <svg class="subnav-icon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2 2h2l2 8h6l2-6H6"/><circle cx="7" cy="13" r="1"/><circle cx="11" cy="13" r="1"/></svg>
+      Merch
+    </a>
+    <a class="subnav-item" href="#sec-visitors" data-section="sec-visitors">
+      <svg class="subnav-icon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M8 1v14M1 8h14"/></svg>
+      Devices
+    </a>
+  </nav>
+
+  <!-- MAIN -->
+  <main class="main">
+
+    <!-- STAT CARDS -->
+    <div id="sec-overview">
+      <div class="section-label">Overview — Last 30 days</div>
+      <div class="stats-grid">
+        <div class="stat-card">
+          <div class="stat-label">Total Visitors</div>
+          <div class="stat-value" id="stat-visitors">—</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">Unique</div>
+          <div class="stat-value" id="stat-unique">—</div>
+        </div>
+        <div class="stat-card highlight">
+          <div class="stat-label">Song Plays</div>
+          <div class="stat-value" id="stat-plays">—</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">Avg Listen</div>
+          <div class="stat-value">—</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">Merch Clicks</div>
+          <div class="stat-value" id="stat-merch">—</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">Conversion</div>
+          <div class="stat-value" id="stat-conv">—</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- MAP + FEED -->
+    <div class="map-feed-row" id="sec-map">
+      <div class="card" style="padding:0;overflow:hidden;">
+        <div style="padding:16px 20px 0;display:flex;align-items:center;justify-content:space-between;">
+          <div class="card-title">Visitor Map</div>
+          <div style="display:flex;gap:6px;">
+            <button class="tab active">Dots</button>
+            <button class="tab">Heatmap</button>
+          </div>
+        </div>
+        <div class="map-container" style="border:none;height:320px;">
+          <!-- World map SVG outline -->
+          <svg viewBox="0 0 1000 500" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid meet">
+            <path fill="rgba(255,255,255,0.06)" stroke="rgba(255,255,255,0.1)" stroke-width="0.5" d="M150,100 Q200,80 260,90 Q310,95 350,110 Q380,120 400,140 Q420,155 410,175 Q395,200 370,210 Q340,220 310,215 Q280,210 255,200 Q225,188 200,175 Q170,160 150,145 Q130,130 135,115 Z"/>
+            <path fill="rgba(255,255,255,0.06)" stroke="rgba(255,255,255,0.1)" stroke-width="0.5" d="M420,80 Q480,60 560,70 Q630,78 680,100 Q720,118 730,145 Q738,168 720,185 Q700,202 670,208 Q635,215 600,210 Q560,205 525,190 Q490,175 465,155 Q440,135 425,115 Q415,98 420,80Z"/>
+            <path fill="rgba(255,255,255,0.06)" stroke="rgba(255,255,255,0.1)" stroke-width="0.5" d="M730,80 Q780,65 840,75 Q880,82 900,105 Q915,125 905,148 Q892,170 865,178 Q835,185 805,178 Q775,170 755,152 Q735,133 730,112 Q726,94 730,80Z"/>
+            <path fill="rgba(255,255,255,0.06)" stroke="rgba(255,255,255,0.1)" stroke-width="0.5" d="M100,220 Q140,200 185,210 Q220,218 240,240 Q258,260 255,285 Q250,310 230,328 Q208,345 180,348 Q150,350 128,335 Q105,318 95,292 Q85,265 88,245 Q92,228 100,220Z"/>
+            <path fill="rgba(255,255,255,0.06)" stroke="rgba(255,255,255,0.1)" stroke-width="0.5" d="M240,240 Q280,220 325,230 Q365,238 390,260 Q415,282 415,310 Q415,340 395,358 Q372,376 342,378 Q308,380 280,362 Q252,344 240,318 Q228,292 230,268 Q232,250 240,240Z"/>
+            <path fill="rgba(255,255,255,0.06)" stroke="rgba(255,255,255,0.1)" stroke-width="0.5" d="M445,215 Q510,195 570,208 Q620,218 650,245 Q678,270 678,302 Q678,335 655,355 Q628,375 592,380 Q553,384 520,368 Q488,352 468,322 Q448,292 445,262 Q443,238 445,215Z"/>
+            <path fill="rgba(255,255,255,0.06)" stroke="rgba(255,255,255,0.1)" stroke-width="0.5" d="M700,195 Q755,178 810,188 Q855,196 882,222 Q908,248 905,278 Q902,308 878,326 Q850,344 815,345 Q778,346 750,328 Q722,310 710,282 Q698,254 700,228 Q700,210 700,195Z"/>
+            <path fill="rgba(255,255,255,0.06)" stroke="rgba(255,255,255,0.1)" stroke-width="0.5" d="M800,80 Q840,68 875,78 Q905,86 918,108 Q928,128 920,150 Q910,170 888,180 Q862,190 838,182 Q814,174 800,155 Q786,136 785,116 Q784,96 800,80Z"/>
+            <path fill="rgba(255,255,255,0.06)" stroke="rgba(255,255,255,0.1)" stroke-width="0.5" d="M320,330 Q340,320 360,330 Q378,340 382,360 Q386,382 372,400 Q355,418 332,420 Q308,422 294,406 Q280,390 284,368 Q288,346 305,336 Z"/>
+          </svg>
+          <div class="map-dots">
+            <div class="map-dot uk"></div>
+            <div class="map-dot ng"></div>
+            <div class="map-dot us"></div>
+            <div class="map-dot br"></div>
+            <div class="map-dot fr"></div>
+            <div class="map-dot gh"></div>
+            <div class="map-dot de"></div>
+            <div class="map-dot jp"></div>
+          </div>
+          <div class="map-legend">
+            <div class="map-legend-item"><div class="map-legend-dot" style="background:var(--blue)"></div>Europe/US</div>
+            <div class="map-legend-item"><div class="map-legend-dot" style="background:var(--green)"></div>Africa</div>
+            <div class="map-legend-item"><div class="map-legend-dot" style="background:var(--yellow)"></div>S. America</div>
+            <div class="map-legend-item"><div class="map-legend-dot" style="background:var(--red)"></div>Asia</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- LIVE FEED -->
+      <div class="card">
+        <div class="card-header">
+          <div class="card-title">Live Activity</div>
+          <div class="live-dot" style="font-size:9px;">Live</div>
+        </div>
+        <div class="feed" id="live-feed">
+          <div style="padding:20px 0;text-align:center;font-size:11px;color:var(--muted);">Loading…</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- CHARTS ROW -->
+    <div class="charts-row" id="sec-charts">
+      <div class="card">
+        <div class="card-header">
+          <div class="card-title">Visitors over time</div>
+          <div class="tabs">
+            <button class="tab active">7D</button>
+            <button class="tab">30D</button>
+            <button class="tab">All</button>
+          </div>
+        </div>
+        <div class="chart-wrap">
+          <canvas id="visitors-chart"></canvas>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-header">
+          <div class="card-title">Traffic Sources</div>
+        </div>
+        <div class="chart-wrap" style="height:180px;">
+          <canvas id="sources-chart"></canvas>
+        </div>
+      </div>
+    </div>
+
+    <!-- SONG ENGAGEMENT FUNNEL -->
+    <div class="funnel-row" id="sec-funnel">
+      <div>
+        <div class="section-label" style="margin-bottom:20px;">Song Engagement Funnel</div>
+        <div class="funnel-steps">
+          <div class="funnel-step">
+            <div class="funnel-label">Visited</div>
+            <div class="funnel-bar-wrap"><div class="funnel-bar" style="width:100%"></div></div>
+            <div class="funnel-pct">2,847</div>
+          </div>
+          <div class="funnel-step">
+            <div class="funnel-label">Hit Play</div>
+            <div class="funnel-bar-wrap"><div class="funnel-bar" style="width:78%"></div></div>
+            <div class="funnel-pct">78%</div>
+          </div>
+          <div class="funnel-step">
+            <div class="funnel-label">25% done</div>
+            <div class="funnel-bar-wrap"><div class="funnel-bar green" style="width:62%"></div></div>
+            <div class="funnel-pct">62%</div>
+          </div>
+          <div class="funnel-step">
+            <div class="funnel-label">50% done</div>
+            <div class="funnel-bar-wrap"><div class="funnel-bar green" style="width:44%"></div></div>
+            <div class="funnel-pct">44%</div>
+          </div>
+          <div class="funnel-step">
+            <div class="funnel-label">75% done</div>
+            <div class="funnel-bar-wrap"><div class="funnel-bar yellow" style="width:28%"></div></div>
+            <div class="funnel-pct">28%</div>
+          </div>
+          <div class="funnel-step">
+            <div class="funnel-label">Completed</div>
+            <div class="funnel-bar-wrap"><div class="funnel-bar red" style="width:17%"></div></div>
+            <div class="funnel-pct">17%</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- HEATMAP -->
+      <div>
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:20px;">
+          <div class="section-label" style="margin-bottom:0;">Activity Heatmap</div>
+          <div style="font-size:9px;color:var(--muted);letter-spacing:0.1em;">by hour · 7 days</div>
+        </div>
+        <div class="heatmap-grid" id="heatmap"></div>
+        <div class="hm-labels">
+          <span>12AM</span><span>6AM</span><span>12PM</span><span>6PM</span><span>11PM</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- MERCH BREAKDOWN -->
+    <div id="sec-merch">
+      <div class="section-label">Merch Performance</div>
+      <div class="merch-grid">
+        <div class="merch-stat-card">
+          <div class="merch-stat-name">AZ Trapsoul Tee · £40</div>
+          <div class="merch-stat-clicks" id="merch-trapsoul-clicks">—</div>
+          <div class="merch-stat-sub" id="merch-trapsoul-pct">—</div>
+          <div class="merch-bar-wrap"><div class="merch-bar" id="merch-trapsoul-bar" style="width:0%"></div></div>
+        </div>
+        <div class="merch-stat-card">
+          <div class="merch-stat-name">AZ 777 Tee · £55</div>
+          <div class="merch-stat-clicks" id="merch-777-clicks">—</div>
+          <div class="merch-stat-sub" id="merch-777-pct">—</div>
+          <div class="merch-bar-wrap"><div class="merch-bar" id="merch-777-bar" style="width:0%;background:var(--green)"></div></div>
+        </div>
+        <div class="merch-stat-card">
+          <div class="merch-stat-name">AZ Cap · £29</div>
+          <div class="merch-stat-clicks" id="merch-cap-clicks">—</div>
+          <div class="merch-stat-sub" id="merch-cap-pct">—</div>
+          <div class="merch-bar-wrap"><div class="merch-bar" id="merch-cap-bar" style="width:0%;background:var(--yellow)"></div></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- BOTTOM ROW -->
+    <div class="bottom-row" id="sec-visitors">
+      <!-- DEVICE BREAKDOWN -->
+      <div>
+        <div class="section-label" style="margin-bottom:16px;">Devices</div>
+        <div class="device-list">
+          <div class="device-item">
+            <div class="device-label">Mobile</div>
+            <div class="device-bar-wrap"><div class="device-bar" id="dev-mobile-bar" style="width:0%"></div></div>
+            <div class="device-pct" id="dev-mobile-pct">—</div>
+          </div>
+          <div class="device-item">
+            <div class="device-label">Desktop</div>
+            <div class="device-bar-wrap"><div class="device-bar green" id="dev-desktop-bar" style="width:0%"></div></div>
+            <div class="device-pct" id="dev-desktop-pct">—</div>
+          </div>
+          <div class="device-item">
+            <div class="device-label">Tablet</div>
+            <div class="device-bar-wrap"><div class="device-bar yellow" style="width:6%"></div></div>
+            <div class="device-pct">6%</div>
+          </div>
+        </div>
+        <div style="height:1px;background:var(--border);margin:20px 0;"></div>
+        <div class="section-label" style="margin-bottom:16px;">OS</div>
+        <div class="device-list">
+          <div class="device-item">
+            <div class="device-label">iOS</div>
+            <div class="device-bar-wrap"><div class="device-bar" style="width:58%"></div></div>
+            <div class="device-pct">58%</div>
+          </div>
+          <div class="device-item">
+            <div class="device-label">Android</div>
+            <div class="device-bar-wrap"><div class="device-bar green" style="width:28%"></div></div>
+            <div class="device-pct">28%</div>
+          </div>
+          <div class="device-item">
+            <div class="device-label">macOS</div>
+            <div class="device-bar-wrap"><div class="device-bar yellow" style="width:10%"></div></div>
+            <div class="device-pct">10%</div>
+          </div>
+          <div class="device-item">
+            <div class="device-label">Windows</div>
+            <div class="device-bar-wrap"><div class="device-bar" style="width:4%;background:var(--muted)"></div></div>
+            <div class="device-pct">4%</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- RECENT VISITORS TABLE -->
+      <div class="card">
+        <div class="card-header">
+          <div class="card-title">Recent Visitors</div>
+          <div class="card-badge">Export CSV</div>
+        </div>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>Location</th>
+                <th>IP</th>
+                <th>Source</th>
+                <th>Event</th>
+                <th>Time</th>
+              </tr>
+            </thead>
+            <tbody id="visitors-tbody">
+              <tr>
+                <td>London, UK</td>
+                <td style="font-variant-numeric:tabular-nums;color:var(--muted);">82.x.x.x</td>
+                <td>Instagram</td>
+                <td><span class="event-pill buy">Buy Click</span></td>
+                <td>2 min ago</td>
+              </tr>
+              <tr>
+                <td>Lagos, NG</td>
+                <td style="font-variant-numeric:tabular-nums;color:var(--muted);">105.x.x.x</td>
+                <td>Direct</td>
+                <td><span class="event-pill play">▶ Play</span></td>
+                <td>4 min ago</td>
+              </tr>
+              <tr>
+                <td>New York, US</td>
+                <td style="font-variant-numeric:tabular-nums;color:var(--muted);">74.x.x.x</td>
+                <td>Instagram</td>
+                <td><span class="event-pill visit">Visit</span></td>
+                <td>6 min ago</td>
+              </tr>
+              <tr>
+                <td>Paris, FR</td>
+                <td style="font-variant-numeric:tabular-nums;color:var(--muted);">90.x.x.x</td>
+                <td>Direct</td>
+                <td><span class="event-pill play">▶ Play</span></td>
+                <td>9 min ago</td>
+              </tr>
+              <tr>
+                <td>Accra, GH</td>
+                <td style="font-variant-numeric:tabular-nums;color:var(--muted);">196.x.x.x</td>
+                <td>Twitter</td>
+                <td><span class="event-pill buy">Buy Click</span></td>
+                <td>12 min ago</td>
+              </tr>
+              <tr>
+                <td>Berlin, DE</td>
+                <td style="font-variant-numeric:tabular-nums;color:var(--muted);">84.x.x.x</td>
+                <td>Direct</td>
+                <td><span class="event-pill play">▶ Play</span></td>
+                <td>15 min ago</td>
+              </tr>
+              <tr>
+                <td>São Paulo, BR</td>
+                <td style="font-variant-numeric:tabular-nums;color:var(--muted);">177.x.x.x</td>
+                <td>Google</td>
+                <td><span class="event-pill visit">Visit</span></td>
+                <td>18 min ago</td>
+              </tr>
+              <tr>
+                <td>Tokyo, JP</td>
+                <td style="font-variant-numeric:tabular-nums;color:var(--muted);">202.x.x.x</td>
+                <td>Direct</td>
+                <td><span class="event-pill buy">Buy Click</span></td>
+                <td>22 min ago</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+  </main>
+</div>
+
+<script>
+// ── Supabase ──
+const SUPA_URL = 'https://symywayiveicjgmswari.supabase.co';
+const SUPA_KEY = 'sb_publishable_m6fm8X8EJtLn1U27sxS6Xw_lnhougka';
+const db = supabase.createClient(SUPA_URL, SUPA_KEY);
+
+// ── Clock ──
+function updateClock() {
+  const now = new Date();
+  document.getElementById('clock').textContent = now.toUTCString().slice(17,25) + ' UTC';
+}
+updateClock();
+setInterval(updateClock, 1000);
+
+// ── Chart.js defaults ──
+Chart.defaults.color = 'rgba(255,255,255,0.3)';
+Chart.defaults.borderColor = 'rgba(255,255,255,0.06)';
+Chart.defaults.font.family = 'Inter, sans-serif';
+Chart.defaults.font.size = 10;
+
+// ── Visitors over time chart ──
+const vCtx = document.getElementById('visitors-chart').getContext('2d');
+const visitorsChart = new Chart(vCtx, {
+  type: 'line',
+  data: { labels: [], datasets: [
+    { label:'Visitors', data:[], borderColor:'#60a5fa', backgroundColor:'rgba(59,130,246,0.08)', borderWidth:1.5, fill:true, tension:0.4, pointRadius:2, pointBackgroundColor:'#60a5fa' },
+    { label:'Plays', data:[], borderColor:'#4ade80', backgroundColor:'rgba(74,222,128,0.05)', borderWidth:1.5, fill:true, tension:0.4, pointRadius:2, pointBackgroundColor:'#4ade80' }
+  ]},
+  options: {
+    responsive:true, maintainAspectRatio:false,
+    plugins:{ legend:{ display:false } },
+    scales:{
+      x:{ grid:{ color:'rgba(255,255,255,0.04)' }, ticks:{ color:'rgba(255,255,255,0.25)' } },
+      y:{ grid:{ color:'rgba(255,255,255,0.04)' }, ticks:{ color:'rgba(255,255,255,0.25)' } }
+    }
+  }
+});
+
+// ── Sources donut ──
+const sCtx = document.getElementById('sources-chart').getContext('2d');
+const sourcesChart = new Chart(sCtx, {
+  type:'doughnut',
+  data:{ labels:[], datasets:[{ data:[], backgroundColor:['#60a5fa','rgba(255,255,255,0.15)','#4ade80','#fbbf24','rgba(255,255,255,0.05)'], borderWidth:0, hoverOffset:4 }] },
+  options:{ responsive:true, maintainAspectRatio:false, cutout:'72%', plugins:{ legend:{ position:'bottom', labels:{ boxWidth:8, padding:10, color:'rgba(255,255,255,0.35)', font:{ size:9 } } } } }
+});
+
+// ── Heatmap ──
+function buildHeatmap(visits) {
+  const hm = document.getElementById('heatmap');
+  hm.innerHTML = '';
+  // Count visits per [day][hour]
+  const grid = Array.from({length:7}, () => new Array(24).fill(0));
+  visits.forEach(v => {
+    const d = new Date(v.created_at);
+    grid[d.getDay()][d.getHours()]++;
+  });
+  const max = Math.max(1, ...grid.flat());
+  for (let row = 0; row < 7; row++) {
+    for (let col = 0; col < 24; col++) {
+      const cell = document.createElement('div');
+      const ratio = grid[row][col] / max;
+      let cls = 'hm-cell';
+      if (ratio > 0.8) cls += ' l5';
+      else if (ratio > 0.6) cls += ' l4';
+      else if (ratio > 0.4) cls += ' l3';
+      else if (ratio > 0.2) cls += ' l2';
+      else if (ratio > 0) cls += ' l1';
+      cell.className = cls;
+      hm.appendChild(cell);
+    }
+  }
+}
+
+// ── Helper: set stat value ──
+function setStat(id, val) {
+  const el = document.getElementById(id);
+  if (el) el.textContent = val;
+}
+
+// ── Helper: time ago ──
+function timeAgo(ts) {
+  const diff = Math.floor((Date.now() - new Date(ts)) / 1000);
+  if (diff < 60) return 'just now';
+  if (diff < 3600) return Math.floor(diff/60) + ' min ago';
+  if (diff < 86400) return Math.floor(diff/3600) + ' hr ago';
+  return Math.floor(diff/86400) + ' day ago';
+}
+
+// ── Load all data ──
+async function loadDashboard() {
+  const now = new Date();
+  const days7ago = new Date(now - 7*24*60*60*1000).toISOString();
+  const days30ago = new Date(now - 30*24*60*60*1000).toISOString();
+
+  const [{ data: allVisits }, { data: events }] = await Promise.all([
+    db.from('visits').select('*').order('created_at', { ascending: false }),
+    db.from('events').select('*').order('created_at', { ascending: false })
+  ]);
+
+  const visits = allVisits || [];
+  const evts = events || [];
+
+  const visits30 = visits.filter(v => v.created_at >= days30ago);
+  const plays = evts.filter(e => e.type === 'play');
+  const buys = evts.filter(e => e.type === 'buy_click');
+
+  // ── Stat cards ──
+  setStat('stat-visitors', visits30.length.toLocaleString());
+  setStat('stat-unique', [...new Set(visits30.map(v => v.ip))].size.toLocaleString());
+  setStat('stat-plays', plays.filter(e => e.created_at >= days30ago).length.toLocaleString());
+  setStat('stat-merch', buys.filter(e => e.created_at >= days30ago).length.toLocaleString());
+  const conv = visits30.length ? ((buys.filter(e => e.created_at >= days30ago).length / visits30.length) * 100).toFixed(1) + '%' : '0%';
+  setStat('stat-conv', conv);
+
+  // ── Visitors over time (last 7 days by day) ──
+  const labels = [];
+  const visitorsByDay = [];
+  const playsByDay = [];
+  for (let i = 6; i >= 0; i--) {
+    const d = new Date(now - i*24*60*60*1000);
+    const dayStr = d.toISOString().slice(0,10);
+    labels.push(d.toLocaleDateString('en',{weekday:'short'}));
+    visitorsByDay.push(visits.filter(v => v.created_at.slice(0,10) === dayStr).length);
+    playsByDay.push(plays.filter(e => e.created_at.slice(0,10) === dayStr).length);
+  }
+  visitorsChart.data.labels = labels;
+  visitorsChart.data.datasets[0].data = visitorsByDay;
+  visitorsChart.data.datasets[1].data = playsByDay;
+  visitorsChart.update();
+
+  // ── Traffic sources ──
+  const sourceCounts = {};
+  visits.forEach(v => {
+    let src = 'Direct';
+    if (v.referrer && v.referrer !== 'direct') {
+      if (v.referrer.includes('instagram')) src = 'Instagram';
+      else if (v.referrer.includes('google')) src = 'Google';
+      else if (v.referrer.includes('twitter') || v.referrer.includes('t.co')) src = 'Twitter';
+      else if (v.referrer.includes('youtube')) src = 'YouTube';
+      else src = 'Other';
+    }
+    sourceCounts[src] = (sourceCounts[src] || 0) + 1;
+  });
+  const srcLabels = Object.keys(sourceCounts);
+  const srcData = srcLabels.map(k => sourceCounts[k]);
+  sourcesChart.data.labels = srcLabels;
+  sourcesChart.data.datasets[0].data = srcData;
+  sourcesChart.update();
+
+  // ── Merch breakdown ──
+  const products = ['Trapsoul Tee','777 Tee','Cap'];
+  const productCounts = {};
+  products.forEach(p => productCounts[p] = buys.filter(e => e.meta === p).length);
+  const maxClicks = Math.max(1, ...Object.values(productCounts));
+  setStat('merch-trapsoul-clicks', productCounts['Trapsoul Tee']);
+  setStat('merch-777-clicks', productCounts['777 Tee']);
+  setStat('merch-cap-clicks', productCounts['Cap']);
+  const total = Object.values(productCounts).reduce((a,b) => a+b, 0) || 1;
+  setStat('merch-trapsoul-pct', Math.round(productCounts['Trapsoul Tee']/total*100) + '% of total');
+  setStat('merch-777-pct', Math.round(productCounts['777 Tee']/total*100) + '% of total');
+  setStat('merch-cap-pct', Math.round(productCounts['Cap']/total*100) + '% of total');
+  document.getElementById('merch-trapsoul-bar').style.width = (productCounts['Trapsoul Tee']/maxClicks*100) + '%';
+  document.getElementById('merch-777-bar').style.width = (productCounts['777 Tee']/maxClicks*100) + '%';
+  document.getElementById('merch-cap-bar').style.width = (productCounts['Cap']/maxClicks*100) + '%';
+
+  // ── Device breakdown ──
+  const devices = { mobile:0, desktop:0, tablet:0 };
+  visits.forEach(v => { if (v.device && devices[v.device] !== undefined) devices[v.device]++; });
+  const dTotal = Math.max(1, visits.length);
+  setStat('dev-mobile-pct', Math.round(devices.mobile/dTotal*100) + '%');
+  setStat('dev-desktop-pct', Math.round(devices.desktop/dTotal*100) + '%');
+  document.getElementById('dev-mobile-bar').style.width = (devices.mobile/dTotal*100) + '%';
+  document.getElementById('dev-desktop-bar').style.width = (devices.desktop/dTotal*100) + '%';
+
+  // ── Live feed ──
+  const feedEl = document.getElementById('live-feed');
+  if (feedEl && evts.length > 0) {
+    feedEl.innerHTML = '';
+    evts.slice(0,10).forEach(e => {
+      const visit = visits.find(v => v.id === e.visit_id);
+      const loc = visit ? (visit.city ? `${visit.city}, ${visit.country_code}` : visit.country || 'Unknown') : 'Unknown';
+      const iconClass = e.type === 'play' ? 'play' : e.type === 'buy_click' ? 'buy' : 'visit';
+      const icon = e.type === 'play' ? '▶' : e.type === 'buy_click' ? '🛍' : '👁';
+      const detail = e.type === 'play' ? `played on ${e.meta || 'streaming'}` : e.type === 'buy_click' ? `clicked Buy Now · <span style="color:var(--blue)">${e.meta || ''}</span>` : 'visited';
+      feedEl.innerHTML += `<div class="feed-item"><div class="feed-icon ${iconClass}">${icon}</div><div><div class="feed-text"><strong>${loc}</strong> ${detail}</div><div class="feed-time">${timeAgo(e.created_at)}</div></div></div>`;
+    });
+  }
+
+  // ── Recent visitors table ──
+  const tbody = document.getElementById('visitors-tbody');
+  if (tbody && visits.length > 0) {
+    tbody.innerHTML = '';
+    visits.slice(0,10).forEach(v => {
+      const lastEvt = evts.find(e => e.visit_id === v.id);
+      const pill = lastEvt ? (lastEvt.type === 'play' ? '<span class="event-pill play">▶ Play</span>' : lastEvt.type === 'buy_click' ? '<span class="event-pill buy">Buy Click</span>' : '<span class="event-pill visit">Visit</span>') : '<span class="event-pill visit">Visit</span>';
+      const src = v.referrer && v.referrer !== 'direct' ? new URL(v.referrer).hostname.replace('www.','') : 'Direct';
+      tbody.innerHTML += `<tr><td>${v.city || ''}${v.city && v.country_code ? ', ' : ''}${v.country_code || 'Unknown'}</td><td style="font-variant-numeric:tabular-nums;color:var(--muted);">${v.ip ? v.ip.split('.').slice(0,2).join('.')+'.x.x' : '—'}</td><td>${src}</td><td>${pill}</td><td>${timeAgo(v.created_at)}</td></tr>`;
+    });
+  }
+
+  // ── Heatmap ──
+  buildHeatmap(visits);
+}
+
+loadDashboard();
+setInterval(loadDashboard, 30000); // refresh every 30s
+
+// ── Tab switching ──
+document.querySelectorAll('.tab').forEach(tab => {
+  tab.addEventListener('click', function() {
+    this.closest('.tabs, div').querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+    this.classList.add('active');
+  });
+});
+
+// ── Subnav smooth scroll + active state ──
+const navItems = document.querySelectorAll('.subnav-item[data-section]');
+navItems.forEach(item => {
+  item.addEventListener('click', function(e) {
+    e.preventDefault();
+    const target = document.getElementById(this.dataset.section);
+    if (target) {
+      const offset = 56 + 40;
+      const top = target.getBoundingClientRect().top + window.scrollY - offset - 12;
+      window.scrollTo({ top, behavior:'smooth' });
+    }
+    navItems.forEach(n => n.classList.remove('active'));
+    this.classList.add('active');
+  });
+});
+
+// ── Scroll spy ──
+const sections = ['sec-overview','sec-map','sec-charts','sec-funnel','sec-merch','sec-visitors'];
+const sectionMap = { 'sec-overview':'[data-section="sec-overview"]','sec-map':'[data-section="sec-map"]','sec-charts':'[data-section="sec-charts"]','sec-funnel':'[data-section="sec-funnel"]','sec-merch':'[data-section="sec-merch"]','sec-visitors':'[data-section="sec-visitors"]' };
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      const id = entry.target.id;
+      navItems.forEach(n => n.classList.remove('active'));
+      const match = document.querySelector(sectionMap[id]);
+      if (match) match.classList.add('active');
+    }
+  });
+}, { rootMargin:'-96px 0px -60% 0px', threshold:0 });
+sections.forEach(id => { const el = document.getElementById(id); if (el) observer.observe(el); });
+</script>
+</body>
+</html>
