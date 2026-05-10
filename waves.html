@@ -151,7 +151,10 @@ overflow: visible;
 /* ── Merch marquee — fully isolated, Webflow JS can't touch it ── */
 .merch-marquee-wrap {
 overflow: hidden;
-width: 100%;
+width: 100vw;
+position: relative;
+left: 50%;
+transform: translateX(-50%);
 margin-bottom: 0;
 }
 .merch-marquee-track {
