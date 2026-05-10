@@ -316,69 +316,6 @@ animation-duration: 20s;
 .releases-list.is-marquee .release-item {
 flex-basis: min(78vw, 280px);
 }
-
-/* ── Mobile-only: show releases slideshow, fix card layout ── */
-/* Reveal wrapper (overrides inline display:none — desktop unaffected) */
-.releases-list-wrapper {
-  display: block !important;
-  margin-top: 20px;
-  margin-bottom: 0;
-}
-
-/* Keep marquee horizontal flex — Webflow would reset to grid */
-.releases-list.is-marquee {
-  display: flex !important;
-  flex-wrap: nowrap !important;
-  flex-direction: row !important;
-}
-
-.releases-list.is-marquee .release-item {
-  flex: 0 0 min(74vw, 260px) !important;
-  flex-shrink: 0 !important;
-}
-
-/* Cards must be vertical (image top, info below) inside horizontal track */
-.releases-list.is-marquee .release-block {
-  display: flex !important;
-  flex-direction: column !important;
-  width: 100% !important;
-  gap: 0 !important;
-  grid-template-columns: unset !important;
-}
-
-.releases-list.is-marquee .release-block-cover {
-  width: 100% !important;
-  aspect-ratio: 1 / 1 !important;
-  position: relative !important;
-  overflow: hidden !important;
-  flex-shrink: 0 !important;
-}
-
-.releases-list.is-marquee .release-block-cover .background-image {
-  position: absolute !important;
-  inset: 0 !important;
-  width: 100% !important;
-  height: 100% !important;
-  object-fit: cover !important;
-}
-
-.releases-list.is-marquee .release-block-content {
-  display: flex !important;
-  flex-direction: row !important;
-  align-items: center !important;
-  justify-content: space-between !important;
-  padding: 10px 0 !important;
-  flex-wrap: nowrap !important;
-}
-
-.releases-list.is-marquee .release-block-info {
-  max-width: unset !important;
-  flex: 1 !important;
-}
-
-.releases-list.is-marquee .release-block-linear {
-  display: none !important;
-}
 }
 
 @keyframes grain-shift {
