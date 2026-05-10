@@ -191,6 +191,22 @@ overflow: hidden;
 .merch-marquee-track { animation-duration: 20s; }
 }
 
+.merch-row {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  flex-wrap: nowrap;
+}
+.merch-row .merch-info { flex: 1; min-width: 0; }
+.merch-row .merch-info .body-m { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+@media screen and (max-width: 600px) {
+  .merch-row { flex-wrap: wrap; }
+  .merch-row img { flex-shrink: 0; }
+  .merch-row .merch-info { flex: 1; min-width: 0; }
+  .merch-row .merch-info .body-m { white-space: normal; }
+  .merch-row a.button { width: 100%; text-align: center; margin-left: 0 !important; box-sizing: border-box; }
+}
+
 .releases-list.is-marquee {
 display: flex;
 flex-wrap: nowrap;
@@ -725,29 +741,29 @@ transform: translate3d(-50%, 0, 0);
 </div>
 </div>
 <div class="w-layout-blockcontainer container w-container">
-<div style="display:flex;align-items:center;gap:24px;flex-wrap:wrap;padding-top:32px;padding-bottom:24px;border-bottom:1px solid rgba(255,255,255,0.1);">
-<img src="https://res.cloudinary.com/dzgqzeebg/image/upload/f_auto,q_auto/azblackstar-tee-trapsoul" loading="lazy" alt="AZ Black Star Tee" style="width:80px;height:80px;object-fit:cover;"/>
-<div>
+<div class="merch-row" style="padding-top:32px;padding-bottom:24px;border-bottom:1px solid rgba(255,255,255,0.1);">
+<img src="https://res.cloudinary.com/dzgqzeebg/image/upload/f_auto,q_auto/azblackstar-tee-trapsoul" loading="lazy" alt="AZ Black Star Tee" style="width:80px;height:80px;object-fit:cover;flex-shrink:0;"/>
+<div class="merch-info">
 <div class="h2">£40</div>
 <div class="body-m" style="opacity:.5;">Organic oversized · Star front · Trapsoul back · Ships worldwide</div>
 </div>
-<a href="https://buy.stripe.com/fZu8wQ3iV14h4O6evX9MY00" target="_blank" class="button custom-cursor-link w-inline-block" style="background:#fff;color:#000;padding:14px 32px;border-radius:0;font-weight:700;letter-spacing:.06em;text-transform:uppercase;text-decoration:none;font-size:13px;margin-left:auto;">Buy Now</a>
+<a href="https://buy.stripe.com/fZu8wQ3iV14h4O6evX9MY00" target="_blank" class="button custom-cursor-link w-inline-block" style="background:#fff;color:#000;padding:14px 32px;border-radius:0;font-weight:700;letter-spacing:.06em;text-transform:uppercase;text-decoration:none;font-size:13px;margin-left:auto;flex-shrink:0;">Buy Now</a>
 </div>
-<div style="display:flex;align-items:center;gap:24px;flex-wrap:wrap;padding-top:24px;padding-bottom:32px;border-bottom:1px solid rgba(255,255,255,0.1);">
-<img src="https://res.cloudinary.com/dzgqzeebg/image/upload/f_auto,q_auto/goeffpoga6lrwhndts6v" loading="lazy" alt="AZ Black Star Distressed Hat" style="width:80px;height:80px;object-fit:cover;"/>
-<div>
+<div class="merch-row" style="padding-top:24px;padding-bottom:32px;border-bottom:1px solid rgba(255,255,255,0.1);">
+<img src="https://res.cloudinary.com/dzgqzeebg/image/upload/f_auto,q_auto/goeffpoga6lrwhndts6v" loading="lazy" alt="AZ Black Star Distressed Hat" style="width:80px;height:80px;object-fit:cover;flex-shrink:0;"/>
+<div class="merch-info">
 <div class="h2">£29</div>
 <div class="body-m" style="opacity:.5;">Distressed dad hat · AZ star embroidered front · One size · Ships worldwide</div>
 </div>
-<a href="https://buy.stripe.com/8x2bJ2g5HdR33K2drT9MY01" target="_blank" class="button custom-cursor-link w-inline-block" style="background:#fff;color:#000;padding:14px 32px;border-radius:0;font-weight:700;letter-spacing:.06em;text-transform:uppercase;text-decoration:none;font-size:13px;margin-left:auto;">Buy Now</a>
+<a href="https://buy.stripe.com/8x2bJ2g5HdR33K2drT9MY01" target="_blank" class="button custom-cursor-link w-inline-block" style="background:#fff;color:#000;padding:14px 32px;border-radius:0;font-weight:700;letter-spacing:.06em;text-transform:uppercase;text-decoration:none;font-size:13px;margin-left:auto;flex-shrink:0;">Buy Now</a>
 </div>
-<div style="display:flex;align-items:center;gap:24px;flex-wrap:wrap;padding-top:24px;padding-bottom:40px;">
-<img src="https://res.cloudinary.com/dzgqzeebg/image/upload/f_auto,q_auto/az777tee-front" loading="lazy" alt="AZ 777 Tee" style="width:80px;height:80px;object-fit:cover;"/>
-<div>
+<div class="merch-row" style="padding-top:24px;padding-bottom:40px;">
+<img src="https://res.cloudinary.com/dzgqzeebg/image/upload/f_auto,q_auto/az777tee-front" loading="lazy" alt="AZ 777 Tee" style="width:80px;height:80px;object-fit:cover;flex-shrink:0;"/>
+<div class="merch-info">
 <div class="h2">£55</div>
 <div class="body-m" style="opacity:.5;">AZ 777 · Organic oversized · Select size at checkout · Ships worldwide</div>
 </div>
-<a href="https://buy.stripe.com/aFafZibPr28l5Sa2Nf9MY02" target="_blank" class="button custom-cursor-link w-inline-block" style="background:#fff;color:#000;padding:14px 32px;border-radius:0;font-weight:700;letter-spacing:.06em;text-transform:uppercase;text-decoration:none;font-size:13px;margin-left:auto;">Buy Now</a>
+<a href="https://buy.stripe.com/aFafZibPr28l5Sa2Nf9MY02" target="_blank" class="button custom-cursor-link w-inline-block" style="background:#fff;color:#000;padding:14px 32px;border-radius:0;font-weight:700;letter-spacing:.06em;text-transform:uppercase;text-decoration:none;font-size:13px;margin-left:auto;flex-shrink:0;">Buy Now</a>
 </div>
 </div>
 </section>
