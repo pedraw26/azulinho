@@ -452,6 +452,92 @@ transform: translate3d(-50%, 0, 0);
   }
 }
 
+/* ── Releases marquee — fix Webflow's mobile grid override ─── */
+/* Show the wrapper (was hidden by inline style) */
+.releases-list-wrapper {
+  display: block !important;
+}
+
+/* Force the marquee track into horizontal flex on ALL screen sizes */
+.releases-list.is-marquee .release-item {
+  flex-shrink: 0 !important;
+}
+
+/* Override Webflow's ≤479px grid that breaks card vertical layout */
+@media screen and (max-width: 479px) {
+  .releases-list.is-marquee {
+    display: flex !important;
+    flex-wrap: nowrap !important;
+    flex-direction: row !important;
+  }
+  .releases-list.is-marquee .release-item {
+    flex: 0 0 min(74vw, 260px) !important;
+    width: min(74vw, 260px) !important;
+  }
+  .releases-list.is-marquee .release-block {
+    display: flex !important;
+    flex-direction: column !important;
+    width: 100% !important;
+    gap: 0 !important;
+    grid-template-columns: unset !important;
+  }
+  .releases-list.is-marquee .release-block-cover {
+    width: 100% !important;
+    aspect-ratio: 1 / 1 !important;
+    position: relative !important;
+    overflow: hidden !important;
+  }
+  .releases-list.is-marquee .release-block-cover .background-image {
+    position: absolute !important;
+    inset: 0 !important;
+    width: 100% !important;
+    height: 100% !important;
+    object-fit: cover !important;
+  }
+  .releases-list.is-marquee .release-block-content {
+    display: flex !important;
+    flex-direction: row !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+    padding: 12px 0 !important;
+    flex-wrap: nowrap !important;
+  }
+  .releases-list.is-marquee .release-block-info {
+    max-width: unset !important;
+    flex: 1 !important;
+  }
+  .releases-list.is-marquee .release-block-linear {
+    display: none !important;
+  }
+}
+
+/* Tablet (480px–767px) — also needs consistent card layout */
+@media screen and (min-width: 480px) and (max-width: 767px) {
+  .releases-list.is-marquee .release-block {
+    display: flex !important;
+    flex-direction: column !important;
+  }
+  .releases-list.is-marquee .release-block-cover {
+    width: 100% !important;
+    aspect-ratio: 1 / 1 !important;
+    position: relative !important;
+    overflow: hidden !important;
+  }
+  .releases-list.is-marquee .release-block-cover .background-image {
+    position: absolute !important;
+    inset: 0 !important;
+    width: 100% !important;
+    height: 100% !important;
+    object-fit: cover !important;
+  }
+}
+
+.releases-list.is-marquee .release-block-button-icon-wrapper {
+  width: 32px !important;
+  height: 32px !important;
+  min-width: 32px !important;
+}
+
 </style>
 </head>
 <body>
@@ -562,7 +648,7 @@ transform: translate3d(-50%, 0, 0);
 </main>
 <section id="merch" class="section no-top-border">
 <div class="w-layout-blockcontainer container w-container">
-<div class="section-content" style="padding-bottom:0">
+<div class="section-content" style="padding-bottom:20px">
 <div class="section-heading">
 <h2 class="h2">Merch</h2>
 </div>
@@ -573,7 +659,7 @@ transform: translate3d(-50%, 0, 0);
 </div>
 </div>
 </div>
-<div class="releases-list-wrapper w-dyn-list" style="display:none">
+<div class="releases-list-wrapper w-dyn-list">
 <div role="list" class="releases-list w-dyn-items">
 <div role="listitem" class="release-item w-dyn-item">
 <a href="#music" class="release-block custom-cursor-link w-inline-block">
@@ -740,7 +826,7 @@ transform: translate3d(-50%, 0, 0);
 </div>
 </div>
 </div>
-<div class="merch-marquee-wrap">
+<div class="merch-marquee-wrap" style="margin-top:8px">
 <div class="merch-marquee-track">
 <div class="merch-marquee-item">
 <img src="https://res.cloudinary.com/dzgqzeebg/image/upload/f_auto,q_auto/azulinho/merch/blackstar-front-1.jpg" loading="lazy" alt="AZ Black Star Front" style="width:100%;height:auto;display:block;"/>
