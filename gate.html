@@ -1,3 +1,6 @@
+---
+permalink: /gate
+---
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -192,7 +195,7 @@ document.getElementById('gate').addEventListener('submit', function() {
     msg.textContent = 'entering...';
     msg.className = 'msg ok';
     sessionStorage.setItem('az_auth', '1');
-    window.location.replace('/waves.html');
+    window.location.replace('/waves');
   } else {
     msg.textContent = 'incorrect';
     msg.className = 'msg error';
