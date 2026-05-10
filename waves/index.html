@@ -209,13 +209,25 @@ overflow: hidden;
 
 @media screen and (max-width: 767px) {
   .footer-main {
-    flex-direction: column !important;
+    flex-direction: row !important;
+    flex-wrap: wrap !important;
+    justify-content: center !important;
     align-items: center !important;
     text-align: center !important;
-    gap: 12px !important;
+    gap: 8px 16px !important;
     width: 100% !important;
   }
-  .footer-divider { display: none !important; }
+  .footer-main .body-m {
+    font-size: 10px !important;
+    letter-spacing: 0.08em !important;
+    opacity: 0.5;
+  }
+  .footer-main .menu-item .body-m {
+    font-size: 10px !important;
+    letter-spacing: 0.08em !important;
+    opacity: 0.5;
+  }
+  .footer-divider { display: block !important; width: 3px !important; height: 3px !important; opacity: 0.4; }
 }
 
 .releases-list.is-marquee {
