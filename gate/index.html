@@ -177,28 +177,15 @@ button:hover { color: #fff; }
 <div class="noise-overlay"></div>
 <img src="/assets/signuture.svg" class="sig" alt="A storm is coming"/>
 
-<form class="gate" id="gate" onsubmit="return false;">
-  <input id="pw" type="password" placeholder="password" autocomplete="off" autofocus/>
-  <button type="submit">enter</button>
-  <div class="msg" id="msg"></div>
+<div class="gate">
+  <button id="enter-btn">enter</button>
   <p class="company-info">Fortuna Records · Registered in England &amp; Wales<br/>Company No. 15473829 · All rights reserved</p>
-</form>
+</div>
 
 <script>
-document.getElementById('gate').addEventListener('submit', function() {
-  var val = document.getElementById('pw').value.trim();
-  var msg = document.getElementById('msg');
-  if (val === 'waves87') {
-    msg.textContent = 'entering...';
-    msg.className = 'msg ok';
-    sessionStorage.setItem('az_auth', '1');
-    window.location.replace('/waves');
-  } else {
-    msg.textContent = 'incorrect';
-    msg.className = 'msg error';
-    document.getElementById('pw').value = '';
-    setTimeout(function() { msg.className = 'msg'; }, 1800);
-  }
+document.getElementById('enter-btn').addEventListener('click', function() {
+  sessionStorage.setItem('az_auth', '1');
+  window.location.replace('/waves');
 });
 </script>
 </body>
