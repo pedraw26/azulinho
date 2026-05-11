@@ -966,7 +966,7 @@ tbody td:first-child { color: var(--text); }
       <div class="card">
         <div class="card-header">
           <div class="card-title">Recent Visitors</div>
-          <div class="card-badge">Export CSV</div>
+          <div class="card-badge" id="export-csv-btn" style="cursor:pointer;user-select:none;">Export CSV</div>
         </div>
         <div class="table-wrap">
           <table>
@@ -1035,6 +1035,44 @@ const sourcesChart = new Chart(sCtx, {
   data:{ labels:[], datasets:[{ data:[], backgroundColor:['#60a5fa','rgba(255,255,255,0.15)','#4ade80','#fbbf24','rgba(255,255,255,0.05)'], borderWidth:0, hoverOffset:4 }] },
   options:{ responsive:true, maintainAspectRatio:false, cutout:'72%', plugins:{ legend:{ position:'bottom', labels:{ boxWidth:8, padding:10, color:'rgba(255,255,255,0.35)', font:{ size:9 } } } } }
 });
+
+// ── Latest data cache (for CSV export) ──
+let lastVisits = [];
+let lastEvents = [];
+
+// ── CSV export ──
+function exportCsv() {
+  if (!lastVisits.length) { alert('No visitors yet to export.'); return; }
+  const eventsByVisit = {};
+  lastEvents.forEach(e => {
+    if (!eventsByVisit[e.visit_id]) eventsByVisit[e.visit_id] = [];
+    eventsByVisit[e.visit_id].push(`${e.type}:${e.meta || ''}`);
+  });
+  const headers = ['created_at','country','country_code','city','device','referrer','ip','user_agent','events'];
+  const escape = s => {
+    if (s == null) return '';
+    const v = String(s).replace(/"/g, '""');
+    return /[",\n]/.test(v) ? `"${v}"` : v;
+  };
+  const rows = [headers.join(',')];
+  lastVisits.forEach(v => {
+    rows.push([
+      v.created_at, v.country, v.country_code, v.city,
+      v.device, v.referrer, v.ip, v.user_agent,
+      (eventsByVisit[v.id] || []).join('|')
+    ].map(escape).join(','));
+  });
+  const blob = new Blob([rows.join('\n')], { type: 'text/csv;charset=utf-8;' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = `azulinho-visitors-${new Date().toISOString().slice(0,10)}.csv`;
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  URL.revokeObjectURL(url);
+}
+document.getElementById('export-csv-btn')?.addEventListener('click', exportCsv);
 
 // ── Geographic visitor map (Leaflet) ──
 let geoMap = null;
@@ -1123,6 +1161,8 @@ async function loadDashboard() {
 
   const visits = allVisits || [];
   const evts = events || [];
+  lastVisits = visits;
+  lastEvents = evts;
 
   const visits30 = visits.filter(v => v.created_at >= days30ago);
   const plays = evts.filter(e => e.type === 'play');

@@ -1880,7 +1880,7 @@ object-position: center 26%;
   // Track visit on load
   trackVisit();
 
-  // Track streaming button clicks (Spotify, Apple Music, YouTube)
+  // Track streaming button clicks (Spotify, Apple Music, YouTube — external links)
   document.querySelectorAll('.streaming-button, .streaming-icon-button').forEach(btn => {
     btn.addEventListener('click', function() {
       const href = this.href || '';
@@ -1888,6 +1888,19 @@ object-position: center 26%;
       if (href.includes('spotify')) platform = 'Spotify';
       else if (href.includes('apple')) platform = 'Apple Music';
       else if (href.includes('youtube')) platform = 'YouTube';
+      trackEvent('play', platform);
+    });
+  });
+
+  // Track on-site music player plays (the track-play-button in each row)
+  document.querySelectorAll('.track-play-button').forEach(btn => {
+    btn.addEventListener('click', function() {
+      const row = this.closest('[data-track-title]') || this.closest('[data-spotify-id]') || this.closest('tr,li,.track-row,.releases-row');
+      let title = 'Unknown';
+      if (row) {
+        title = row.dataset.trackTitle || row.dataset.title || row.querySelector('[data-track-title]')?.dataset.trackTitle || row.textContent.trim().slice(0,80) || 'Unknown';
+      }
+      const platform = row && row.dataset.spotifyId ? `Site Player (Spotify: ${title})` : `Site Player (${title})`;
       trackEvent('play', platform);
     });
   });
