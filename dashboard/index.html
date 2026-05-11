@@ -1157,10 +1157,18 @@ async function loadDashboard() {
   visits.forEach(v => {
     let src = 'Direct';
     if (v.referrer && v.referrer !== 'direct') {
-      if (v.referrer.includes('instagram')) src = 'Instagram';
-      else if (v.referrer.includes('google')) src = 'Google';
-      else if (v.referrer.includes('twitter') || v.referrer.includes('t.co')) src = 'Twitter';
-      else if (v.referrer.includes('youtube')) src = 'YouTube';
+      const r = v.referrer.toLowerCase();
+      if (r.includes('azulinhomusic.com')) src = 'Direct';
+      else if (r.includes('instagram')) src = 'Instagram';
+      else if (r.includes('tiktok')) src = 'TikTok';
+      else if (r.includes('google')) src = 'Google';
+      else if (r.includes('twitter') || r.includes('t.co') || r.includes('x.com')) src = 'Twitter/X';
+      else if (r.includes('youtube') || r.includes('youtu.be')) src = 'YouTube';
+      else if (r.includes('facebook') || r.includes('fb.com')) src = 'Facebook';
+      else if (r.includes('spotify')) src = 'Spotify';
+      else if (r.includes('apple.com') || r.includes('music.apple')) src = 'Apple Music';
+      else if (r.includes('whatsapp')) src = 'WhatsApp';
+      else if (r.includes('reddit')) src = 'Reddit';
       else src = 'Other';
     }
     sourceCounts[src] = (sourceCounts[src] || 0) + 1;
