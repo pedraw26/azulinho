@@ -115,7 +115,7 @@ a[href*="music.apple.com"],
 display: none !important;
 }
 
-/* About section — Safari/desktop-only fix. Mobile untouched. */
+/* About section quote — bottom-aligned on all screens */
 @media screen and (min-width: 768px) {
   #about.section.quote-section {
     width: 100% !important;
@@ -139,6 +139,24 @@ display: none !important;
     margin: 0 !important;
     width: 100% !important;
     max-width: 100% !important;
+  }
+}
+@media screen and (max-width: 767px) {
+  #about .w-layout-blockcontainer.container {
+    position: absolute !important;
+    bottom: 60px !important;
+    left: 0 !important;
+    right: 0 !important;
+    top: auto !important;
+    z-index: 2;
+    margin: 0 !important;
+    width: 100% !important;
+    max-width: 100% !important;
+  }
+}
+@media screen and (max-width: 479px) {
+  #about .w-layout-blockcontainer.container {
+    bottom: 40px !important;
   }
 }
 @media screen and (min-width: 1200px) {
