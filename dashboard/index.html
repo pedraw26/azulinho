@@ -738,36 +738,49 @@ tbody td:first-child { color: var(--text); }
 <!-- GATE -->
 <div id="gate-overlay">
   <div class="brand">AZULINHO<span>·</span>OS</div>
-  <input type="password" id="gate-input" placeholder="password" autofocus/>
+  <input type="email" id="gate-email" placeholder="email" autocomplete="email" style="background:transparent;border:none;border-bottom:1px solid rgba(255,255,255,0.2);color:#fff;font-size:13px;letter-spacing:0.1em;text-align:center;width:240px;padding:10px 0;outline:none;font-family:var(--font-body);margin-bottom:8px;"/>
+  <input type="password" id="gate-input" placeholder="password" autocomplete="current-password"/>
   <button class="gate-btn" id="gate-btn">Enter</button>
-  <div class="gate-error" id="gate-error">Incorrect password</div>
+  <div class="gate-error" id="gate-error">Incorrect credentials</div>
 </div>
 
 <script>
-(function() {
-  const PWD = 'azulinhorulesdaworld';
-  const overlay = document.getElementById('gate-overlay');
-  const input = document.getElementById('gate-input');
-  const btn = document.getElementById('gate-btn');
-  const err = document.getElementById('gate-error');
+(async function() {
+  const SUPA_URL = 'https://symywayiveicjgmswari.supabase.co';
+  const SUPA_KEY = 'sb_publishable_m6fm8X8EJtLn1U27sxS6Xw_lnhougka';
+  const auth = supabase.createClient(SUPA_URL, SUPA_KEY).auth;
 
-  if (sessionStorage.getItem('az_dash_auth') === '1') {
-    overlay.style.display = 'none';
-  }
+  const overlay  = document.getElementById('gate-overlay');
+  const emailEl  = document.getElementById('gate-email');
+  const input    = document.getElementById('gate-input');
+  const btn      = document.getElementById('gate-btn');
+  const err      = document.getElementById('gate-error');
 
-  function attempt() {
-    if (input.value === PWD) {
-      sessionStorage.setItem('az_dash_auth', '1');
-      overlay.style.display = 'none';
-    } else {
+  // Already logged in?
+  const { data: { session } } = await auth.getSession();
+  if (session) overlay.style.display = 'none';
+
+  async function attempt() {
+    err.classList.remove('show');
+    btn.textContent = '...';
+    const { data, error } = await auth.signInWithPassword({
+      email: emailEl.value.trim(),
+      password: input.value
+    });
+    btn.textContent = 'Enter';
+    if (error || !data.session) {
+      err.textContent = (error && error.message) || 'Incorrect credentials';
       err.classList.add('show');
       input.value = '';
-      setTimeout(() => err.classList.remove('show'), 2000);
+      setTimeout(() => err.classList.remove('show'), 3000);
+      return;
     }
+    overlay.style.display = 'none';
   }
 
   btn.addEventListener('click', attempt);
   input.addEventListener('keydown', e => { if (e.key === 'Enter') attempt(); });
+  emailEl.addEventListener('keydown', e => { if (e.key === 'Enter') input.focus(); });
 })();
 </script>
 
