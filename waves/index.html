@@ -146,16 +146,7 @@ min-width: 0;
 text-align: center;
 }
 
-.releases-list-wrapper {
-display: block;
-overflow: hidden;
-width: 100vw;
-position: relative;
-left: 50%;
-transform: translateX(-50%);
-}
-
-/* Ensure the releases section never clips the edge-to-edge wrapper */
+/* Ensure the merch section never clips carousels */
 .section.no-top-border {
 overflow: visible;
 }
@@ -233,21 +224,6 @@ overflow: hidden;
   .footer-divider { display: block !important; width: 3px !important; height: 3px !important; opacity: 0.4; }
 }
 
-.releases-list.is-marquee {
-display: flex;
-flex-wrap: nowrap;
-gap: 32px;
-width: max-content;
-animation: releases-marquee 28s linear infinite;
-will-change: transform;
-}
-
-.releases-list.is-marquee .release-item {
-flex: 0 0 clamp(240px, 28vw, 360px);
-opacity: 1;
-transform: none;
-animation: none;
-}
 
 @media screen and (max-width: 991px) {
 .header-social-links {
@@ -292,29 +268,11 @@ mix-blend-mode: screen;
 .home-hero-section .latest-release-cover .background-image {
 object-position: center 30%;
 }
-
-.releases-list.is-marquee {
-gap: 24px;
-animation-duration: 24s;
-}
-
-.releases-list.is-marquee .release-item {
-flex-basis: clamp(220px, 42vw, 320px);
-}
 }
 
 @media screen and (max-width: 767px) {
 .home-hero-section .latest-release-cover .background-image {
 object-position: center 26%;
-}
-
-.releases-list.is-marquee {
-gap: 18px;
-animation-duration: 20s;
-}
-
-.releases-list.is-marquee .release-item {
-flex-basis: min(78vw, 280px);
 }
 }
 
@@ -350,15 +308,6 @@ flex-basis: min(78vw, 280px);
   100% { transform: translate3d( 33px,  67px, 0) scale(1.08); }
 }
 
-@keyframes releases-marquee {
-0% {
-transform: translate3d(0, 0, 0);
-}
-
-100% {
-transform: translate3d(-50%, 0, 0);
-}
-}
 
 /* ── Consistent page margins — single source of truth ─────── */
 :root {
@@ -690,173 +639,6 @@ transform: translate3d(-50%, 0, 0);
   <span style="font-size:11px;letter-spacing:0.15em;text-transform:uppercase;color:rgba(255,255,255,0.55);">17% off with code</span>
   <span style="font-size:11px;letter-spacing:0.15em;text-transform:uppercase;font-weight:700;color:#60a5fa;">BLUE77</span>
   <button id="copy-code-btn" onclick="navigator.clipboard.writeText('BLUE77').then(function(){var b=document.getElementById('copy-code-btn');b.textContent='✓';setTimeout(function(){b.textContent='⧉';},1500);})" style="background:none;border:none;color:#60a5fa;font-size:14px;padding:2px 4px;cursor:pointer;opacity:0.7;transition:opacity 0.2s;line-height:1;" onmouseover="this.style.opacity='1'" onmouseout="this.style.opacity='0.7'">⧉</button>
-</div>
-</div>
-</div>
-<div class="releases-list-wrapper w-dyn-list" style="display:none">
-<div role="list" class="releases-list w-dyn-items">
-<div role="listitem" class="release-item w-dyn-item">
-<a href="#music" class="release-block custom-cursor-link w-inline-block">
-<div class="release-block-cover">
-<img src="/assets/cdn.prod.website-files.com/67ee44f1ff9354a5d5c4df6c/67ee85fb2178ca84a0b94f64_Texture.avif" loading="lazy" alt="" class="release-texture"/>
-<div class="release-block-noise"><div data-wf--noise--variant="card" class="noise w-variant-6c7d30c2-2502-0ce8-e0c1-9ebed8cceb3b">
-<img src="/assets/cdn.prod.website-files.com/67ee44f1ff9354a5d5c4df6c/67ee85fb0f074b505aea71fe_Noise.avif" loading="lazy" alt="" class="noise-default"/>
-<img src="/assets/cdn.prod.website-files.com/67ee44f1ff9354a5d5c4df6c/67ee85fb0f074b505aea71fe_Noise.avif" loading="lazy" alt="" class="noise-flipped"/>
-</div></div>
-<img src="/assets/cdn.prod.website-files.com/67ee554feab19e388b23feeb/67ee7f002fdf0cab130ad074_Silent%20Ops.avif" loading="lazy" alt="You Belong to You" class="background-image"/>
-</div>
-<div class="release-block-content">
-<div class="release-block-info">
-<div class="body-s release-block-year">2026</div>
-<div class="release-block-name"><h3 class="h3">You Belong to You</h3></div>
-</div>
-<div class="release-block-button">
-<div class="body-m release-block-button-text">Listen Now</div>
-<div class="release-block-button-icon-wrapper"><img src="/assets/cdn.prod.website-files.com/67ee44f1ff9354a5d5c4df6c/67ee9442b2f39a68e205ff40_Play.svg" loading="lazy" alt="" class="release-block-button-icon"/></div>
-</div>
-<div class="release-block-linear"></div>
-</div>
-</a>
-</div>
-<div role="listitem" class="release-item w-dyn-item">
-<a href="#music" class="release-block custom-cursor-link w-inline-block">
-<div class="release-block-cover">
-<img src="/assets/cdn.prod.website-files.com/67ee44f1ff9354a5d5c4df6c/67ee85fb2178ca84a0b94f64_Texture.avif" loading="lazy" alt="" class="release-texture"/>
-<div class="release-block-noise"><div data-wf--noise--variant="card" class="noise w-variant-6c7d30c2-2502-0ce8-e0c1-9ebed8cceb3b">
-<img src="/assets/cdn.prod.website-files.com/67ee44f1ff9354a5d5c4df6c/67ee85fb0f074b505aea71fe_Noise.avif" loading="lazy" alt="" class="noise-default"/>
-<img src="/assets/cdn.prod.website-files.com/67ee44f1ff9354a5d5c4df6c/67ee85fb0f074b505aea71fe_Noise.avif" loading="lazy" alt="" class="noise-flipped"/>
-</div></div>
-<img src="/assets/cdn.prod.website-files.com/67ee554feab19e388b23feeb/67ee7e3548b162fe0fe9fbcd_Jet%20Black%20Skies.avif" loading="lazy" alt="C.E.G." class="background-image"/>
-</div>
-<div class="release-block-content">
-<div class="release-block-info">
-<div class="body-s release-block-year">2026</div>
-<div class="release-block-name"><h3 class="h3">C.E.G.</h3></div>
-</div>
-<div class="release-block-button">
-<div class="body-m release-block-button-text">Listen Now</div>
-<div class="release-block-button-icon-wrapper"><img src="/assets/cdn.prod.website-files.com/67ee44f1ff9354a5d5c4df6c/67ee9442b2f39a68e205ff40_Play.svg" loading="lazy" alt="" class="release-block-button-icon"/></div>
-</div>
-<div class="release-block-linear"></div>
-</div>
-</a>
-</div>
-<div role="listitem" class="release-item w-dyn-item">
-<a href="#music" class="release-block custom-cursor-link w-inline-block">
-<div class="release-block-cover">
-<img src="/assets/cdn.prod.website-files.com/67ee44f1ff9354a5d5c4df6c/67ee85fb2178ca84a0b94f64_Texture.avif" loading="lazy" alt="" class="release-texture"/>
-<div class="release-block-noise"><div data-wf--noise--variant="card" class="noise w-variant-6c7d30c2-2502-0ce8-e0c1-9ebed8cceb3b">
-<img src="/assets/cdn.prod.website-files.com/67ee44f1ff9354a5d5c4df6c/67ee85fb0f074b505aea71fe_Noise.avif" loading="lazy" alt="" class="noise-default"/>
-<img src="/assets/cdn.prod.website-files.com/67ee44f1ff9354a5d5c4df6c/67ee85fb0f074b505aea71fe_Noise.avif" loading="lazy" alt="" class="noise-flipped"/>
-</div></div>
-<img src="/assets/coffee-eye-queen.png" loading="lazy" alt="Coffee Eye Queen" class="background-image"/>
-</div>
-<div class="release-block-content">
-<div class="release-block-info">
-<div class="body-s release-block-year">2026</div>
-<div class="release-block-name"><h3 class="h3">Coffee Eye Queen</h3></div>
-</div>
-<div class="release-block-button">
-<div class="body-m release-block-button-text">Listen Now</div>
-<div class="release-block-button-icon-wrapper"><img src="/assets/cdn.prod.website-files.com/67ee44f1ff9354a5d5c4df6c/67ee9442b2f39a68e205ff40_Play.svg" loading="lazy" alt="" class="release-block-button-icon"/></div>
-</div>
-<div class="release-block-linear"></div>
-</div>
-</a>
-</div>
-<div role="listitem" class="release-item w-dyn-item">
-<a href="#music" class="release-block custom-cursor-link w-inline-block">
-<div class="release-block-cover">
-<img src="/assets/cdn.prod.website-files.com/67ee44f1ff9354a5d5c4df6c/67ee85fb2178ca84a0b94f64_Texture.avif" loading="lazy" alt="" class="release-texture"/>
-<div class="release-block-noise"><div data-wf--noise--variant="card" class="noise w-variant-6c7d30c2-2502-0ce8-e0c1-9ebed8cceb3b">
-<img src="/assets/cdn.prod.website-files.com/67ee44f1ff9354a5d5c4df6c/67ee85fb0f074b505aea71fe_Noise.avif" loading="lazy" alt="" class="noise-default"/>
-<img src="/assets/cdn.prod.website-files.com/67ee44f1ff9354a5d5c4df6c/67ee85fb0f074b505aea71fe_Noise.avif" loading="lazy" alt="" class="noise-flipped"/>
-</div></div>
-<img src="/assets/i-gave-you-everything.png" loading="lazy" alt="I Gave You Everything" class="background-image"/>
-</div>
-<div class="release-block-content">
-<div class="release-block-info">
-<div class="body-s release-block-year">2026</div>
-<div class="release-block-name"><h3 class="h3">I Gave You Everything</h3></div>
-</div>
-<div class="release-block-button">
-<div class="body-m release-block-button-text">Listen Now</div>
-<div class="release-block-button-icon-wrapper"><img src="/assets/cdn.prod.website-files.com/67ee44f1ff9354a5d5c4df6c/67ee9442b2f39a68e205ff40_Play.svg" loading="lazy" alt="" class="release-block-button-icon"/></div>
-</div>
-<div class="release-block-linear"></div>
-</div>
-</a>
-</div>
-<div role="listitem" class="release-item w-dyn-item">
-<a href="#music" class="release-block custom-cursor-link w-inline-block">
-<div class="release-block-cover">
-<img src="/assets/cdn.prod.website-files.com/67ee44f1ff9354a5d5c4df6c/67ee85fb2178ca84a0b94f64_Texture.avif" loading="lazy" alt="" class="release-texture"/>
-<div class="release-block-noise"><div data-wf--noise--variant="card" class="noise w-variant-6c7d30c2-2502-0ce8-e0c1-9ebed8cceb3b">
-<img src="/assets/cdn.prod.website-files.com/67ee44f1ff9354a5d5c4df6c/67ee85fb0f074b505aea71fe_Noise.avif" loading="lazy" alt="" class="noise-default"/>
-<img src="/assets/cdn.prod.website-files.com/67ee44f1ff9354a5d5c4df6c/67ee85fb0f074b505aea71fe_Noise.avif" loading="lazy" alt="" class="noise-flipped"/>
-</div></div>
-<img src="/assets/no-star-in-the-sky.png" loading="lazy" alt="No Stars in the Sky" class="background-image"/>
-</div>
-<div class="release-block-content">
-<div class="release-block-info">
-<div class="body-s release-block-year">2026</div>
-<div class="release-block-name"><h3 class="h3">No Stars in the Sky</h3></div>
-</div>
-<div class="release-block-button">
-<div class="body-m release-block-button-text">Listen Now</div>
-<div class="release-block-button-icon-wrapper"><img src="/assets/cdn.prod.website-files.com/67ee44f1ff9354a5d5c4df6c/67ee9442b2f39a68e205ff40_Play.svg" loading="lazy" alt="" class="release-block-button-icon"/></div>
-</div>
-<div class="release-block-linear"></div>
-</div>
-</a>
-</div>
-<div role="listitem" class="release-item w-dyn-item">
-<a href="#music" class="release-block custom-cursor-link w-inline-block">
-<div class="release-block-cover">
-<img src="/assets/cdn.prod.website-files.com/67ee44f1ff9354a5d5c4df6c/67ee85fb2178ca84a0b94f64_Texture.avif" loading="lazy" alt="" class="release-texture"/>
-<div class="release-block-noise"><div data-wf--noise--variant="card" class="noise w-variant-6c7d30c2-2502-0ce8-e0c1-9ebed8cceb3b">
-<img src="/assets/cdn.prod.website-files.com/67ee44f1ff9354a5d5c4df6c/67ee85fb0f074b505aea71fe_Noise.avif" loading="lazy" alt="" class="noise-default"/>
-<img src="/assets/cdn.prod.website-files.com/67ee44f1ff9354a5d5c4df6c/67ee85fb0f074b505aea71fe_Noise.avif" loading="lazy" alt="" class="noise-flipped"/>
-</div></div>
-<img src="/assets/cdn.prod.website-files.com/67ee554feab19e388b23feeb/67ee7e3548b162fe0fe9fbcd_Jet%20Black%20Skies.avif" loading="lazy" alt="Point Blank" class="background-image"/>
-</div>
-<div class="release-block-content">
-<div class="release-block-info">
-<div class="body-s release-block-year">2026</div>
-<div class="release-block-name"><h3 class="h3">Point Blank</h3></div>
-</div>
-<div class="release-block-button">
-<div class="body-m release-block-button-text">Listen Now</div>
-<div class="release-block-button-icon-wrapper"><img src="/assets/cdn.prod.website-files.com/67ee44f1ff9354a5d5c4df6c/67ee9442b2f39a68e205ff40_Play.svg" loading="lazy" alt="" class="release-block-button-icon"/></div>
-</div>
-<div class="release-block-linear"></div>
-</div>
-</a>
-</div>
-<div role="listitem" class="release-item w-dyn-item">
-<a href="#music" class="release-block custom-cursor-link w-inline-block">
-<div class="release-block-cover">
-<img src="/assets/cdn.prod.website-files.com/67ee44f1ff9354a5d5c4df6c/67ee85fb2178ca84a0b94f64_Texture.avif" loading="lazy" alt="" class="release-texture"/>
-<div class="release-block-noise"><div data-wf--noise--variant="card" class="noise w-variant-6c7d30c2-2502-0ce8-e0c1-9ebed8cceb3b">
-<img src="/assets/cdn.prod.website-files.com/67ee44f1ff9354a5d5c4df6c/67ee85fb0f074b505aea71fe_Noise.avif" loading="lazy" alt="" class="noise-default"/>
-<img src="/assets/cdn.prod.website-files.com/67ee44f1ff9354a5d5c4df6c/67ee85fb0f074b505aea71fe_Noise.avif" loading="lazy" alt="" class="noise-flipped"/>
-</div></div>
-<video class="background-image" muted loop playsinline preload="none" style="object-fit:cover;width:100%;height:100%;" data-lazy-video="true"><source data-src="/assets/hero-bg.mp4" type="video/mp4"/></video>
-</div>
-<div class="release-block-content">
-<div class="release-block-info">
-<div class="body-s release-block-year">2026</div>
-<div class="release-block-name"><h3 class="h3">Post-Clarity</h3></div>
-</div>
-<div class="release-block-button">
-<div class="body-m release-block-button-text">Listen Now</div>
-<div class="release-block-button-icon-wrapper"><img src="/assets/cdn.prod.website-files.com/67ee44f1ff9354a5d5c4df6c/67ee9442b2f39a68e205ff40_Play.svg" loading="lazy" alt="" class="release-block-button-icon"/></div>
-</div>
-</div>
-<div class="release-block-linear">
-</div>
-</div>
-</a>
 </div>
 </div>
 </div>
@@ -1292,22 +1074,6 @@ transform: translate3d(-50%, 0, 0);
 <script src="/assets/cdn.prod.website-files.com/67ee44f1ff9354a5d5c4df6c/js/webflow.schunk.40219c9b112e4424.js" type="text/javascript">
 </script>
 <script src="/assets/cdn.prod.website-files.com/67ee44f1ff9354a5d5c4df6c/js/webflow.cdff352a.11b7e4a3d3deb3be.js" type="text/javascript">
-</script>
-<script>
-(() => {
-  const releasesList = document.querySelector(".releases-list");
-  if (!releasesList || releasesList.dataset.marqueeBuilt === "true") return;
-
-  const items = Array.from(releasesList.children);
-  if (items.length < 2) return;
-
-  items.forEach((item) => {
-    releasesList.appendChild(item.cloneNode(true));
-  });
-
-  releasesList.dataset.marqueeBuilt = "true";
-  releasesList.classList.add("is-marquee");
-})();
 </script>
 <script>
 (() => {
