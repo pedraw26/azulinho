@@ -1,0 +1,37 @@
+# robots.txt — Azulinho official site
+User-agent: *
+Allow: /
+Allow: /waves/
+Allow: /assets/
+Disallow: /gate/
+Disallow: /dashboard/
+
+# Allow major crawlers to access merch/music data
+User-agent: Googlebot
+Allow: /
+
+User-agent: Googlebot-Image
+Allow: /assets/
+Allow: /
+
+User-agent: Bingbot
+Allow: /
+
+User-agent: Applebot
+Allow: /
+
+# AI assistants (allow for discoverability)
+User-agent: GPTBot
+Allow: /
+User-agent: ChatGPT-User
+Allow: /
+User-agent: PerplexityBot
+Allow: /
+User-agent: ClaudeBot
+Allow: /
+User-agent: Claude-Web
+Allow: /
+User-agent: anthropic-ai
+Allow: /
+
+Sitemap: https://azulinhomusic.com/sitemap.xml

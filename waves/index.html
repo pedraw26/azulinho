@@ -1,23 +1,55 @@
 <!DOCTYPE html>
-<script>if(!sessionStorage.getItem('az_auth'))window.location.replace('/gate');</script>
-<!-- This site was created in Webflow. https://webflow.com -->
-<!-- Last Published: Tue Apr 22 2025 07:39:45 GMT+0000 (Coordinated Universal Time) -->
-<html data-wf-domain="trvns.webflow.io" data-wf-page="67ee44f1ff9354a5d5c4df73" data-wf-site="67ee44f1ff9354a5d5c4df6c" lang="en">
+<script>
+// Allow search engines (Google, Bing, etc.) and accessibility crawlers to index this page.
+// Humans without auth get redirected to the gate.
+(function() {
+  var ua = navigator.userAgent || '';
+  var isBot = /Googlebot|bingbot|Slurp|DuckDuckBot|Baiduspider|YandexBot|facebookexternalhit|Twitterbot|LinkedInBot|WhatsApp|TelegramBot|AhrefsBot|SemrushBot|Applebot|Discordbot|ia_archiver|Pinterest|Sogou|Mediapartners-Google|AdsBot|Lighthouse|PageSpeed/i.test(ua);
+  if (!sessionStorage.getItem('az_auth') && !isBot) {
+    window.location.replace('/gate');
+  }
+})();
+</script>
+<html lang="en">
 <head>
 <meta charset="utf-8"/>
 <link href="https://cdn.prod.website-files.com" rel="preconnect" crossorigin="anonymous"/>
-<title>Azulinho</title>
-<meta content="Azulinho is known for emotional tracks and a dark sound. His music speaks to people who stay quiet but feel everything. He doesn’t follow trends — he creates his own." name="description"/>
-<meta content="Azulinho" property="og:title"/>
-<meta content="Azulinho is known for emotional tracks and a dark sound. His music speaks to people who stay quiet but feel everything. He doesn’t follow trends — he creates his own." property="og:description"/>
-<meta content="/assets/cdn.prod.website-files.com/67ee44f1ff9354a5d5c4df6c/67f38ee0ed3092f0df2d1208_Opengraph%20-%20Home.jpg" property="og:image"/>
-<meta content="Azulinho" property="twitter:title"/>
-<meta content="Azulinho is known for emotional tracks and a dark sound. His music speaks to people who stay quiet but feel everything. He doesn’t follow trends — he creates his own." property="twitter:description"/>
-<meta content="/assets/cdn.prod.website-files.com/67ee44f1ff9354a5d5c4df6c/67f38ee0ed3092f0df2d1208_Opengraph%20-%20Home.jpg" property="twitter:image"/>
-<meta property="og:type" content="website"/>
-<meta content="summary_large_image" name="twitter:card"/>
+<link href="https://res.cloudinary.com" rel="preconnect" crossorigin="anonymous"/>
+
+<!-- ═══ PRIMARY SEO ═══ -->
+<title>Azulinho — Trap Singer, Producer & Artist | Official Site</title>
+<meta name="description" content="Azulinho — London-based trap singer, producer and recording artist. Stream WAVES, listen to Child of God on Spotify, and shop official AZ Black Star merch. Released through Fortuna Records."/>
+<meta name="keywords" content="Azulinho, Azulinho singer, Azulinho music, Azulinho trap artist, Azulinho producer, Child of God Azulinho, WAVES Azulinho, AZ Black Star, Fortuna Records, UK trap, London trap artist, trap singer, dark trap, emotional trap"/>
+<meta name="author" content="Azulinho"/>
+<meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1"/>
+<meta name="googlebot" content="index, follow, max-image-preview:large, max-snippet:-1"/>
+<meta name="rating" content="general"/>
+<link rel="canonical" href="https://azulinhomusic.com/waves/"/>
+<link rel="alternate" hreflang="en" href="https://azulinhomusic.com/waves/"/>
+<link rel="alternate" hreflang="en-gb" href="https://azulinhomusic.com/waves/"/>
+<link rel="alternate" hreflang="x-default" href="https://azulinhomusic.com/waves/"/>
+
+<!-- ═══ OPEN GRAPH (Facebook, LinkedIn, etc.) ═══ -->
+<meta property="og:type" content="music.musician"/>
+<meta property="og:site_name" content="Azulinho — Official"/>
+<meta property="og:title" content="Azulinho — Trap Singer, Producer & Artist"/>
+<meta property="og:description" content="Stream WAVES, listen to Child of God, and shop official AZ Black Star merch. Azulinho — London trap artist on Fortuna Records."/>
+<meta property="og:url" content="https://azulinhomusic.com/waves/"/>
+<meta property="og:image" content="https://azulinhomusic.com/assets/cdn.prod.website-files.com/67ee44f1ff9354a5d5c4df6c/67f38ee0ed3092f0df2d1208_Opengraph%20-%20Home.jpg"/>
+<meta property="og:image:width" content="1200"/>
+<meta property="og:image:height" content="630"/>
+<meta property="og:image:alt" content="Azulinho — Official Artist Site"/>
+<meta property="og:locale" content="en_GB"/>
+<meta property="music:musician" content="https://open.spotify.com/artist/2f0dT9wXBVwfvHD1XOgf00"/>
+
+<!-- ═══ TWITTER / X CARD ═══ -->
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:title" content="Azulinho — Trap Singer, Producer & Artist"/>
+<meta name="twitter:description" content="Stream WAVES, listen to Child of God on Spotify, and shop official AZ Black Star merch. London trap artist on Fortuna Records."/>
+<meta name="twitter:image" content="https://azulinhomusic.com/assets/cdn.prod.website-files.com/67ee44f1ff9354a5d5c4df6c/67f38ee0ed3092f0df2d1208_Opengraph%20-%20Home.jpg"/>
+<meta name="twitter:image:alt" content="Azulinho — Official Artist Site"/>
+
 <meta content="width=device-width, initial-scale=1" name="viewport"/>
-<meta content="Webflow" name="generator"/>
 <link href="/assets/cdn.prod.website-files.com/67ee44f1ff9354a5d5c4df6c/css/trvns.webflow.shared.937e95af2.css" rel="stylesheet" type="text/css"/>
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
 <link href="https://fonts.googleapis.com/css2?family=Nothing+You+Could+Do&display=swap" rel="stylesheet"/>
@@ -27,6 +59,144 @@
 <link href="/assets/favicon-square.svg" rel="icon" type="image/svg+xml"/>
 <link href="/assets/favicon-square.svg" rel="shortcut icon"/>
 <link href="/assets/favicon-square.svg" rel="apple-touch-icon"/>
+
+<!-- ═══ STRUCTURED DATA — Schema.org JSON-LD ═══ -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "MusicGroup",
+      "@id": "https://azulinhomusic.com/#artist",
+      "name": "Azulinho",
+      "alternateName": ["AZ Black Star", "AZ"],
+      "url": "https://azulinhomusic.com/",
+      "image": "https://azulinhomusic.com/assets/cdn.prod.website-files.com/67ee44f1ff9354a5d5c4df6c/67f38ee0ed3092f0df2d1208_Opengraph%20-%20Home.jpg",
+      "description": "Azulinho is a London-based trap artist, singer and producer known for emotional storytelling, a dark aesthetic, and raw analog energy. Released through Fortuna Records.",
+      "genre": ["Trap", "Hip Hop", "UK Trap", "Dark Trap", "Emotional Rap"],
+      "sameAs": [
+        "https://open.spotify.com/artist/2f0dT9wXBVwfvHD1XOgf00",
+        "https://music.apple.com/",
+        "https://www.youtube.com/@Azulinho-music",
+        "https://www.instagram.com/azulinhomusic/",
+        "https://www.tiktok.com/@azulinhomusic",
+        "https://www.facebook.com/azulinhomusic"
+      ],
+      "recordLabel": {
+        "@type": "Organization",
+        "name": "Fortuna Records",
+        "legalName": "Fortuna Records",
+        "address": {
+          "@type": "PostalAddress",
+          "addressCountry": "GB",
+          "addressRegion": "England"
+        },
+        "vatID": "GB15473829",
+        "url": "https://azulinhomusic.com/"
+      },
+      "track": [
+        { "@id": "https://azulinhomusic.com/#track-child-of-god" }
+      ]
+    },
+    {
+      "@type": "Person",
+      "@id": "https://azulinhomusic.com/#person",
+      "name": "Azulinho",
+      "alternateName": "AZ Black Star",
+      "jobTitle": ["Singer", "Trap Artist", "Music Producer", "Recording Artist"],
+      "url": "https://azulinhomusic.com/",
+      "image": "https://azulinhomusic.com/assets/cdn.prod.website-files.com/67ee44f1ff9354a5d5c4df6c/67f38ee0ed3092f0df2d1208_Opengraph%20-%20Home.jpg",
+      "description": "Azulinho — trap singer, producer and recording artist. Known for emotional narratives, dark sonic palette, and a raw analog aesthetic.",
+      "knowsLanguage": ["en", "pt"],
+      "nationality": { "@type": "Country", "name": "United Kingdom" }
+    },
+    {
+      "@type": "MusicRecording",
+      "@id": "https://azulinhomusic.com/#track-child-of-god",
+      "name": "Child of God",
+      "byArtist": { "@id": "https://azulinhomusic.com/#artist" },
+      "url": "https://open.spotify.com/track/3UqYJPe0GPgh2mbMiKG944",
+      "image": "https://i.scdn.co/image/ab67616d0000b273649a2ae0a4403ecaff97c0be",
+      "datePublished": "2026",
+      "inLanguage": "en",
+      "genre": ["Trap", "Hip Hop"],
+      "sameAs": "https://open.spotify.com/track/3UqYJPe0GPgh2mbMiKG944",
+      "audio": "https://res.cloudinary.com/dzgqzeebg/video/upload/azulinho/waves/azulinho---child-of-god.m4a"
+    },
+    {
+      "@type": "WebSite",
+      "@id": "https://azulinhomusic.com/#website",
+      "url": "https://azulinhomusic.com/",
+      "name": "Azulinho — Official",
+      "description": "Official site of Azulinho — trap singer, producer and recording artist.",
+      "publisher": { "@id": "https://azulinhomusic.com/#artist" },
+      "inLanguage": "en-GB"
+    },
+    {
+      "@type": "Product",
+      "@id": "https://azulinhomusic.com/waves/#tee-blackstar",
+      "name": "AZ Black Star Organic Oversized Tee",
+      "description": "Organic oversized t-shirt by Azulinho. Star embroidered front, Trapsoul printed back. Ships worldwide.",
+      "image": [
+        "https://res.cloudinary.com/dzgqzeebg/image/upload/f_auto,q_auto/azulinho/merch/blackstar-front-1.jpg",
+        "https://res.cloudinary.com/dzgqzeebg/image/upload/f_auto,q_auto/azulinho/merch/blackstar-back.jpg"
+      ],
+      "brand": { "@type": "Brand", "name": "Azulinho" },
+      "category": "Apparel > T-Shirts",
+      "sku": "AZ-BLACKSTAR-TEE",
+      "offers": {
+        "@type": "Offer",
+        "url": "https://buy.stripe.com/fZu8wQ3iV14h4O6evX9MY00",
+        "priceCurrency": "GBP",
+        "price": "40.00",
+        "availability": "https://schema.org/InStock",
+        "itemCondition": "https://schema.org/NewCondition",
+        "shippingDetails": {
+          "@type": "OfferShippingDetails",
+          "shippingDestination": { "@type": "DefinedRegion", "geoMidpoint": { "@type": "GeoCoordinates" } }
+        }
+      }
+    },
+    {
+      "@type": "Product",
+      "@id": "https://azulinhomusic.com/waves/#hat-blackstar",
+      "name": "AZ Black Star Distressed Dad Hat",
+      "description": "Distressed dad hat with AZ star embroidered front. One size, ships worldwide.",
+      "image": "https://res.cloudinary.com/dzgqzeebg/image/upload/f_auto,q_auto/goeffpoga6lrwhndts6v",
+      "brand": { "@type": "Brand", "name": "Azulinho" },
+      "category": "Apparel > Hats",
+      "sku": "AZ-BLACKSTAR-HAT",
+      "offers": {
+        "@type": "Offer",
+        "url": "https://buy.stripe.com/8x2bJ2g5HdR33K2drT9MY01",
+        "priceCurrency": "GBP",
+        "price": "29.00",
+        "availability": "https://schema.org/InStock",
+        "itemCondition": "https://schema.org/NewCondition"
+      }
+    },
+    {
+      "@type": "Product",
+      "@id": "https://azulinhomusic.com/waves/#tee-az777",
+      "name": "AZ 777 Organic Oversized Tee",
+      "description": "AZ 777 organic oversized t-shirt. Select size at checkout, ships worldwide.",
+      "image": "https://res.cloudinary.com/dzgqzeebg/image/upload/f_auto,q_auto/az777tee-front",
+      "brand": { "@type": "Brand", "name": "Azulinho" },
+      "category": "Apparel > T-Shirts",
+      "sku": "AZ-777-TEE",
+      "offers": {
+        "@type": "Offer",
+        "url": "https://buy.stripe.com/aFafZibPr28l5Sa2Nf9MY02",
+        "priceCurrency": "GBP",
+        "price": "55.00",
+        "availability": "https://schema.org/InStock",
+        "itemCondition": "https://schema.org/NewCondition"
+      }
+    }
+  ]
+}
+</script>
+
 <style>
 
 body {

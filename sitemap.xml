@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9
+                            http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd"
+        xmlns:image="http://www.google.com/schemas/sitemap-image/1.1"
+        xmlns:xhtml="http://www.w3.org/1999/xhtml">
+  <url>
+    <loc>https://azulinhomusic.com/</loc>
+    <lastmod>2026-05-11</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>1.0</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://azulinhomusic.com/waves/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://azulinhomusic.com/waves/"/>
+  </url>
+  <url>
+    <loc>https://azulinhomusic.com/waves/</loc>
+    <lastmod>2026-05-11</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>1.0</priority>
+    <image:image>
+      <image:loc>https://azulinhomusic.com/assets/cdn.prod.website-files.com/67ee44f1ff9354a5d5c4df6c/67f38ee0ed3092f0df2d1208_Opengraph%20-%20Home.jpg</image:loc>
+      <image:title>Azulinho — Official Artist Site</image:title>
+      <image:caption>Azulinho — trap singer, producer and recording artist</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://i.scdn.co/image/ab67616d0000b273649a2ae0a4403ecaff97c0be</image:loc>
+      <image:title>Child of God — Azulinho</image:title>
+      <image:caption>Child of God by Azulinho — official cover art</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://res.cloudinary.com/dzgqzeebg/image/upload/f_auto,q_auto/azulinho/about/about-slide-1.jpg</image:loc>
+      <image:title>Azulinho — Portrait</image:title>
+      <image:caption>Azulinho — official portrait</image:caption>
+    </image:image>
+  </url>
+</urlset>
