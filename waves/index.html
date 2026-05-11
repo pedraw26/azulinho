@@ -1455,5 +1455,37 @@ object-position: center 26%;
   initAnalytics();
 })();
 </script>
+<script>
+/* ── Merch carousel shield — prevents Webflow JS from hiding it ── */
+(function() {
+  function shieldCarousel() {
+    var wrap = document.querySelector('.merch-marquee-wrap');
+    var track = document.querySelector('.merch-marquee-track');
+    if (!wrap || !track) return;
+    function forceVisible(el) {
+      el.style.setProperty('display', el === track ? 'flex' : 'block', 'important');
+      el.style.setProperty('visibility', 'visible', 'important');
+      el.style.setProperty('opacity', '1', 'important');
+      el.style.setProperty('height', 'auto', 'important');
+      el.style.setProperty('max-height', 'none', 'important');
+      el.style.setProperty('overflow', el === wrap ? 'hidden' : 'visible', 'important');
+    }
+    forceVisible(wrap);
+    forceVisible(track);
+    var obs = new MutationObserver(function() {
+      forceVisible(wrap);
+      forceVisible(track);
+    });
+    obs.observe(wrap,  { attributes: true, attributeFilter: ['style','class'] });
+    obs.observe(track, { attributes: true, attributeFilter: ['style','class'] });
+  }
+  shieldCarousel();
+  document.addEventListener('DOMContentLoaded', shieldCarousel);
+  window.addEventListener('load', shieldCarousel);
+  setTimeout(shieldCarousel, 300);
+  setTimeout(shieldCarousel, 1000);
+  setTimeout(shieldCarousel, 2500);
+})();
+</script>
 </body>
 </html>
