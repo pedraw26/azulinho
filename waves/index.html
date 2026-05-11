@@ -1090,27 +1090,55 @@ object-position: center 26%;
     window.addEventListener('resize', resize);
 
     const ctx = canvas.getContext('2d');
+    const isMobile = window.matchMedia('(max-width: 991px)').matches;
+    const targetFps = isMobile ? 12 : 24; // mobile: cap at 12fps to save battery + scroll perf
+    const frameInterval = 1000 / targetFps;
+    let lastDraw = 0;
+    let isScrolling = false;
+    let scrollTimer = null;
 
-    function drawGrain() {
+    function drawGrain(now) {
+      grainRaf = requestAnimationFrame(drawGrain);
+      // Skip frames when scrolling — scroll smoothness > grain
+      if (isScrolling) return;
+      if (now - lastDraw < frameInterval) return;
+      lastDraw = now;
+
       const w = canvas.width, h = canvas.height;
       const imageData = ctx.createImageData(w, h);
       const data = imageData.data;
 
       for (let i = 0; i < data.length; i += 4) {
-        // Warm analog grain — slightly golden tint
         const luma = (Math.random() * 2 - 1) * 180;
-        data[i]   = 128 + luma + 8;   // R — slightly warm
-        data[i+1] = 128 + luma + 2;   // G
-        data[i+2] = 128 + luma - 12;  // B — slightly cool shadow
-        data[i+3] = 38 + Math.random() * 28; // alpha — vary density
+        data[i]   = 128 + luma + 8;
+        data[i+1] = 128 + luma + 2;
+        data[i+2] = 128 + luma - 12;
+        data[i+3] = 38 + Math.random() * 28;
       }
       ctx.putImageData(imageData, 0, 0);
-      grainRaf = requestAnimationFrame(drawGrain);
     }
 
     let grainRaf = requestAnimationFrame(drawGrain);
 
-    // Pause grain when tab is hidden — saves ~155M Math.random() calls/s on mobile
+    // Pause grain when scrolling for smoother scroll
+    window.addEventListener('scroll', function() {
+      isScrolling = true;
+      clearTimeout(scrollTimer);
+      scrollTimer = setTimeout(function() { isScrolling = false; }, 150);
+    }, { passive: true });
+
+    // Pause grain when hero is off-screen
+    if ('IntersectionObserver' in window) {
+      let heroVisible = true;
+      const io = new IntersectionObserver(function(entries) {
+        heroVisible = entries[0].isIntersecting;
+        if (!heroVisible && grainRaf) { cancelAnimationFrame(grainRaf); grainRaf = null; }
+        else if (heroVisible && !grainRaf) { grainRaf = requestAnimationFrame(drawGrain); }
+      }, { threshold: 0 });
+      io.observe(hero);
+    }
+
+    // Pause when tab is hidden
     document.addEventListener('visibilitychange', function() {
       if (document.hidden) { cancelAnimationFrame(grainRaf); grainRaf = null; }
       else if (!grainRaf) { grainRaf = requestAnimationFrame(drawGrain); }
@@ -1496,7 +1524,6 @@ object-position: center 26%;
       if (started) return;
       var halfWidth = track.scrollWidth / 2;
       if (halfWidth < 100) {
-        // Layout not ready, retry
         setTimeout(run, 500);
         return;
       }
@@ -1504,13 +1531,32 @@ object-position: center 26%;
       var pos = 0;
       var pxPerSec = Math.max(40, Math.min(80, window.innerWidth / 18));
       var last = performance.now();
+      var visible = true;
+      var paused = false;
+
+      // Pause when carousel off-screen
+      if ('IntersectionObserver' in window) {
+        var io = new IntersectionObserver(function(entries) {
+          visible = entries[0].isIntersecting;
+        }, { threshold: 0 });
+        io.observe(wrap);
+      }
+      // Pause during scroll for smoothness
+      var scrollT = null;
+      window.addEventListener('scroll', function() {
+        paused = true;
+        clearTimeout(scrollT);
+        scrollT = setTimeout(function() { paused = false; last = performance.now(); }, 120);
+      }, { passive: true });
+
       function step(now) {
+        requestAnimationFrame(step);
+        if (!visible || paused) { last = now; return; }
         var dt = (now - last) / 1000;
         last = now;
         pos -= pxPerSec * dt;
         if (Math.abs(pos) >= halfWidth) pos += halfWidth;
         track.style.transform = 'translate3d(' + pos.toFixed(2) + 'px, 0, 0)';
-        requestAnimationFrame(step);
       }
       requestAnimationFrame(step);
     }
