@@ -815,7 +815,7 @@ object-position: center 26%;
 </div>
 </div>
 <div role="listitem" class="tour-item w-dyn-item">
-<div class="tour-block track-item" data-track-id="track-03" data-track-title="Child of God" data-track-mood="Azulinho" data-track-url="https://res.cloudinary.com/dzgqzeebg/video/upload/azulinho/waves/azulinho---child-of-god.m4a">
+<div class="tour-block track-item" data-track-id="track-03" data-track-title="Child of God" data-track-mood="Azulinho" data-spotify-id="3UqYJPe0GPgh2mbMiKG944">
 <div class="tour-block-content">
 <div class="tour-block-date"><div class="body-m">01</div></div>
 <div class="tour-block-main">
@@ -852,6 +852,9 @@ object-position: center 26%;
 </div>
 </div>
 </div>
+</div>
+<div id="spotify-embed-container" style="display:none;margin-top:24px;width:100%;">
+<iframe id="spotify-embed-iframe" src="" width="100%" height="152" frameBorder="0" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy" style="border-radius:0;background:#000;"></iframe>
 </div>
 <a href="https://buymeacoffee.com/azulinho" target="_blank" rel="noopener noreferrer" class="button custom-cursor-link w-inline-block">
 <img src="/assets/cdn.prod.website-files.com/67ee44f1ff9354a5d5c4df6c/67ee9442b2f39a68e205ff40_Play.svg" loading="lazy" alt="" class="button-icon left-button-icon"/>
@@ -970,9 +973,30 @@ object-position: center 26%;
     currentRow = row;
   }
 
+  const spotifyContainer = document.getElementById("spotify-embed-container");
+  const spotifyIframe    = document.getElementById("spotify-embed-iframe");
+
+  function hideSpotify() {
+    if (spotifyContainer) spotifyContainer.style.display = "none";
+    if (spotifyIframe)    spotifyIframe.src = "";
+  }
+
   rows.forEach((row) => {
     const button = row.querySelector(".track-play-button");
     button.addEventListener("click", async () => {
+      const spotifyId = row.dataset.spotifyId;
+
+      // Spotify-backed track
+      if (spotifyId) {
+        if (!audio.paused) audio.pause();
+        spotifyIframe.src = "https://open.spotify.com/embed/track/" + spotifyId + "?utm_source=generator&theme=0";
+        spotifyContainer.style.display = "block";
+        setNowPlaying(row, "Streaming via Spotify", "Pause");
+        return;
+      }
+
+      // Regular audio track
+      hideSpotify();
       const isCurrent = currentRow === row;
 
       if (isCurrent && !audio.paused) {
