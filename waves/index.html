@@ -104,6 +104,19 @@ a[href*="music.apple.com"],
 display: none !important;
 }
 
+/* About section — force full width on Safari (overrides aspect-ratio constraint) */
+#about.section.quote-section {
+  width: 100% !important;
+  max-width: 100vw !important;
+  aspect-ratio: auto !important;
+  min-height: 640px;
+  max-height: 1200px;
+  height: 70vh;
+}
+@media screen and (min-width: 1200px) {
+  #about.section.quote-section { height: 800px; }
+}
+
 /* About section slideshow — background-image based for cross-browser reliability */
 .about-slideshow {
 position: absolute;
