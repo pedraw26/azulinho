@@ -153,36 +153,42 @@ overflow: visible;
 
 /* ── Merch marquee — fully isolated, Webflow JS can't touch it ── */
 .merch-marquee-wrap {
-overflow: hidden;
-width: 100vw;
-position: relative;
-left: 50%;
-transform: translateX(-50%);
-margin-bottom: 0;
+display: block !important;
+overflow: hidden !important;
+width: 100vw !important;
+position: relative !important;
+left: 50% !important;
+transform: translateX(-50%) !important;
+margin-bottom: 0 !important;
+visibility: visible !important;
+opacity: 1 !important;
 }
 .merch-marquee-track {
-display: flex;
-width: max-content;
-animation: merch-scroll 28s linear infinite;
-will-change: transform;
+display: flex !important;
+flex-direction: row !important;
+flex-wrap: nowrap !important;
+width: max-content !important;
+animation: merch-scroll 28s linear infinite !important;
+will-change: transform !important;
 }
 @keyframes merch-scroll {
 0%   { transform: translateX(0); }
 100% { transform: translateX(-50%); }
 }
 .merch-marquee-item {
-flex: 0 0 clamp(240px, 28vw, 360px);
-margin-right: 32px;
-position: relative;
-overflow: hidden;
+flex: 0 0 clamp(240px, 28vw, 360px) !important;
+margin-right: 32px !important;
+position: relative !important;
+overflow: hidden !important;
+display: block !important;
 }
 @media screen and (max-width: 991px) {
-.merch-marquee-item { flex: 0 0 clamp(200px, 42vw, 300px); margin-right: 24px; }
-.merch-marquee-track { animation-duration: 32s; }
+.merch-marquee-item { flex: 0 0 clamp(200px, 42vw, 300px) !important; margin-right: 24px !important; }
+.merch-marquee-track { animation-duration: 32s !important; }
 }
 @media screen and (max-width: 767px) {
-.merch-marquee-item { flex: 0 0 min(72vw, 260px); margin-right: 18px; }
-.merch-marquee-track { animation-duration: 40s; }
+.merch-marquee-item { flex: 0 0 min(72vw, 260px) !important; margin-right: 18px !important; }
+.merch-marquee-track { animation-duration: 40s !important; }
 }
 
 .merch-row {
