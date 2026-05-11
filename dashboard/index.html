@@ -1161,7 +1161,7 @@ async function loadDashboard() {
 
   // ── Stat cards ──
   setStat('stat-visitors', visits30.length.toLocaleString());
-  setStat('stat-unique', [...new Set(visits30.map(v => v.ip))].size.toLocaleString());
+  setStat('stat-unique', new Set(visits30.map(v => v.ip)).size.toLocaleString());
   setStat('stat-plays', plays.filter(e => e.created_at >= days30ago).length.toLocaleString());
   setStat('stat-merch', buys.filter(e => e.created_at >= days30ago).length.toLocaleString());
   const conv = visits30.length ? ((buys.filter(e => e.created_at >= days30ago).length / visits30.length) * 100).toFixed(1) + '%' : '0%';
