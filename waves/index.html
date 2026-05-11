@@ -102,7 +102,7 @@ a[href*="music.apple.com"],
 display: none !important;
 }
 
-/* About section slideshow */
+/* About section slideshow — background-image based for cross-browser reliability */
 .about-slideshow {
 position: absolute;
 inset: 0;
@@ -113,23 +113,20 @@ overflow: hidden;
 }
 .about-slideshow .slide {
 position: absolute;
-inset: 0;
-width: 100% !important;
-height: 100% !important;
-min-width: 100%;
-min-height: 100%;
-max-width: none !important;
-max-height: none !important;
-object-fit: cover !important;
-object-position: center center;
+top: 0;
+left: 0;
+right: 0;
+bottom: 0;
+width: 100%;
+height: 100%;
+background-size: cover;
+background-position: center center;
+background-repeat: no-repeat;
 animation: about-crossfade 15s infinite;
 }
-.about-slideshow .slide-2 {
-animation-delay: -10s;
-}
-.about-slideshow .slide-3 {
-animation-delay: -5s;
-}
+.about-slideshow .slide-1 { background-image: url('/assets/image-before-footer.webp'); }
+.about-slideshow .slide-2 { background-image: url('/assets/loop-image.webp'); animation-delay: -10s; }
+.about-slideshow .slide-3 { background-image: url('/assets/lower-bottom.webp'); animation-delay: -5s; }
 @keyframes about-crossfade {
 0%, 26%  { opacity: 1; }
 33%, 93% { opacity: 0; }
@@ -973,10 +970,10 @@ object-position: center 26%;
 </div>
 </div>
 </div>
-<div class="about-slideshow">
-<img src="/assets/image-before-footer.webp" loading="eager" alt="Azulinho" class="slide">
-<img src="/assets/loop-image.webp" loading="lazy" alt="Azulinho" class="slide slide-2">
-<img src="/assets/lower-bottom.webp" loading="lazy" alt="Azulinho" class="slide slide-3">
+<div class="about-slideshow" role="img" aria-label="Azulinho">
+<div class="slide slide-1"></div>
+<div class="slide slide-2"></div>
+<div class="slide slide-3"></div>
 </div>
 </section>
 <section id="socials" class="section streaming-section">
