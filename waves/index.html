@@ -151,7 +151,7 @@ text-align: center;
 overflow: visible;
 }
 
-/* ── Merch marquee — fully isolated, Webflow JS can't touch it ── */
+/* ── Merch marquee — JS-driven, browser-agnostic ── */
 .merch-marquee-wrap {
 display: block !important;
 overflow: hidden !important;
@@ -162,18 +162,15 @@ transform: translateX(-50%) !important;
 margin-bottom: 0 !important;
 visibility: visible !important;
 opacity: 1 !important;
+min-height: 240px;
 }
 .merch-marquee-track {
-display: flex !important;
+display: inline-flex !important;
 flex-direction: row !important;
 flex-wrap: nowrap !important;
-width: max-content !important;
-animation: merch-scroll 28s linear infinite !important;
-will-change: transform !important;
-}
-@keyframes merch-scroll {
-0%   { transform: translateX(0); }
-100% { transform: translateX(-50%); }
+white-space: nowrap;
+will-change: transform;
+/* JS handles transform — no CSS animation */
 }
 .merch-marquee-item {
 flex: 0 0 clamp(240px, 28vw, 360px) !important;
@@ -184,7 +181,6 @@ display: block !important;
 }
 @media screen and (max-width: 991px) {
 .merch-marquee-item { flex: 0 0 clamp(200px, 42vw, 300px) !important; margin-right: 24px !important; }
-.merch-marquee-track { animation-duration: 32s !important; }
 }
 @media screen and (max-width: 767px) {
 .merch-marquee-wrap {
@@ -192,11 +188,6 @@ display: block !important;
   left: 0 !important;
   transform: none !important;
   min-height: 220px !important;
-  contain: layout !important;
-}
-.merch-marquee-track {
-  animation-duration: 40s !important;
-  transform: translateZ(0) !important;
 }
 .merch-marquee-item { flex: 0 0 min(72vw, 260px) !important; margin-right: 18px !important; }
 }
@@ -1466,35 +1457,67 @@ object-position: center 26%;
 })();
 </script>
 <script>
-/* ── Merch carousel shield — prevents Webflow JS from hiding it ── */
+/* ── Merch marquee: JS-driven animation (works in Safari, Firefox, Chrome) ── */
 (function() {
-  function shieldCarousel() {
-    var wrap = document.querySelector('.merch-marquee-wrap');
+  function startMarquee() {
+    var wrap  = document.querySelector('.merch-marquee-wrap');
     var track = document.querySelector('.merch-marquee-track');
     if (!wrap || !track) return;
-    function forceVisible(el) {
-      el.style.setProperty('display', el === track ? 'flex' : 'block', 'important');
-      el.style.setProperty('visibility', 'visible', 'important');
-      el.style.setProperty('opacity', '1', 'important');
-      el.style.setProperty('height', 'auto', 'important');
-      el.style.setProperty('max-height', 'none', 'important');
-      el.style.setProperty('overflow', el === wrap ? 'hidden' : 'visible', 'important');
+
+    // Force-visible (shield against any external JS or CSS hiding it)
+    wrap.style.setProperty('display', 'block', 'important');
+    wrap.style.setProperty('visibility', 'visible', 'important');
+    wrap.style.setProperty('opacity', '1', 'important');
+    track.style.setProperty('display', 'inline-flex', 'important');
+    track.style.setProperty('visibility', 'visible', 'important');
+    track.style.setProperty('opacity', '1', 'important');
+
+    // Wait for images so scrollWidth is accurate
+    var imgs = track.querySelectorAll('img');
+    var pending = imgs.length;
+    function ready() {
+      if (--pending > 0) return;
+      run();
     }
-    forceVisible(wrap);
-    forceVisible(track);
-    var obs = new MutationObserver(function() {
-      forceVisible(wrap);
-      forceVisible(track);
+    if (!imgs.length) { run(); return; }
+    imgs.forEach(function(img) {
+      if (img.complete) ready();
+      else { img.addEventListener('load', ready); img.addEventListener('error', ready); }
     });
-    obs.observe(wrap,  { attributes: true, attributeFilter: ['style','class'] });
-    obs.observe(track, { attributes: true, attributeFilter: ['style','class'] });
+    // Fallback in case images never resolve
+    setTimeout(run, 2500);
+
+    var started = false;
+    function run() {
+      if (started) return;
+      var halfWidth = track.scrollWidth / 2;
+      if (halfWidth < 100) {
+        // Layout not ready, retry
+        setTimeout(run, 500);
+        return;
+      }
+      started = true;
+      var pos = 0;
+      var pxPerSec = Math.max(40, Math.min(80, window.innerWidth / 18));
+      var last = performance.now();
+      function step(now) {
+        var dt = (now - last) / 1000;
+        last = now;
+        pos -= pxPerSec * dt;
+        if (Math.abs(pos) >= halfWidth) pos += halfWidth;
+        track.style.transform = 'translate3d(' + pos.toFixed(2) + 'px, 0, 0)';
+        requestAnimationFrame(step);
+      }
+      requestAnimationFrame(step);
+    }
   }
-  shieldCarousel();
-  document.addEventListener('DOMContentLoaded', shieldCarousel);
-  window.addEventListener('load', shieldCarousel);
-  setTimeout(shieldCarousel, 300);
-  setTimeout(shieldCarousel, 1000);
-  setTimeout(shieldCarousel, 2500);
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', startMarquee);
+  } else {
+    startMarquee();
+  }
+  window.addEventListener('load', function() { setTimeout(startMarquee, 100); });
 })();
 </script>
 </body>
