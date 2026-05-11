@@ -187,8 +187,18 @@ display: block !important;
 .merch-marquee-track { animation-duration: 32s !important; }
 }
 @media screen and (max-width: 767px) {
+.merch-marquee-wrap {
+  width: 100% !important;
+  left: 0 !important;
+  transform: none !important;
+  min-height: 220px !important;
+  contain: layout !important;
+}
+.merch-marquee-track {
+  animation-duration: 40s !important;
+  transform: translateZ(0) !important;
+}
 .merch-marquee-item { flex: 0 0 min(72vw, 260px) !important; margin-right: 18px !important; }
-.merch-marquee-track { animation-duration: 40s !important; }
 }
 
 .merch-row {
