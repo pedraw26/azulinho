@@ -10,14 +10,8 @@
     <lastmod>2026-05-11</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
-    <xhtml:link rel="alternate" hreflang="en" href="https://azulinhomusic.com/waves/"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://azulinhomusic.com/waves/"/>
-  </url>
-  <url>
-    <loc>https://azulinhomusic.com/waves/</loc>
-    <lastmod>2026-05-11</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>1.0</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://azulinhomusic.com/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://azulinhomusic.com/"/>
     <image:image>
       <image:loc>https://azulinhomusic.com/assets/cdn.prod.website-files.com/67ee44f1ff9354a5d5c4df6c/67f38ee0ed3092f0df2d1208_Opengraph%20-%20Home.jpg</image:loc>
       <image:title>Azulinho — Official Artist Site</image:title>
