@@ -115,31 +115,27 @@ a[href*="music.apple.com"],
 display: none !important;
 }
 
-/* About section — force full width on Safari, image fills full height edge-to-edge */
-#about.section.quote-section {
-  width: 100% !important;
-  max-width: 100vw !important;
-  aspect-ratio: auto !important;
-  min-height: 640px;
-  max-height: 1200px;
-  height: 70vh;
-  padding-top: 0 !important;
-  padding-bottom: 0 !important;
+/* About section — Safari/desktop-only fix. Mobile untouched. */
+@media screen and (min-width: 768px) {
+  #about.section.quote-section {
+    width: 100% !important;
+    max-width: 100vw !important;
+    aspect-ratio: auto !important;
+    min-height: 640px;
+    max-height: 1200px;
+    height: 70vh;
+    padding-top: 0 !important;
+    padding-bottom: 0 !important;
+  }
+  #about .w-layout-blockcontainer.container {
+    padding-top: 136px;
+    padding-bottom: 136px;
+    position: relative;
+    z-index: 2;
+  }
 }
 @media screen and (min-width: 1200px) {
   #about.section.quote-section { height: 800px; }
-}
-#about .w-layout-blockcontainer.container {
-  padding-top: 136px;
-  padding-bottom: 136px;
-  position: relative;
-  z-index: 2;
-}
-@media screen and (max-width: 767px) {
-  #about .w-layout-blockcontainer.container {
-    padding-top: 80px;
-    padding-bottom: 80px;
-  }
 }
 
 /* About section slideshow — background-image based for cross-browser reliability */
@@ -164,13 +160,15 @@ background-position: center center;
 background-repeat: no-repeat;
 animation: about-crossfade 15s infinite;
 }
-.about-slideshow .slide-1 {
-  background-image: url('/assets/image-before-footer.webp');
-  background-size: 120% auto;
-  background-position: center top;
-}
+.about-slideshow .slide-1 { background-image: url('/assets/image-before-footer.webp'); }
 .about-slideshow .slide-2 { background-image: url('/assets/loop-image.webp'); animation-delay: -10s; }
 .about-slideshow .slide-3 { background-image: url('/assets/lower-bottom.webp'); animation-delay: -5s; }
+@media screen and (min-width: 768px) {
+  .about-slideshow .slide-1 {
+    background-size: 120% auto;
+    background-position: center top;
+  }
+}
 @keyframes about-crossfade {
 0%, 26%  { opacity: 1; }
 33%, 93% { opacity: 0; }
