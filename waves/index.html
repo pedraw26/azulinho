@@ -1107,6 +1107,21 @@ object-position: center 26%;
     const pct = (e.clientX - rect.left) / rect.width;
     if (audio.duration) audio.currentTime = pct * audio.duration;
   });
+
+  // Try autoplay on landing — falls back to first interaction (browser policy)
+  function tryAutoplay() {
+    audio.play().catch(() => {
+      // Browser blocked — wait for first interaction
+      const events = ['click','touchstart','keydown','scroll'];
+      const fire = () => {
+        events.forEach(e => document.removeEventListener(e, fire));
+        audio.play().catch(() => {});
+      };
+      events.forEach(e => document.addEventListener(e, fire, { once: true, passive: true }));
+    });
+  }
+  if (document.readyState === 'complete') tryAutoplay();
+  else window.addEventListener('load', tryAutoplay);
 })();
 </script>
 <script>
