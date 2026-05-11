@@ -646,10 +646,103 @@ object-position: center 26%;
   #music .tour-info-header {
     display: none;
   }
-  #spotify-embed-container,
-  #spotify-embed-iframe {
-    border-radius: 0 !important;
-    overflow: hidden !important;
+  /* ── Custom Child of God player ── */
+  .cog-player {
+    display: flex;
+    align-items: stretch;
+    gap: 20px;
+    padding: 20px;
+    background: #0d0d0d;
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 0;
+    width: 100%;
+    box-sizing: border-box;
+  }
+  .cog-cover {
+    width: 120px;
+    height: 120px;
+    object-fit: cover;
+    display: block;
+    border-radius: 0;
+    flex-shrink: 0;
+  }
+  .cog-info {
+    flex: 1;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 4px;
+  }
+  .cog-title {
+    font-size: 20px;
+    font-weight: 700;
+    color: #fff;
+    letter-spacing: 0.02em;
+    text-transform: uppercase;
+  }
+  .cog-artist {
+    font-size: 12px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.5);
+    margin-bottom: 10px;
+  }
+  .cog-progress {
+    width: 100%;
+    height: 3px;
+    background: rgba(255,255,255,0.12);
+    cursor: pointer;
+    border-radius: 0;
+    overflow: hidden;
+  }
+  .cog-progress-fill {
+    width: 0%;
+    height: 100%;
+    background: #fff;
+    transition: width 0.1s linear;
+  }
+  .cog-meta {
+    display: flex;
+    justify-content: space-between;
+    font-size: 10px;
+    letter-spacing: 0.14em;
+    color: rgba(255,255,255,0.4);
+    margin-top: 6px;
+  }
+  .cog-spotify-link {
+    font-size: 10px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: #1DB954;
+    text-decoration: none;
+    margin-top: 10px;
+    transition: opacity 0.2s;
+  }
+  .cog-spotify-link:hover { opacity: 0.7; }
+  .cog-play {
+    width: 64px;
+    height: 64px;
+    background: #fff;
+    color: #000;
+    border: none;
+    cursor: pointer;
+    align-self: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    border-radius: 0;
+    transition: transform 0.15s;
+  }
+  .cog-play:hover { transform: scale(1.05); }
+  .cog-play:active { transform: scale(0.97); }
+  @media (max-width: 600px) {
+    .cog-player { gap: 14px; padding: 14px; flex-wrap: wrap; }
+    .cog-cover  { width: 88px; height: 88px; }
+    .cog-info   { flex: 1 1 calc(100% - 102px); }
+    .cog-title  { font-size: 16px; }
+    .cog-play   { width: 100%; height: 48px; order: 99; }
   }
 
   #music .tour-list {
@@ -799,13 +892,24 @@ object-position: center 26%;
 </div>
 <div class="body-s text-align-right">Player</div>
 </div>
-<div id="spotify-embed-container" style="width:100%;">
-<iframe id="spotify-embed-iframe" src="https://open.spotify.com/embed/track/3UqYJPe0GPgh2mbMiKG944?utm_source=generator&theme=0" width="100%" height="152" frameBorder="0" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy" style="border-radius:0 !important;background:#000;display:block;"></iframe>
+<!-- ── Custom Child of God player — sharp corners, Spotify-style ── -->
+<div class="cog-player">
+  <img src="https://i.scdn.co/image/ab67616d0000b273649a2ae0a4403ecaff97c0be" alt="Child of God" class="cog-cover" loading="lazy"/>
+  <div class="cog-info">
+    <div class="cog-title">Child of God</div>
+    <div class="cog-artist">Azulinho</div>
+    <div class="cog-progress" aria-hidden="true"><div class="cog-progress-fill"></div></div>
+    <div class="cog-meta"><span id="cog-time-current">0:00</span><span id="cog-time-total">0:00</span></div>
+    <a href="https://open.spotify.com/track/3UqYJPe0GPgh2mbMiKG944" target="_blank" rel="noopener noreferrer" class="cog-spotify-link">Listen on Spotify →</a>
+  </div>
+  <button type="button" class="cog-play" id="cog-play-btn" aria-label="Play Child of God">
+    <svg viewBox="0 0 24 24" width="24" height="24" fill="currentColor" class="cog-icon-play"><path d="M8 5v14l11-7z"/></svg>
+    <svg viewBox="0 0 24 24" width="24" height="24" fill="currentColor" class="cog-icon-pause" style="display:none"><path d="M6 5h4v14H6zM14 5h4v14h-4z"/></svg>
+  </button>
+  <audio id="cog-audio" src="https://res.cloudinary.com/dzgqzeebg/video/upload/azulinho/waves/azulinho---child-of-god.m4a" preload="metadata"></audio>
 </div>
-<a href="https://buymeacoffee.com/azulinho" target="_blank" rel="noopener noreferrer" class="button custom-cursor-link w-inline-block">
-<img src="/assets/cdn.prod.website-files.com/67ee44f1ff9354a5d5c4df6c/67ee9442b2f39a68e205ff40_Play.svg" loading="lazy" alt="" class="button-icon left-button-icon"/>
+<a href="https://buymeacoffee.com/azulinho" target="_blank" rel="noopener noreferrer" class="button custom-cursor-link w-inline-block" style="margin-top:40px;display:inline-block;">
 <div class="body-m button-text">Support Me Here</div>
-<img src="/assets/cdn.prod.website-files.com/67ee44f1ff9354a5d5c4df6c/67ee9442b2f39a68e205ff40_Play.svg" loading="lazy" alt="" class="button-icon right-button-icon"/>
 </a>
 </div>
 </div>
@@ -886,6 +990,52 @@ object-position: center 26%;
 <script src="/assets/cdn.prod.website-files.com/67ee44f1ff9354a5d5c4df6c/js/webflow.cdff352a.11b7e4a3d3deb3be.js" type="text/javascript">
 </script>
 <script>
+/* ── Child of God custom player ── */
+(() => {
+  const audio   = document.getElementById('cog-audio');
+  const playBtn = document.getElementById('cog-play-btn');
+  if (!audio || !playBtn) return;
+
+  const iconPlay  = playBtn.querySelector('.cog-icon-play');
+  const iconPause = playBtn.querySelector('.cog-icon-pause');
+  const fill      = document.querySelector('.cog-progress-fill');
+  const progress  = document.querySelector('.cog-progress');
+  const timeNow   = document.getElementById('cog-time-current');
+  const timeTotal = document.getElementById('cog-time-total');
+
+  function fmt(s) {
+    if (!isFinite(s)) return '0:00';
+    const m = Math.floor(s / 60);
+    const r = Math.floor(s % 60);
+    return m + ':' + (r < 10 ? '0' : '') + r;
+  }
+
+  audio.addEventListener('loadedmetadata', () => {
+    timeTotal.textContent = fmt(audio.duration);
+  });
+  audio.addEventListener('timeupdate', () => {
+    if (!audio.duration) return;
+    fill.style.width = (audio.currentTime / audio.duration * 100) + '%';
+    timeNow.textContent = fmt(audio.currentTime);
+  });
+  audio.addEventListener('play',  () => { iconPlay.style.display = 'none';  iconPause.style.display = 'block'; });
+  audio.addEventListener('pause', () => { iconPlay.style.display = 'block'; iconPause.style.display = 'none'; });
+  audio.addEventListener('ended', () => { iconPlay.style.display = 'block'; iconPause.style.display = 'none'; fill.style.width = '0%'; });
+
+  playBtn.addEventListener('click', () => {
+    if (audio.paused) audio.play().catch(() => {});
+    else audio.pause();
+  });
+
+  progress.addEventListener('click', (e) => {
+    const rect = progress.getBoundingClientRect();
+    const pct = (e.clientX - rect.left) / rect.width;
+    if (audio.duration) audio.currentTime = pct * audio.duration;
+  });
+})();
+</script>
+<script>
+/* ── Legacy player guard — no-op if tracklist removed ── */
 (() => {
   const rows = Array.from(document.querySelectorAll(".track-item:not(.track-coming-soon)"));
   if (!rows.length) return;
@@ -903,7 +1053,7 @@ object-position: center 26%;
       if (label) label.textContent = "Play";
     });
     currentRow = null;
-    statusEl.textContent = "Ready";
+    if (statusEl) statusEl.textContent = "Ready";
   }
 
   function setNowPlaying(row, stateText, buttonText) {
@@ -913,9 +1063,9 @@ object-position: center 26%;
       item.classList.toggle("is-playing", isCurrent);
       if (label) label.textContent = isCurrent ? buttonText : "Play";
     });
-    titleEl.textContent = row.dataset.trackTitle;
-    moodEl.textContent  = row.dataset.trackMood;
-    statusEl.textContent = stateText;
+    if (titleEl)  titleEl.textContent  = row.dataset.trackTitle;
+    if (moodEl)   moodEl.textContent   = row.dataset.trackMood;
+    if (statusEl) statusEl.textContent = stateText;
     currentRow = row;
   }
 
