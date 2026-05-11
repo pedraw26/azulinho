@@ -8,6 +8,8 @@
 <link href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@800&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet"/>
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 <meta name="robots" content="noindex"/>
 <style>
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -856,36 +858,7 @@ tbody td:first-child { color: var(--text); }
             <button class="tab">Heatmap</button>
           </div>
         </div>
-        <div class="map-container" style="border:none;height:320px;">
-          <!-- World map SVG outline -->
-          <svg viewBox="0 0 1000 500" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid meet">
-            <path fill="rgba(255,255,255,0.06)" stroke="rgba(255,255,255,0.1)" stroke-width="0.5" d="M150,100 Q200,80 260,90 Q310,95 350,110 Q380,120 400,140 Q420,155 410,175 Q395,200 370,210 Q340,220 310,215 Q280,210 255,200 Q225,188 200,175 Q170,160 150,145 Q130,130 135,115 Z"/>
-            <path fill="rgba(255,255,255,0.06)" stroke="rgba(255,255,255,0.1)" stroke-width="0.5" d="M420,80 Q480,60 560,70 Q630,78 680,100 Q720,118 730,145 Q738,168 720,185 Q700,202 670,208 Q635,215 600,210 Q560,205 525,190 Q490,175 465,155 Q440,135 425,115 Q415,98 420,80Z"/>
-            <path fill="rgba(255,255,255,0.06)" stroke="rgba(255,255,255,0.1)" stroke-width="0.5" d="M730,80 Q780,65 840,75 Q880,82 900,105 Q915,125 905,148 Q892,170 865,178 Q835,185 805,178 Q775,170 755,152 Q735,133 730,112 Q726,94 730,80Z"/>
-            <path fill="rgba(255,255,255,0.06)" stroke="rgba(255,255,255,0.1)" stroke-width="0.5" d="M100,220 Q140,200 185,210 Q220,218 240,240 Q258,260 255,285 Q250,310 230,328 Q208,345 180,348 Q150,350 128,335 Q105,318 95,292 Q85,265 88,245 Q92,228 100,220Z"/>
-            <path fill="rgba(255,255,255,0.06)" stroke="rgba(255,255,255,0.1)" stroke-width="0.5" d="M240,240 Q280,220 325,230 Q365,238 390,260 Q415,282 415,310 Q415,340 395,358 Q372,376 342,378 Q308,380 280,362 Q252,344 240,318 Q228,292 230,268 Q232,250 240,240Z"/>
-            <path fill="rgba(255,255,255,0.06)" stroke="rgba(255,255,255,0.1)" stroke-width="0.5" d="M445,215 Q510,195 570,208 Q620,218 650,245 Q678,270 678,302 Q678,335 655,355 Q628,375 592,380 Q553,384 520,368 Q488,352 468,322 Q448,292 445,262 Q443,238 445,215Z"/>
-            <path fill="rgba(255,255,255,0.06)" stroke="rgba(255,255,255,0.1)" stroke-width="0.5" d="M700,195 Q755,178 810,188 Q855,196 882,222 Q908,248 905,278 Q902,308 878,326 Q850,344 815,345 Q778,346 750,328 Q722,310 710,282 Q698,254 700,228 Q700,210 700,195Z"/>
-            <path fill="rgba(255,255,255,0.06)" stroke="rgba(255,255,255,0.1)" stroke-width="0.5" d="M800,80 Q840,68 875,78 Q905,86 918,108 Q928,128 920,150 Q910,170 888,180 Q862,190 838,182 Q814,174 800,155 Q786,136 785,116 Q784,96 800,80Z"/>
-            <path fill="rgba(255,255,255,0.06)" stroke="rgba(255,255,255,0.1)" stroke-width="0.5" d="M320,330 Q340,320 360,330 Q378,340 382,360 Q386,382 372,400 Q355,418 332,420 Q308,422 294,406 Q280,390 284,368 Q288,346 305,336 Z"/>
-          </svg>
-          <div class="map-dots">
-            <div class="map-dot uk"></div>
-            <div class="map-dot ng"></div>
-            <div class="map-dot us"></div>
-            <div class="map-dot br"></div>
-            <div class="map-dot fr"></div>
-            <div class="map-dot gh"></div>
-            <div class="map-dot de"></div>
-            <div class="map-dot jp"></div>
-          </div>
-          <div class="map-legend">
-            <div class="map-legend-item"><div class="map-legend-dot" style="background:var(--blue)"></div>Europe/US</div>
-            <div class="map-legend-item"><div class="map-legend-dot" style="background:var(--green)"></div>Africa</div>
-            <div class="map-legend-item"><div class="map-legend-dot" style="background:var(--yellow)"></div>S. America</div>
-            <div class="map-legend-item"><div class="map-legend-dot" style="background:var(--red)"></div>Asia</div>
-          </div>
-        </div>
+        <div id="leaflet-map" style="height:320px;background:#0a0a0a;"></div>
       </div>
 
       <!-- LIVE FEED -->
@@ -1094,7 +1067,39 @@ const sourcesChart = new Chart(sCtx, {
   options:{ responsive:true, maintainAspectRatio:false, cutout:'72%', plugins:{ legend:{ position:'bottom', labels:{ boxWidth:8, padding:10, color:'rgba(255,255,255,0.35)', font:{ size:9 } } } } }
 });
 
-// ── Heatmap ──
+// ── Geographic visitor map (Leaflet) ──
+let geoMap = null;
+let geoLayer = null;
+function buildGeoMap(visits) {
+  if (!geoMap) {
+    geoMap = L.map('leaflet-map', { zoomControl: true, attributionControl: false, worldCopyJump: true }).setView([20, 0], 2);
+    L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_nolabels/{z}/{x}/{y}{r}.png', {
+      subdomains: 'abcd', maxZoom: 19
+    }).addTo(geoMap);
+    L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_only_labels/{z}/{x}/{y}{r}.png', {
+      subdomains: 'abcd', maxZoom: 19, pane: 'shadowPane'
+    }).addTo(geoMap);
+  }
+  if (geoLayer) geoMap.removeLayer(geoLayer);
+  // Cluster visits by rounded lat/lng so duplicate locations show as bigger dots
+  const buckets = {};
+  visits.forEach(v => {
+    if (typeof v.lat !== 'number' || typeof v.lng !== 'number') return;
+    const key = v.lat.toFixed(1) + ',' + v.lng.toFixed(1);
+    if (!buckets[key]) buckets[key] = { lat: v.lat, lng: v.lng, count: 0, sample: v };
+    buckets[key].count++;
+  });
+  const group = L.layerGroup();
+  Object.values(buckets).forEach(b => {
+    const radius = Math.max(5, Math.min(22, 5 + Math.log2(b.count + 1) * 4));
+    L.circleMarker([b.lat, b.lng], {
+      radius, color: '#60a5fa', weight: 1.5, fillColor: '#60a5fa', fillOpacity: 0.55
+    }).bindTooltip(`${b.sample.city || b.sample.country || 'Unknown'} — ${b.count} visit${b.count === 1 ? '' : 's'}`, { direction: 'top' }).addTo(group);
+  });
+  geoLayer = group.addTo(geoMap);
+}
+
+// ── Time heatmap (day × hour grid) ──
 function buildHeatmap(visits) {
   const hm = document.getElementById('heatmap');
   hm.innerHTML = '';
@@ -1270,6 +1275,7 @@ async function loadDashboard() {
 
   // ── Heatmap ──
   buildHeatmap(visits);
+  buildGeoMap(visits);
 }
 
 loadDashboard();
