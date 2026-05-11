@@ -702,11 +702,21 @@ object-position: center 26%;
     border-radius: 2px;
   }
   .cog-artist {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
     font-size: 14px;
     font-weight: 400;
     letter-spacing: 0;
     text-transform: none;
     color: rgba(255,255,255,0.85);
+  }
+  .cog-verified {
+    width: 16px;
+    height: 16px;
+    flex-shrink: 0;
+    display: inline-block;
+    vertical-align: middle;
   }
   .cog-progress {
     width: 100%;
@@ -736,10 +746,10 @@ object-position: center 26%;
     align-items: center;
     gap: 8px;
     font-size: 14px;
-    font-weight: 400;
+    font-weight: 700;
     letter-spacing: 0;
     text-transform: none;
-    color: #fff;
+    color: #1ED760;
     text-decoration: none;
     margin-top: 8px;
     transition: opacity 0.2s;
@@ -750,7 +760,7 @@ object-position: center 26%;
     width: 22px;
     height: 22px;
     flex-shrink: 0;
-    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='1.6'><circle cx='12' cy='12' r='10'/><line x1='12' y1='8' x2='12' y2='16'/><line x1='8' y1='12' x2='16' y2='12'/></svg>");
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%231ED760' stroke-width='1.8'><circle cx='12' cy='12' r='10'/><line x1='12' y1='8' x2='12' y2='16'/><line x1='8' y1='12' x2='16' y2='12'/></svg>");
     background-size: contain;
     background-repeat: no-repeat;
   }
@@ -935,7 +945,7 @@ object-position: center 26%;
     <div class="cog-title">Child of God</div>
     <div class="cog-artist-row">
       <span class="cog-preview-badge">Preview</span>
-      <span class="cog-artist">Azulinho</span>
+      <span class="cog-artist">Azulinho<svg class="cog-verified" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg" aria-label="Verified Artist"><path d="M8 0l1.8 1.4L12 1l.6 2.2 2.2.6-.4 2.2L16 8l-1.6 2 .4 2.2-2.2.6L12 15l-2.2-.4L8 16l-1.8-1.4L4 15l-.6-2.2L1.2 12.2 1.6 10 0 8l1.6-2-.4-2.2L3.4 3.2 4 1l2.2.4z" fill="#4287F5"/><path d="M6.7 10.6L4.3 8.2l.95-.95L6.7 8.7l4.05-4.05.95.95z" fill="#fff"/></svg></span>
     </div>
     <div class="cog-progress" aria-hidden="true"><div class="cog-progress-fill"></div></div>
     <div class="cog-meta"><span id="cog-time-current">0:00</span><span id="cog-time-total">0:00</span></div>
