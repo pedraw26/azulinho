@@ -646,17 +646,18 @@ object-position: center 26%;
   #music .tour-info-header {
     display: none;
   }
-  /* ── Custom Child of God player ── */
+  /* ── Custom Child of God player — Spotify-style typography ── */
   .cog-player {
     display: flex;
     align-items: stretch;
-    gap: 20px;
-    padding: 20px;
-    background: #0d0d0d;
-    border: 1px solid rgba(255,255,255,0.08);
+    gap: 16px;
+    padding: 16px;
+    background: #181818;
+    border: 1px solid rgba(255,255,255,0.06);
     border-radius: 0;
     width: 100%;
     box-sizing: border-box;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Helvetica Neue", Arial, sans-serif;
   }
   .cog-cover {
     width: 120px;
@@ -672,21 +673,40 @@ object-position: center 26%;
     display: flex;
     flex-direction: column;
     justify-content: center;
-    gap: 4px;
+    gap: 6px;
   }
   .cog-title {
-    font-size: 20px;
+    font-size: 16px;
     font-weight: 700;
     color: #fff;
-    letter-spacing: 0.02em;
-    text-transform: uppercase;
+    letter-spacing: -0.01em;
+    text-transform: none;
+    line-height: 1.2;
+  }
+  .cog-artist-row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-top: 2px;
+  }
+  .cog-preview-badge {
+    display: inline-block;
+    background: rgba(255,255,255,0.16);
+    color: #fff;
+    font-size: 11px;
+    font-weight: 700;
+    line-height: 1;
+    padding: 4px 6px;
+    letter-spacing: 0;
+    text-transform: none;
+    border-radius: 2px;
   }
   .cog-artist {
-    font-size: 12px;
-    letter-spacing: 0.18em;
-    text-transform: uppercase;
-    color: rgba(255,255,255,0.5);
-    margin-bottom: 10px;
+    font-size: 14px;
+    font-weight: 400;
+    letter-spacing: 0;
+    text-transform: none;
+    color: rgba(255,255,255,0.85);
   }
   .cog-progress {
     width: 100%;
@@ -695,6 +715,7 @@ object-position: center 26%;
     cursor: pointer;
     border-radius: 0;
     overflow: hidden;
+    margin-top: 8px;
   }
   .cog-progress-fill {
     width: 0%;
@@ -705,24 +726,38 @@ object-position: center 26%;
   .cog-meta {
     display: flex;
     justify-content: space-between;
-    font-size: 10px;
-    letter-spacing: 0.14em;
-    color: rgba(255,255,255,0.4);
-    margin-top: 6px;
+    font-size: 11px;
+    letter-spacing: 0;
+    color: rgba(255,255,255,0.5);
+    margin-top: 4px;
   }
   .cog-spotify-link {
-    font-size: 10px;
-    letter-spacing: 0.16em;
-    text-transform: uppercase;
-    color: #1DB954;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 14px;
+    font-weight: 400;
+    letter-spacing: 0;
+    text-transform: none;
+    color: #fff;
     text-decoration: none;
-    margin-top: 10px;
+    margin-top: 8px;
     transition: opacity 0.2s;
+  }
+  .cog-spotify-link::before {
+    content: "";
+    display: inline-block;
+    width: 22px;
+    height: 22px;
+    flex-shrink: 0;
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='1.6'><circle cx='12' cy='12' r='10'/><line x1='12' y1='8' x2='12' y2='16'/><line x1='8' y1='12' x2='16' y2='12'/></svg>");
+    background-size: contain;
+    background-repeat: no-repeat;
   }
   .cog-spotify-link:hover { opacity: 0.7; }
   .cog-play {
-    width: 64px;
-    height: 64px;
+    width: 56px;
+    height: 56px;
     background: #fff;
     color: #000;
     border: none;
@@ -741,7 +776,8 @@ object-position: center 26%;
     .cog-player { gap: 14px; padding: 14px; flex-wrap: wrap; }
     .cog-cover  { width: 88px; height: 88px; }
     .cog-info   { flex: 1 1 calc(100% - 102px); }
-    .cog-title  { font-size: 16px; }
+    .cog-title  { font-size: 15px; }
+    .cog-artist { font-size: 13px; }
     .cog-play   { width: 100%; height: 48px; order: 99; }
   }
 
@@ -892,15 +928,18 @@ object-position: center 26%;
 </div>
 <div class="body-s text-align-right">Player</div>
 </div>
-<!-- ── Custom Child of God player — sharp corners, Spotify-style ── -->
+<!-- ── Custom Child of God player — Spotify-style typography, sharp corners ── -->
 <div class="cog-player">
   <img src="https://i.scdn.co/image/ab67616d0000b273649a2ae0a4403ecaff97c0be" alt="Child of God" class="cog-cover" loading="lazy"/>
   <div class="cog-info">
     <div class="cog-title">Child of God</div>
-    <div class="cog-artist">Azulinho</div>
+    <div class="cog-artist-row">
+      <span class="cog-preview-badge">Preview</span>
+      <span class="cog-artist">Azulinho</span>
+    </div>
     <div class="cog-progress" aria-hidden="true"><div class="cog-progress-fill"></div></div>
     <div class="cog-meta"><span id="cog-time-current">0:00</span><span id="cog-time-total">0:00</span></div>
-    <a href="https://open.spotify.com/track/3UqYJPe0GPgh2mbMiKG944" target="_blank" rel="noopener noreferrer" class="cog-spotify-link">Listen on Spotify →</a>
+    <a href="https://open.spotify.com/track/3UqYJPe0GPgh2mbMiKG944" target="_blank" rel="noopener noreferrer" class="cog-spotify-link">Save on Spotify</a>
   </div>
   <button type="button" class="cog-play" id="cog-play-btn" aria-label="Play Child of God">
     <svg viewBox="0 0 24 24" width="24" height="24" fill="currentColor" class="cog-icon-play"><path d="M8 5v14l11-7z"/></svg>
