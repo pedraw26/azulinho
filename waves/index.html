@@ -151,15 +151,18 @@ text-align: center;
 overflow: visible;
 }
 
-/* ── Releases artwork marquee — same pattern as merch, works desktop + mobile ── */
+/* ── Releases artwork marquee — standalone, Webflow-proof ── */
 .rl-marquee-wrap {
+  display: block !important;
+  visibility: visible !important;
+  opacity: 1 !important;
   overflow: hidden;
   width: 100vw;
   position: relative;
   left: 50%;
   transform: translateX(-50%);
-  margin-top: 24px;
-  margin-bottom: 32px;
+  margin-top: 0;
+  margin-bottom: 0;
 }
 .rl-marquee-track {
   display: flex;
@@ -660,15 +663,8 @@ object-position: center 26%;
 </div>
 </div>
 </section>
-<section id="music" class="section no-borders">
-<div class="w-layout-blockcontainer container w-container">
-<div class="section-content">
-<div class="section-heading">
-<h2 class="h2">Music Releases</h2>
-</div>
-</div>
-</div>
-<!-- ── Releases artwork marquee ── -->
+
+<!-- ── Releases artwork marquee — standalone, outside any Webflow section ── -->
 <div class="rl-marquee-wrap">
 <div class="rl-marquee-track">
 <div class="rl-marquee-item"><img src="/assets/waves-cover.png" loading="lazy" alt="Waves"/></div>
@@ -691,6 +687,15 @@ object-position: center 26%;
 </div>
 </div>
 <!-- ── end releases marquee ── -->
+
+<section id="music" class="section no-borders">
+<div class="w-layout-blockcontainer container w-container">
+<div class="section-content">
+<div class="section-heading">
+<h2 class="h2">Music Releases</h2>
+</div>
+</div>
+</div>
 <div class="w-layout-blockcontainer container w-container">
 <div class="section-content">
 <div class="tour-info">
