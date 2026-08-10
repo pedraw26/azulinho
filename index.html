@@ -352,14 +352,13 @@ height: 100%;
 background-size: cover;
 background-position: center center;
 background-repeat: no-repeat;
-animation: about-crossfade 15s infinite;
+animation: about-crossfade 10s infinite;
 }
-.about-slideshow .slide-1 { background-image: url('/assets/about-slide-1.webp'); }
-.about-slideshow .slide-2 { background-image: url('/assets/loop-image.webp'); animation-delay: -10s; }
-.about-slideshow .slide-3 { background-image: url('/assets/lower-bottom.webp'); animation-delay: -5s; }
+.about-slideshow .slide-1 { background-image: url('/assets/loop-image.webp'); }
+.about-slideshow .slide-2 { background-image: url('/assets/lower-bottom.webp'); animation-delay: -5s; }
 @keyframes about-crossfade {
-0%, 26%  { opacity: 1; }
-33%, 93% { opacity: 0; }
+0%, 40%  { opacity: 1; }
+50%, 90% { opacity: 0; }
 100%     { opacity: 1; }
 }
 
@@ -1211,7 +1210,6 @@ object-position: center 26%;
 <div class="about-slideshow" role="img" aria-label="Azulinho">
 <div class="slide slide-1"></div>
 <div class="slide slide-2"></div>
-<div class="slide slide-3"></div>
 </div>
 </section>
 <section id="socials" class="section streaming-section">
